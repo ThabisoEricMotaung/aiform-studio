@@ -1,5 +1,6 @@
 import Link from "next/link";
 import EngineStep from "@/components/EngineStep";
+import ProjectCard from "@/components/ProjectCard";
 
 export default function Home() {
   return (
@@ -27,14 +28,17 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* THE PROBLEM */}
+      {/* OUR PRINCIPLE */}
       <section className="px-6 py-24 max-w-3xl mx-auto text-center">
         <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5">
-          01 — The Problem
+          01 — Our Principle
         </div>
         <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight">
-          Too much of the world still runs on assumption.
+          Don&apos;t assume. Observe, test, verify.
         </h2>
+        <p className="text-muted text-lg max-w-xl mx-auto mt-6 leading-relaxed">
+          The fix isn&apos;t always AI, and it isn&apos;t always the same fix twice.
+        </p>
       </section>
 
       {/* THE ENGINE */}
@@ -47,9 +51,10 @@ export default function Home() {
             What are people currently being asked to assume?
           </h2>
           <p className="text-muted text-center max-w-lg mx-auto mb-16 leading-relaxed">
-            Messy information becomes structured. Claims become evidence.
-            Evidence becomes useful decisions. The technology changes from
-            product to product. The principle doesn&apos;t.
+            When information and trust are the problem, we use the right
+            combination of tools to make the situation clearer and more useful.
+            Sometimes that means Parse, Verify, Understand, and Match. Sometimes
+            it means something else.
           </p>
           <div className="max-w-md mx-auto">
             <EngineStep number="01" title="Parse" desc="Take unstructured, messy, real-world input and give it shape." />
@@ -60,78 +65,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROOF: AIFORM PROCURE */}
+      {/* BUILT BY AIFORM */}
       <section id="work" className="px-6 py-24 border-t border-panel-line">
         <div className="max-w-4xl mx-auto">
           <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5 text-center">
-            03 — Proof
+            03 — Built by AiForm
           </div>
           <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-14">
-            The first proof.
+            Products, studio work, and experiments.
           </h2>
-
-          <div className="blueprint-panel p-8 md:p-10 mb-8">
-            <div className="corner-tl" />
-            <div className="corner-br" />
-            <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-cyan mb-3">
-              AiForm Procure
+          <div className="mb-12">
+            <h3 className="font-mono text-[11px] tracking-[0.15em] uppercase text-cyan mb-4">
+              Products
+            </h3>
+            <div className="grid md:grid-cols-2 gap-5">
+              <ProjectCard
+                name="AiForm Procure"
+                tag="Product"
+                desc="A procurement system built around fragmented information, compliance, and trust."
+                status="Live · Pilot phase"
+                href="https://www.aiformprocure.co.za"
+              />
             </div>
-            <p className="text-text leading-relaxed mb-6 max-w-2xl">
-              AiForm Procure began with something ordinary: South African
-              businesses searching across fragmented procurement sources
-              while repeatedly proving the same compliance information.
-              What looked like a tender-discovery problem was really a
-              trust and information problem. So we built around that.
-            </p>
-            <div className="grid sm:grid-cols-3 gap-6 font-mono text-[11px] text-muted border-t border-panel-line pt-6">
-              <div>
-                <div className="text-cyan mb-1">PROBLEM</div>
-                Fragmented compliance verification across procurement
-              </div>
-              <div>
-                <div className="text-cyan mb-1">ENGINE USED</div>
-                Parse → Verify → Match
-              </div>
-              <div>
-                <div className="text-cyan mb-1">STATUS</div>
-                Live · Pilot phase
-              </div>
-            </div>
-            <a
-              href="https://www.aiformprocure.co.za"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-7 font-mono text-[11px] tracking-[0.08em] uppercase text-cyan hover:underline underline-offset-4"
-            >
-              Visit aiformprocure.co.za →
-            </a>
           </div>
 
-          <div className="blueprint-panel p-8 md:p-10">
-            <div className="corner-tl" />
-            <div className="corner-br" />
-            <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-cyan mb-3">
-              Kutlwano Tutoring
+          <div className="mb-12">
+            <h3 className="font-mono text-[11px] tracking-[0.15em] uppercase text-cyan mb-4">
+              Studio Work
+            </h3>
+            <div className="grid md:grid-cols-2 gap-5">
+              <ProjectCard
+                name="Residential Construction Portfolio Site"
+                tag="Website"
+                desc="A clear, credible portfolio site for a residential construction business."
+                status="Delivered"
+              />
+              <ProjectCard
+                name="Kutlwano Tutoring"
+                tag="Website"
+                desc="A focused site bringing two tutoring audiences and pricing models into one clear experience."
+                status="Live"
+                href="https://kutlwanotutoring.co.za"
+              />
+              <ProjectCard
+                name="Mathabo Crochet"
+                tag="Brand pack"
+                desc="A visual brand foundation for a handmade crochet business."
+                status="Delivered · No site"
+              />
             </div>
-            <p className="text-text leading-relaxed mb-6 max-w-2xl">
-              A one-on-one tutoring business needed a clear way to present
-              two very different offerings — international students and
-              South African Grade 8–11 learners — without either audience
-              feeling like an afterthought.
-            </p>
-            <div className="grid sm:grid-cols-3 gap-6 font-mono text-[11px] text-muted border-t border-panel-line pt-6">
-              <div>
-                <div className="text-cyan mb-1">PROBLEM</div>
-                Two audiences, two pricing models, one clear site
-              </div>
-              <div>
-                <div className="text-cyan mb-1">ENGINE USED</div>
-                Understand → Match
-              </div>
-              <div>
-                <div className="text-cyan mb-1">STATUS</div>
-                Live
-              </div>
+          </div>
+
+          <div>
+            <h3 className="font-mono text-[11px] tracking-[0.15em] uppercase text-cyan mb-4">
+              Experiments
+            </h3>
+            <div className="grid md:grid-cols-2 gap-5">
+              <ProjectCard name="AutoDesign Studio" tag="Experiment" desc="Exploring how AI can support faster, more deliberate design work." status="Exploring" />
+              <ProjectCard name="Vibe Coders Hub" tag="Experiment" desc="Exploring a more accessible way into building with code." status="Exploring" />
+              <ProjectCard name="AI Builder Collective" tag="Experiment" desc="Exploring what a community around practical AI building could become." status="Exploring" />
+              <ProjectCard name="AiForm Construct" tag="Experiment" desc="Exploring tools for clearer construction information and decisions." status="Exploring" />
             </div>
           </div>
         </div>

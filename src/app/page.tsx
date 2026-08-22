@@ -137,11 +137,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* THE FOUNDER */}
+      <section id="founder" className="px-6 py-24 border-t border-panel-line">
+        <div className="max-w-3xl mx-auto">
+          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5 text-center">
+            04 — The Builder
+          </div>
+          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-14">
+            One person. One engine.
+          </h2>
+
+          <div className="blueprint-panel p-8 md:p-10">
+            <div className="corner-tl" />
+            <div className="corner-br" />
+            <div className="flex flex-col sm:flex-row gap-8 items-start">
+              <div
+                className="w-28 h-28 rounded-full bg-bg border border-panel-line shrink-0 bg-cover bg-center"
+                style={{ backgroundImage: "url(/images/founder.jpg)" }}
+                aria-label="Thabiso Eric Motaung"
+              />
+              <div className="flex-1">
+                <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-cyan mb-2">
+                  Thabiso Eric Motaung
+                </div>
+                <p className="text-text leading-relaxed mb-6">
+                  AiForm Studio is a one-person forge. I design, build, and
+                  ship every product myself — from the first line of code to
+                  the deployed system. Alongside the studio, I&apos;m also a
+                  Senior Lecturer at the University of Pretoria, which keeps
+                  me close to how people actually learn, reason, and get
+                  stuck — the same instinct that shapes how I design systems
+                  that verify rather than assume.
+                </p>
+                <div className="grid sm:grid-cols-3 gap-6 font-mono text-[11px] text-muted border-t border-panel-line pt-6">
+                  <div>
+                    <div className="text-cyan mb-1">ROLE</div>
+                    Founder &amp; Builder, AiForm Studio
+                  </div>
+                  <div>
+                    <div className="text-cyan mb-1">ALSO</div>
+                    Senior Lecturer, University of Pretoria
+                  </div>
+                  <div>
+                    <div className="text-cyan mb-1">BASED</div>
+                    Pretoria, South Africa
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* BUILT ON VERIFICATION */}
       <section className="px-6 py-24 border-t border-panel-line bg-panel/30">
         <div className="max-w-2xl mx-auto">
           <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-cyan mb-5 text-center">
-            04 — What We&apos;ve Learned
+            05 — What We&apos;ve Learned
           </div>
           <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-10">
             Built on verification.
@@ -172,7 +224,7 @@ export default function Home() {
       <section className="px-6 py-24 border-t border-panel-line">
         <div className="max-w-2xl mx-auto text-center">
           <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5">
-            05 — How We Work
+            06 — How We Work
           </div>
           <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight mb-6">
             We don&apos;t start with AI.
@@ -191,7 +243,7 @@ export default function Home() {
       <section id="next" className="px-6 py-24 border-t border-panel-line bg-panel/30">
         <div className="max-w-2xl mx-auto text-center">
           <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-cyan mb-5">
-            06 — Where We Look Next
+            07 — Where We Look Next
           </div>
           <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight mb-8">
             No fixed industry. A very specific kind of problem.

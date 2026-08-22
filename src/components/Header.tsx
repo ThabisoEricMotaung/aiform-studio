@@ -3,6 +3,7 @@ import Link from "next/link";
 const NAV_LINKS = [
   { href: "/#engine", label: "Engine" },
   { href: "/#work", label: "Work" },
+  { href: "/#founder", label: "Founder" },
   { href: "/#next", label: "Where We Look Next" },
   { href: "/contact", label: "Contact" },
 ];

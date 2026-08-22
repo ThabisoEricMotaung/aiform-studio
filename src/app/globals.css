@@ -1,65 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  --color-bg: #0F1D2E;
-  --color-panel: #1C2E42;
-  --color-panel-line: #2A3F56;
-  --color-text: #F4F6F5;
-  --color-muted: #8B9AAB;
-  --color-cyan: #4FA8E0;
+  --color-bg: #F3F0E8;
+  --color-bg-alt: #E7E3DA;
+  --color-text: #181A18;
+  --color-muted: #5C5A52;
+  --color-green: #173B2C;
+  --color-gold: #B68A3A;
+  --color-clay: #A65D43;
+  --color-sage: #A9B5A3;
+  --color-line: #D8D3C6;
 }
 
 @theme inline {
   --color-bg: var(--color-bg);
-  --color-panel: var(--color-panel);
-  --color-panel-line: var(--color-panel-line);
+  --color-bg-alt: var(--color-bg-alt);
   --color-text: var(--color-text);
   --color-muted: var(--color-muted);
-  --color-cyan: var(--color-cyan);
-  --font-display: var(--font-space-grotesk);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains);
+  --color-green: var(--color-green);
+  --color-gold: var(--color-gold);
+  --color-clay: var(--color-clay);
+  --color-sage: var(--color-sage);
+  --color-line: var(--color-line);
+  --font-display: var(--font-instrument-serif);
+  --font-sans: var(--font-geist);
 }
+
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-geist), sans-serif;
 }
 
-/* Blueprint grid background */
-.blueprint-grid {
-  background-image:
-    linear-gradient(rgba(79, 168, 224, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(79, 168, 224, 0.07) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+.rule-gold { width: 48px; height: 2px; background: var(--color-gold); }
 
-/* Corner-bracket panel frame */
-.blueprint-panel {
-  position: relative;
-  border: 1px solid var(--color-panel-line);
-  background: var(--color-panel);
-}
-.blueprint-panel::before,
-.blueprint-panel::after,
-.blueprint-panel > .corner-tl,
-.blueprint-panel > .corner-br {
-  content: "";
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: var(--color-cyan);
-}
-.blueprint-panel::before {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid var(--color-cyan);
-  border-left: 2px solid var(--color-cyan);
-}
-.blueprint-panel::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid var(--color-cyan);
-  border-right: 2px solid var(--color-cyan);
+.chapter-label {
+  font-family: var(--font-geist), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-green);
 }

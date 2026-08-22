@@ -1,273 +1,45 @@
+import Image from "next/image";
 import Link from "next/link";
-import EngineStep from "@/components/EngineStep";
+import DeskGraphic from "@/components/DeskGraphic";
 import ProjectCard from "@/components/ProjectCard";
+
+const projects = [
+  ["AiForm Procure", "Product", "A procurement system built around fragmented information, compliance, and trust.", "Live · Pilot phase", "https://www.aiformprocure.co.za", "var(--color-green)"],
+  ["Residential Construction Portfolio Site", "Website", "A clear, credible portfolio site for a residential construction business.", "Delivered", undefined, "var(--color-clay)"],
+  ["Kutlwano Tutoring", "Website", "A focused site bringing two tutoring audiences and pricing models into one clear experience.", "Live", "https://kutlwanotutoring.co.za", "var(--color-sage)"],
+  ["Mathabo Crochet", "Brand pack", "A visual brand foundation for a handmade crochet business.", "Delivered · No site", undefined, "var(--color-gold)"],
+] as const;
+
+const experiments = [
+  ["AutoDesign Studio", "Exploring how AI can support faster, more deliberate design work."],
+  ["Vibe Coders Hub", "Exploring a more accessible way into building with code."],
+  ["AI Builder Collective", "Exploring what a community around practical AI building could become."],
+  ["AiForm Construct", "Exploring tools for clearer construction information and decisions."],
+] as const;
 
 export default function Home() {
   return (
     <>
-      {/* HERO */}
-      <section className="blueprint-grid px-6 py-28 md:py-36 text-center border-b border-panel-line">
-        <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-cyan mb-6">
-          AiForm Studio
-        </div>
-        <h1 className="font-display font-bold text-[38px] md:text-[64px] leading-[1.08] mb-7">
-          Noticed, not invented.
-        </h1>
-        <p className="text-muted text-lg max-w-xl mx-auto mb-4 leading-relaxed">
-          We look for places where people are still expected to trust what
-          hasn&apos;t been verified, then build systems that change that.
-        </p>
-        <p className="font-mono text-[13px] tracking-[0.04em] text-cyan/90 mb-11">
-          Less assumption. More evidence. Better decisions.
-        </p>
-        <Link
-          href="/contact"
-          className="inline-block font-mono text-[12px] tracking-[0.08em] uppercase border border-cyan text-cyan px-7 py-3.5 hover:bg-cyan hover:text-bg transition-colors"
-        >
-          Start a project
-        </Link>
-      </section>
-
-      {/* OUR PRINCIPLE */}
-      <section className="px-6 py-24 max-w-3xl mx-auto text-center">
-        <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5">
-          01 — Our Principle
-        </div>
-        <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight">
-          Don&apos;t assume. Observe, test, verify.
-        </h2>
-        <p className="text-muted text-lg max-w-xl mx-auto mt-6 leading-relaxed">
-          The fix isn&apos;t always AI, and it isn&apos;t always the same fix twice.
-        </p>
-      </section>
-
-      {/* THE ENGINE */}
-      <section id="engine" className="px-6 py-24 border-t border-panel-line bg-panel/30">
-        <div className="max-w-3xl mx-auto">
-          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-cyan mb-5 text-center">
-            02 — The AiForm Engine
-          </div>
-          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-4">
-            What are people currently being asked to assume?
-          </h2>
-          <p className="text-muted text-center max-w-lg mx-auto mb-16 leading-relaxed">
-            When information and trust are the problem, we use the right
-            combination of tools to make the situation clearer and more useful.
-            Sometimes that means Parse, Verify, Understand, and Match. Sometimes
-            it means something else.
-          </p>
-          <div className="max-w-md mx-auto">
-            <EngineStep number="01" title="Parse" desc="Take unstructured, messy, real-world input and give it shape." />
-            <EngineStep number="02" title="Verify" desc="Check the claim against evidence, not against what's convenient to believe." />
-            <EngineStep number="03" title="Understand" desc="Turn verified evidence into something a person can actually act on." />
-            <EngineStep number="04" title="Match" desc="Connect what belongs together — the right buyer, the right supplier, the right fit." last />
-          </div>
+      <section className="px-6 md:px-14 py-20 md:py-28 border-b border-line">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-[1.35fr_0.65fr] items-center gap-12">
+          <div><p className="chapter-label mb-7">A studio for expensive assumptions</p><h1 className="font-display text-[56px] sm:text-[72px] lg:text-[96px] leading-[0.92] tracking-[-0.03em] max-w-4xl">Noticed,<br /><em className="text-green">not invented.</em></h1><p className="font-sans text-lg text-muted max-w-xl mt-8 leading-relaxed">We look for places where people are still expected to trust what hasn&apos;t been verified, then build systems that change that.</p><div className="flex flex-wrap gap-8 items-center mt-10"><Link href="/contact" className="font-sans text-sm bg-green text-bg px-6 py-3.5 hover:bg-green/90 transition-colors">Start a project →</Link><p className="font-display italic text-lg text-clay">Less assumption. More evidence.</p></div></div>
+          <div className="hidden md:flex justify-end"><DeskGraphic /></div>
         </div>
       </section>
 
-      {/* BUILT BY AIFORM */}
-      <section id="work" className="px-6 py-24 border-t border-panel-line">
-        <div className="max-w-4xl mx-auto">
-          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5 text-center">
-            03 — Built by AiForm
-          </div>
-          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-14">
-            Products, studio work, and experiments.
-          </h2>
-          <div className="mb-12">
-            <h3 className="font-mono text-[11px] tracking-[0.15em] uppercase text-cyan mb-4">
-              Products
-            </h3>
-            <div className="grid md:grid-cols-2 gap-5">
-              <ProjectCard
-                name="AiForm Procure"
-                tag="Product"
-                desc="A procurement system built around fragmented information, compliance, and trust."
-                status="Live · Pilot phase"
-                href="https://www.aiformprocure.co.za"
-              />
-            </div>
-          </div>
+      <section className="px-6 py-20 md:py-28"><div className="max-w-4xl mx-auto grid md:grid-cols-[180px_1fr] gap-8"><div><p className="chapter-label">01 / Our Principle</p><div className="rule-gold mt-4" /></div><div><h2 className="font-display text-4xl md:text-6xl leading-[1.04]">Don&apos;t assume.<br /><em>Observe, test, verify.</em></h2><p className="text-muted text-lg mt-7 max-w-xl">The fix isn&apos;t always AI, and it isn&apos;t always the same fix twice.</p></div></div></section>
 
-          <div className="mb-12">
-            <h3 className="font-mono text-[11px] tracking-[0.15em] uppercase text-cyan mb-4">
-              Studio Work
-            </h3>
-            <div className="grid md:grid-cols-2 gap-5">
-              <ProjectCard
-                name="Residential Construction Portfolio Site"
-                tag="Website"
-                desc="A clear, credible portfolio site for a residential construction business."
-                status="Delivered"
-              />
-              <ProjectCard
-                name="Kutlwano Tutoring"
-                tag="Website"
-                desc="A focused site bringing two tutoring audiences and pricing models into one clear experience."
-                status="Live"
-                href="https://kutlwanotutoring.co.za"
-              />
-              <ProjectCard
-                name="Mathabo Crochet"
-                tag="Brand pack"
-                desc="A visual brand foundation for a handmade crochet business."
-                status="Delivered · No site"
-              />
-            </div>
-          </div>
+      <section id="engine" className="px-6 py-20 md:py-28 bg-bg-alt border-y border-line"><div className="max-w-5xl mx-auto"><p className="chapter-label mb-6">02 / The AiForm Engine</p><h2 className="font-display text-4xl md:text-6xl max-w-3xl leading-tight">What are people currently being asked to assume?</h2><div className="font-display text-3xl md:text-5xl text-green mt-14 flex flex-wrap items-center gap-x-4 gap-y-2"><span>Parse</span><span className="text-gold">—</span><span>Verify</span><span className="text-gold">—</span><span>Understand</span><span className="text-gold">—</span><span>Match</span></div><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10 text-sm text-muted leading-relaxed"><p>Give messy, real-world input a useful shape.</p><p>Check a claim against evidence, not convenience.</p><p>Turn evidence into something a person can act on.</p><p>Connect the right buyer, supplier, answer, or fit.</p></div><p className="mt-12 max-w-2xl text-muted leading-relaxed">Sometimes the problem needs this sequence. Sometimes it needs something else. The tool follows the problem.</p></div></section>
 
-          <div>
-            <h3 className="font-mono text-[11px] tracking-[0.15em] uppercase text-cyan mb-4">
-              Experiments
-            </h3>
-            <div className="grid md:grid-cols-2 gap-5">
-              <ProjectCard name="AutoDesign Studio" tag="Experiment" desc="Exploring how AI can support faster, more deliberate design work." status="Exploring" />
-              <ProjectCard name="Vibe Coders Hub" tag="Experiment" desc="Exploring a more accessible way into building with code." status="Exploring" />
-              <ProjectCard name="AI Builder Collective" tag="Experiment" desc="Exploring what a community around practical AI building could become." status="Exploring" />
-              <ProjectCard name="AiForm Construct" tag="Experiment" desc="Exploring tools for clearer construction information and decisions." status="Exploring" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <section id="work" className="px-6 py-20 md:py-28"><div className="max-w-5xl mx-auto"><p className="chapter-label mb-6">03 / Built by AiForm</p><div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-12"><h2 className="font-display text-4xl md:text-6xl">Products, studio work,<br /><em>and experiments.</em></h2><p className="text-sm text-muted max-w-xs">Different outputs, shaped by the same instinct: notice what is unclear, then make it useful.</p></div><div className="grid md:grid-cols-2 gap-5">{projects.map(([name, tag, desc, status, href, accent]) => <ProjectCard key={name} name={name} tag={tag} desc={desc} status={status} href={href} accent={accent} />)}</div><h3 className="chapter-label mt-14 mb-5">Unlaunched experiments</h3><div className="grid md:grid-cols-2 gap-5">{experiments.map(([name, desc]) => <ProjectCard key={name} name={name} tag="Experiment" desc={desc} status="Exploring" accent="var(--color-muted)" />)}</div></div></section>
 
-      {/* THE FOUNDER */}
-      <section id="founder" className="px-6 py-24 border-t border-panel-line">
-        <div className="max-w-3xl mx-auto">
-          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5 text-center">
-            04 — The Builder
-          </div>
-          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-14">
-            One person. One engine.
-          </h2>
+      <section id="founder" className="px-6 py-20 md:py-28 bg-bg-alt border-y border-line"><div className="max-w-5xl mx-auto grid md:grid-cols-[0.8fr_1.2fr] gap-12 md:gap-20 items-center"><div><div className="relative aspect-[4/5] max-w-sm"><Image src="/images/founder.jpg" alt="Thabiso Eric Motaung, founder of AiForm Studio" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover grayscale" /></div></div><div><p className="chapter-label mb-6">04 / The Founder</p><h2 className="font-display text-4xl md:text-6xl leading-tight">One person.<br /><em>One engine.</em></h2><p className="text-muted leading-relaxed mt-8">AiForm Studio is a one-person forge. I design, build, and ship every product myself — from the first line of code to the deployed system. Alongside the studio, I&apos;m a Senior Lecturer at the University of Pretoria. That keeps me close to how people learn, reason, and get stuck — the same instinct that shapes systems that verify rather than assume.</p><div className="grid sm:grid-cols-3 gap-6 mt-9 pt-6 border-t border-line text-xs text-muted"><div><span className="block text-green mb-2">ROLE</span>Founder &amp; Builder</div><div><span className="block text-green mb-2">ALSO</span>Senior Lecturer</div><div><span className="block text-green mb-2">BASED</span>Pretoria, South Africa</div></div></div></div></section>
 
-          <div className="blueprint-panel p-8 md:p-10">
-            <div className="corner-tl" />
-            <div className="corner-br" />
-            <div className="flex flex-col sm:flex-row gap-8 items-start">
-              <div
-                className="w-28 h-28 rounded-full bg-bg border border-panel-line shrink-0 bg-cover bg-center"
-                style={{ backgroundImage: "url(/images/founder.jpg)" }}
-                aria-label="Thabiso Eric Motaung"
-              />
-              <div className="flex-1">
-                <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-cyan mb-2">
-                  Thabiso Eric Motaung
-                </div>
-                <p className="text-text leading-relaxed mb-6">
-                  AiForm Studio is a one-person forge. I design, build, and
-                  ship every product myself — from the first line of code to
-                  the deployed system. Alongside the studio, I&apos;m also a
-                  Senior Lecturer at the University of Pretoria, which keeps
-                  me close to how people actually learn, reason, and get
-                  stuck — the same instinct that shapes how I design systems
-                  that verify rather than assume.
-                </p>
-                <div className="grid sm:grid-cols-3 gap-6 font-mono text-[11px] text-muted border-t border-panel-line pt-6">
-                  <div>
-                    <div className="text-cyan mb-1">ROLE</div>
-                    Founder &amp; Builder, AiForm Studio
-                  </div>
-                  <div>
-                    <div className="text-cyan mb-1">ALSO</div>
-                    Senior Lecturer, University of Pretoria
-                  </div>
-                  <div>
-                    <div className="text-cyan mb-1">BASED</div>
-                    Pretoria, South Africa
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="px-6 py-20 md:py-28"><div className="max-w-4xl mx-auto"><p className="chapter-label mb-6">05 / What We&apos;ve Learned</p><h2 className="font-display text-4xl md:text-6xl">Claims should survive<br /><em>contact with reality.</em></h2><div className="mt-12 border-t border-line">{["A configuration that ‘should’ be correct isn’t correct until it’s tested.", "A security policy that looks scoped isn’t safe until it’s verified.", "A feature isn’t fixed because the code changed. It’s fixed when the behaviour changes.", "A product doesn’t support something because the website says it does."].map((line, i) => <div key={line} className="grid grid-cols-[40px_1fr] gap-4 py-5 border-b border-line"><span className="font-display text-gold">0{i + 1}</span><p>{line}</p></div>)}</div></div></section>
 
-      {/* BUILT ON VERIFICATION */}
-      <section className="px-6 py-24 border-t border-panel-line bg-panel/30">
-        <div className="max-w-2xl mx-auto">
-          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-cyan mb-5 text-center">
-            05 — What We&apos;ve Learned
-          </div>
-          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight text-center mb-10">
-            Built on verification.
-          </h2>
-          <p className="text-muted text-center mb-10 leading-relaxed">
-            We learned this principle building our own products.
-          </p>
-          <ul className="space-y-5 mb-10">
-            {[
-              "A configuration that \u201cshould\u201d be correct isn't correct until it's tested.",
-              "A security policy that looks scoped isn't safe until it's verified.",
-              "A feature isn't fixed because the code changed. It's fixed when the behaviour changes.",
-              "A product doesn't support something because the website says it does.",
-            ].map((line) => (
-              <li key={line} className="flex gap-4 text-[15px] text-text/90 leading-relaxed">
-                <span className="text-cyan font-mono shrink-0">—</span>
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="font-mono text-[13px] tracking-[0.04em] text-cyan text-center">
-            Claims should survive contact with reality.
-          </p>
-        </div>
-      </section>
+      <section className="px-6 py-24 md:py-36 bg-bg-alt border-y border-line text-center"><p className="chapter-label mb-7">06 / How We Work</p><h2 className="font-display text-6xl md:text-8xl lg:text-[112px] leading-[0.9] tracking-[-0.03em]">We don&apos;t start<br />with <em className="text-green">AI.</em></h2><p className="font-display italic text-2xl mt-8">We start with the problem.</p><p className="text-muted max-w-xl mx-auto mt-6 leading-relaxed">Sometimes the answer needs AI. Sometimes it needs better data, automation, or simply software designed properly. The technology serves the problem.</p></section>
 
-      {/* WE DON'T START WITH AI */}
-      <section className="px-6 py-24 border-t border-panel-line">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted mb-5">
-            06 — How We Work
-          </div>
-          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight mb-6">
-            We don&apos;t start with AI.
-          </h2>
-          <p className="text-lg text-text/90 mb-4">We start with the problem.</p>
-          <p className="text-muted leading-relaxed max-w-lg mx-auto">
-            Sometimes the answer needs AI. Sometimes it needs better data.
-            Sometimes it needs automation. Sometimes it just needs software
-            designed properly. The technology serves the problem, not the
-            other way around.
-          </p>
-        </div>
-      </section>
-
-      {/* WHERE WE LOOK NEXT */}
-      <section id="next" className="px-6 py-24 border-t border-panel-line bg-panel/30">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-cyan mb-5">
-            07 — Where We Look Next
-          </div>
-          <h2 className="font-display font-bold text-2xl md:text-[34px] leading-tight mb-8">
-            No fixed industry. A very specific kind of problem.
-          </h2>
-          <div className="space-y-2 text-text/90 mb-8">
-            <p>Documents everywhere.</p>
-            <p>Important claims that are difficult to verify.</p>
-            <p>Two parties trying to decide whether they can trust one another.</p>
-            <p>People spending hours doing work that software should be doing in seconds.</p>
-          </div>
-          <p className="text-lg text-text mb-6">
-            When we find that combination, we pay attention.
-          </p>
-          <p className="font-mono text-[13px] tracking-[0.04em] text-cyan">
-            Procurement was one. There will be others.
-          </p>
-        </div>
-      </section>
-
-      {/* CLOSING */}
-      <section className="blueprint-grid px-6 py-28 text-center border-t border-panel-line">
-        <h2 className="font-display font-bold text-2xl md:text-[38px] leading-tight max-w-2xl mx-auto mb-10">
-          If something important is being trusted on assumption, we&apos;re interested.
-        </h2>
-        <Link
-          href="/contact"
-          className="inline-block font-mono text-[12px] tracking-[0.08em] uppercase border border-cyan text-cyan px-7 py-3.5 hover:bg-cyan hover:text-bg transition-colors"
-        >
-          Start a project
-        </Link>
-      </section>
+      <section className="px-6 py-24 md:py-32 text-center"><p className="chapter-label mb-7">07 / Where We Look Next</p><h2 className="font-display text-4xl md:text-6xl max-w-3xl mx-auto">No fixed industry.<br /><em>A very specific kind of problem.</em></h2><p className="text-muted mt-8 max-w-xl mx-auto leading-relaxed">Documents everywhere. Important claims that are difficult to verify. Two parties deciding whether they can trust one another. Hours of work that software should do in seconds.</p><p className="font-display text-2xl text-green mt-8">When we find that combination, we pay attention.</p><Link href="/contact" className="inline-block mt-10 text-sm border-b border-green pb-1 text-green">Tell us what you&apos;ve noticed →</Link></section>
     </>
   );
 }

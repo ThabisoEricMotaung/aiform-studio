@@ -1,19 +1,3 @@
 import Link from "next/link";
-
-const NAV_LINKS = [
-  { href: "/#work", label: "Work" },
-  { href: "/#work", label: "Products" },
-  { href: "/#founder", label: "Studio" },
-  { href: "/journal", label: "Journal" },
-  { href: "/contact", label: "Contact" },
-];
-
-export default function Header() {
-  return (
-    <header className="flex items-center justify-between px-6 md:px-14 py-6 border-b border-line bg-bg">
-      <Link href="/" className="flex items-baseline gap-1"><span className="font-sans font-semibold text-[13px] tracking-[0.1em] text-green">AIFORM</span><span className="font-sans text-[13px] tracking-[0.1em] text-muted">/ STUDIO</span></Link>
-      <nav className="hidden md:flex gap-9">{NAV_LINKS.map((link) => <Link key={link.label} href={link.href} className="font-sans text-[13px] text-text/80 hover:text-green transition-colors">{link.label}</Link>)}</nav>
-      <Link href="/contact" className="font-sans text-[13px] text-green border-b border-green/40 hover:border-green transition-colors pb-0.5">Start a project ↗</Link>
-    </header>
-  );
-}
+const links=[["/#work","Work"],["/#work","Products"],["/#studio","Studio"],["/journal","Journal"],["/contact","Contact"]];
+export default function Header(){return <header className="flex items-center justify-between px-6 md:px-14 py-6 border-b border-line bg-bg"><Link href="/" className="text-[13px] font-semibold tracking-[.1em] text-green">AIFORM <span className="font-normal text-muted">/ STUDIO</span></Link><nav aria-label="Primary navigation" className="hidden md:flex gap-9">{links.map(([href,label])=><Link key={label} href={href} className="text-[13px] hover:text-green">{label}</Link>)}</nav><Link href="/contact" className="text-[13px] text-green md:hidden">Start a project ↗</Link></header>}

@@ -1,14 +1,2 @@
 import Link from "next/link";
-
-export default function Footer() {
-  return (
-    <footer className="border-t border-line px-6 md:px-14 py-12 bg-bg">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
-        <div className="flex items-baseline gap-1"><span className="font-sans font-semibold text-[13px] tracking-[0.1em] text-green">AIFORM</span><span className="font-sans text-[13px] tracking-[0.1em] text-muted">/ STUDIO</span></div>
-        <p className="font-display italic text-lg text-text/70 text-center">Built in Pretoria. Looking everywhere.</p>
-        <div className="flex gap-6 font-sans text-[13px] text-muted"><Link href="/contact" className="hover:text-green transition-colors">Contact</Link><a href="mailto:hello@aiformstudio.co.za" className="hover:text-green transition-colors">Email</a></div>
-      </div>
-      <div className="text-center font-sans text-[11px] text-muted/70 mt-10">© {new Date().getFullYear()} AiForm Studio</div>
-    </footer>
-  );
-}
+export default function Footer(){return <footer className="bg-green text-white editorial-grid py-20 md:py-28"><p className="col-span-12 chapter-label chapter-label-light">AiForm / Studio / Pretoria</p><h2 className="col-span-12 md:col-span-9 font-display text-5xl md:text-8xl leading-[.9] mt-12">Built in Pretoria.<br/><span className="text-[#e0c98f]">Looking everywhere.</span></h2><div className="col-span-12 md:col-start-9 md:col-span-4 mt-16"><Link href="/contact" className="text-xl border-b border-white/40 pb-2">Start a project ↗</Link><a href="mailto:hello@aiformstudio.co.za" className="block text-sm mt-7 text-white/70">hello@aiformstudio.co.za</a></div><div className="col-span-12 mt-20 pt-6 border-t border-white/20 flex flex-col md:flex-row gap-3 justify-between text-[10px] text-white/60"><p>© {new Date().getFullYear()} AiForm Studio</p><p>Union Buildings photograph: CC BY-SA / Wikimedia Commons</p></div></footer>}

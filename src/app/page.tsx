@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import PretoriaPhoto from "@/components/PretoriaPhoto";
+import { HeroBotanicalArtwork, MothGeometryStudy } from "@/components/BrandLineArt";
 
 const engine = [["01","Parse","Give messy, real-world information a useful shape."],["02","Verify","Check claims against evidence, not convenience."],["03","Understand","Turn evidence into something people can act on."],["04","Match","Connect the right buyer, supplier, answer, or fit."]];
 const work = [["Residential construction","Studio project / Gauteng","A clear portfolio for a building business, designed around proof of work and direct enquiries."],["Kutlwano Tutoring","Studio project / Education / Live","One focused experience for two audiences, with distinct learning needs and pricing models."],["Mathabo Crochet","Studio project / Brand","A visual foundation for a handmade business: identity, palette, typography, and social templates."],["AiForm Construct","Experiment / Construction","An early investigation into permits, contractor verification, and clearer project documentation."]];
 
 export default function Home() {
   return <>
-    <section className="editorial-grid min-h-[78vh] items-center py-20 md:py-28">
-      <div className="col-span-12"><p className="chapter-label mb-10">A studio for expensive assumptions</p><h1 className="font-display hero-title">Noticed,<br/><span className="text-green">not invented.</span></h1></div>
-      <div className="col-span-12 md:col-start-8 md:col-span-5 mt-16 md:mt-24"><p className="text-lg md:text-xl leading-relaxed">We notice the problems people have learned to live with, understand why they persist, and build systems that make them easier to solve.</p><div className="flex flex-wrap gap-8 items-center mt-9"><Link href="#work" className="link-arrow">Explore the work →</Link><Link href="/contact" className="text-lg font-semibold text-green">Start a project ↗</Link></div></div>
+    <section className="editorial-grid relative min-h-[78vh] items-center overflow-hidden py-20 md:py-28">
+      <HeroBotanicalArtwork />
+      <div className="relative z-10 col-span-12"><p className="chapter-label mb-10">A studio for expensive assumptions</p><h1 className="font-display hero-title">Noticed,<br/><span className="text-green">not invented.</span></h1></div>
+      <div className="relative z-10 col-span-12 mt-16 md:col-start-8 md:col-span-5 md:mt-24"><p className="text-lg leading-relaxed md:text-xl">We notice the problems people have learned to live with, understand why they persist, and build systems that make them easier to solve.</p><div className="mt-9 flex flex-wrap items-center gap-8"><Link href="#work" className="link-arrow">Explore the work →</Link><Link href="/contact" className="text-lg font-semibold text-green">Start a project ↗</Link></div></div>
     </section>
     <PretoriaPhoto/>
     <section id="studio" className="editorial-grid bg-green text-white py-24 md:py-40"><p className="col-span-12 md:col-span-2 chapter-label chapter-label-light">01 / The studio</p><div className="col-span-12 md:col-start-3 md:col-span-9 mt-12 md:mt-0"><h2 className="section-title">We don&apos;t start with technology.</h2><p className="mt-7 text-xl font-semibold leading-snug text-[#e0c98f] md:text-2xl">We start with what isn&apos;t working.</p></div><p className="col-span-12 md:col-start-9 md:col-span-4 mt-20 text-sm leading-relaxed text-white/75">The fix isn&apos;t always AI, and it isn&apos;t always the same fix twice. We inspect the evidence, test the assumption, build what is useful, and revise when reality disagrees.</p></section>
@@ -21,17 +23,22 @@ export default function Home() {
     <section className="editorial-grid bg-clay text-white py-24 md:py-40"><p className="col-span-12 md:col-span-2 chapter-label chapter-label-light">04 / Principle</p><h2 className="col-span-12 md:col-start-3 md:col-span-8 principle-title mt-10 md:mt-0">Claims should survive contact with reality.</h2><p className="col-span-12 md:col-start-8 md:col-span-5 mt-16 leading-relaxed text-white/80">A configuration isn&apos;t correct until it&apos;s tested. A feature isn&apos;t fixed because the code changed. It&apos;s fixed when the behaviour changes.</p></section>
     <section id="founder" className="editorial-grid py-24 md:py-40"><p className="col-span-12 md:col-span-2 chapter-label">05 / Founder</p><div className="col-span-12 md:col-start-3 md:col-span-4 mt-10 md:mt-0 relative aspect-[4/5]"><Image src="/images/founder.jpg" alt="Thabiso Eric Motaung, founder of AiForm Studio" fill sizes="(max-width:768px) 100vw, 34vw" className="object-cover grayscale"/></div><div className="col-span-12 md:col-start-8 md:col-span-5 mt-12 md:mt-0"><h2 className="section-title">Founder-led. <span className="text-green">Research-driven.</span></h2><p className="text-muted leading-relaxed mt-9">AiForm Studio is led by Thabiso Eric Motaung, who designs and builds each engagement from research through delivery. Alongside the studio, he is a Senior Lecturer at the University of Pretoria—experience that keeps the work close to how people learn, reason, and get stuck.</p><p className="font-display text-2xl text-green mt-10">Identify → inspect → test → build → observe → revise.</p></div></section>
     <section className="editorial-grid border-t border-line py-24 md:py-40">
-      <p className="col-span-12 md:col-span-2 chapter-label">06 / The mark</p>
-      <div className="col-span-12 md:col-start-3 md:col-span-5 mt-10 md:mt-0">
-        <h2 className="secondary-title">The mark was <span className="text-green">noticed, too.</span></h2>
-        <p className="mt-9 max-w-xl text-lg leading-relaxed text-muted">AiForm&apos;s A began with a small moth resting on a wall in Pretoria. Its wings naturally formed the shape we were looking for. We didn&apos;t design the coincidence. We noticed it.</p>
+      <p className="col-span-12 chapter-label">06 / The mark</p>
+      <div className="col-span-12 mt-12 grid gap-14 md:grid-cols-3 md:gap-7">
+        <figure className="border-t border-line pt-5">
+          <figcaption><span className="chapter-label">01 / Observed</span><span className="mt-2 block text-sm text-muted">The original moth</span></figcaption>
+          <div className="relative mt-7 aspect-[4/5] overflow-hidden bg-bg-alt"><Image src="/images/IMG_0837.JPEG" alt="The original moth observed by AiForm's founder on a wall in Pretoria" fill sizes="(max-width: 768px) 100vw, 32vw" className="scale-[1.55] object-cover object-[50%_48%]" /></div>
+        </figure>
+        <figure className="border-t border-line pt-5">
+          <figcaption><span className="chapter-label">02 / Geometry</span><span className="mt-2 block text-sm text-muted">The A was already there.</span></figcaption>
+          <div className="mt-7 flex aspect-[4/5] items-center justify-center bg-bg-alt px-8"><MothGeometryStudy /></div>
+        </figure>
+        <figure className="border-t border-line pt-5">
+          <figcaption><span className="chapter-label">03 / Mark</span><span className="mt-2 block text-sm text-muted">AiForm</span></figcaption>
+          <div className="mt-7 flex aspect-[4/5] items-center justify-center bg-bg-alt px-12"><Image src="/images/aiform-mark.png" alt="The official gold AiForm A-moth mark" width={472} height={588} sizes="(max-width: 768px) 60vw, 24vw" className="brand-mark h-auto w-full max-w-[250px]" /></div>
+        </figure>
       </div>
-      <div className="col-span-8 col-start-3 mt-16 flex items-center justify-center border-y border-line py-14 sm:col-span-5 sm:col-start-5 md:col-span-3 md:col-start-9 md:mt-0 md:py-16">
-        <Image src="/images/aiform-mark.png" alt="The gold AiForm A-moth mark" width={472} height={588} sizes="(max-width: 768px) 50vw, 22vw" className="brand-mark h-auto w-28 sm:w-36 md:w-44" />
-      </div>
-      <div className="col-span-12 mt-14 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-3 border-t border-line pt-6 text-center text-[10px] font-semibold uppercase tracking-[.12em] text-muted md:col-start-3 md:col-span-9 md:text-xs">
-        <span>Moth</span><span aria-hidden="true" className="text-gold">→</span><span>Letter A</span><span aria-hidden="true" className="text-gold">→</span><span>AiForm mark</span>
-      </div>
+      <p className="col-span-12 mt-14 border-t border-line pt-7 text-lg font-semibold text-green md:col-start-5 md:col-span-8 md:text-xl">The mark was noticed before it was designed.</p>
     </section>
     <section className="editorial-grid bg-bg-alt py-28 md:py-52"><p className="col-span-12 md:col-span-2 chapter-label">07 / How we work</p><h2 className="col-span-12 md:col-start-3 md:col-span-6 section-title mt-10 md:mt-0">We don&apos;t start with <span className="text-green">AI.</span></h2><div className="col-span-12 md:col-start-9 md:col-span-4 mt-16"><p className="text-muted leading-relaxed">Sometimes the answer needs AI. Sometimes it needs better data. Sometimes it needs automation. Sometimes it just needs software designed properly.</p><p className="font-display text-2xl text-green mt-7">Technology serves the problem, not the other way around.</p></div></section>
     <section className="editorial-grid py-28 md:py-52"><p className="col-span-12 md:col-span-2 chapter-label">08 / Where next</p><h2 className="col-span-12 md:col-start-3 md:col-span-7 section-title mt-10 md:mt-0">What haven&apos;t we <span className="text-green">noticed yet?</span></h2><p className="col-span-12 md:col-start-8 md:col-span-5 text-muted leading-relaxed mt-16">Documents everywhere. Important claims that are difficult to verify. Two parties deciding whether they can trust one another. Repetitive work that software could handle more clearly.</p></section>

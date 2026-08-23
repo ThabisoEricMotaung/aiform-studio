@@ -10,6 +10,10 @@ const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["lati
 export const metadata: Metadata = {
   title: "AiForm Studio | Noticed, Not Invented",
   description: "A studio that notices real problems before deciding what technology they need. We build where assumption becomes expensive.",
+  icons: {
+    icon: [{ url: "/images/aiform-mark.png", type: "image/png" }],
+    apple: [{ url: "/images/aiform-mark.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,16 +1,120 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import AiFormLockup from "@/components/AiFormLockup";
 
-const links = [["/#work", "Work"], ["/#work", "Products"], ["/#studio", "Studio"], ["/journal", "Journal"], ["/contact", "Contact"]];
+const links = [
+  { href: "/#work", label: "Work", section: "work" },
+  { href: "/#products", label: "Products", section: "products" },
+  { href: "/#system", label: "System", section: "system" },
+  { href: "/#studio", label: "Studio", section: "studio" },
+  { href: "/#journal", label: "Journal", section: "journal" },
+  { href: "/#contact", label: "Contact", section: "contact" },
+];
 
 export default function Header() {
+  const pathname = usePathname();
+  const [observedSection, setObservedSection] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const activeSection =
+    pathname === "/"
+      ? observedSection
+      : pathname.startsWith("/journal")
+        ? "journal"
+        : pathname.startsWith("/contact")
+          ? "contact"
+          : "";
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      return;
+    }
+
+    const sections = links
+      .map(({ section }) => document.getElementById(section))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const visible = new Map<string, IntersectionObserverEntry>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) =>
+          entry.isIntersecting
+            ? visible.set(entry.target.id, entry)
+            : visible.delete(entry.target.id),
+        );
+        const current = [...visible.values()].sort(
+          (a, b) =>
+            Math.abs(a.boundingClientRect.top - 96) -
+            Math.abs(b.boundingClientRect.top - 96),
+        )[0];
+        if (current) setObservedSection(current.target.id);
+      },
+      { rootMargin: "-88px 0px -56% 0px", threshold: [0, 0.1, 0.25] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [pathname]);
+
   return (
-    <header className="flex min-h-20 items-center justify-between border-b border-line bg-bg px-6 md:px-14">
-      <Link href="/" aria-label="AiForm Studio home" className="group flex min-h-11 items-center gap-3 focus-visible:outline-offset-2">
-        <AiFormLockup product="Studio" variant="gold" compactOnMobile className="text-[15px] text-text transition-opacity group-hover:opacity-80" markClassName="h-10 md:h-11" />
-      </Link>
-      <nav aria-label="Primary navigation" className="hidden gap-9 md:flex">{links.map(([href, label]) => <Link key={label} href={href} className="text-[13px] hover:text-green">{label}</Link>)}</nav>
-      <Link href="/contact" className="text-[13px] font-medium text-green md:hidden">Start a project ↗</Link>
+    <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-sm">
+      <div className="flex h-[76px] items-center justify-between px-6 md:h-20 md:px-14">
+        <Link
+          href="/"
+          aria-label="AiForm Studio home"
+          className="group flex min-h-11 items-center focus-visible:outline-offset-2"
+        >
+          <AiFormLockup
+            product="Studio"
+            variant="gold"
+            compactOnMobile
+            className="text-[14px] text-text transition-opacity duration-200 group-hover:opacity-80"
+            markClassName="h-9 md:h-10"
+          />
+        </Link>
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center gap-7 md:flex lg:gap-9"
+        >
+          {links.map(({ href, label, section }) => (
+            <Link
+              key={section}
+              href={href}
+              aria-current={activeSection === section ? "location" : undefined}
+              className={`nav-link ${activeSection === section ? "nav-link-active" : ""}`}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <button
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+          className="min-h-11 min-w-11 text-right text-xs font-medium uppercase tracking-[.1em] text-green md:hidden"
+        >
+          {menuOpen ? "Close" : activeSection || "Menu"}
+        </button>
+      </div>
+      <nav
+        id="mobile-navigation"
+        aria-label="Mobile navigation"
+        className={`${menuOpen ? "grid" : "hidden"} grid-cols-2 border-t border-line bg-white px-6 py-5 md:hidden`}
+      >
+        {links.map(({ href, label, section }) => (
+          <Link
+            key={section}
+            href={href}
+            onClick={() => setMenuOpen(false)}
+            aria-current={activeSection === section ? "location" : undefined}
+            className={`min-h-11 border-b border-line py-3 text-sm ${activeSection === section ? "font-semibold text-green underline decoration-gold decoration-2 underline-offset-8" : "text-muted"}`}
+          >
+            {label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

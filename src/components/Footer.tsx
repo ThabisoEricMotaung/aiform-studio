@@ -1,2 +1,12 @@
 import Link from "next/link";
-export default function Footer(){return <footer className="bg-green text-white editorial-grid py-20 md:py-28"><p className="col-span-12 chapter-label chapter-label-light">AiForm / Studio / Pretoria</p><h2 className="col-span-12 md:col-span-9 font-display text-4xl md:text-6xl leading-[.95] mt-12">Built in Pretoria.<br/><span className="text-[#e0c98f]">Looking everywhere.</span></h2><div className="col-span-12 md:col-start-9 md:col-span-4 mt-16"><Link href="/contact" className="text-xl border-b border-white/40 pb-2">Start a project ↗</Link><a href="mailto:hello@aiformstudio.co.za" className="block text-sm mt-7 text-white/70">hello@aiformstudio.co.za</a></div><div className="col-span-12 mt-20 pt-6 border-t border-white/20 flex flex-col md:flex-row gap-3 justify-between text-[10px] text-white/60"><p>© {new Date().getFullYear()} AiForm Studio</p><p>Union Buildings photograph: CC BY-SA / Wikimedia Commons</p></div></footer>}
+
+const links = [["/#work", "Work"], ["/#work", "Products"], ["/#studio", "Studio"], ["/journal", "Journal"], ["/contact", "Contact"]];
+
+export default function Footer() {
+  return <footer className="editorial-grid bg-green py-20 text-white md:py-28">
+    <p className="chapter-label chapter-label-light col-span-12">AiForm / Studio / Pretoria</p>
+    <h2 className="font-display col-span-12 mt-12 text-4xl leading-[.95] md:col-span-8 md:text-6xl">Built in Pretoria.<br/><span className="text-[#e0c98f]">Looking everywhere.</span></h2>
+    <div className="col-span-12 mt-14 md:col-start-10 md:col-span-3 md:mt-12"><nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-8 gap-y-4 text-sm">{links.map(([href, label]) => <Link key={label} href={href} className="text-white/75 hover:text-white">{label}</Link>)}</nav><a href="mailto:hello@aiformstudio.co.za" className="mt-8 block text-sm text-white/70 hover:text-white">hello@aiformstudio.co.za</a></div>
+    <div className="col-span-12 mt-20 flex flex-col justify-between gap-3 border-t border-white/20 pt-6 text-[10px] text-white/60 md:flex-row"><p>© {new Date().getFullYear()} AiForm Studio</p><p>Union Buildings photograph: CC BY-SA / Wikimedia Commons</p></div>
+  </footer>;
+}

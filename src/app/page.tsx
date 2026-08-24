@@ -81,7 +81,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="col-span-12 mt-12 self-center md:mt-14 lg:col-start-8 lg:col-span-5 lg:mt-0">
+        <div className="col-span-12 mt-12 self-center md:mt-14 lg:col-start-8 lg:col-span-5 lg:mt-0 lg:-ml-[14%] lg:w-[114%] xl:-ml-[24%] xl:w-[124%] 2xl:-ml-[28%] 2xl:w-[128%]">
           <SouthAfricaMap />
         </div>
       </section>

@@ -56,9 +56,6 @@ export default function Footer() {
           <div className="mt-8">
             <p className="chapter-label uppercase">Email</p>
             <div className="mt-4 flex flex-col items-start gap-2">
-              <a href="mailto:hello@aiformstudio.co.za" className="link-arrow">
-                hello@aiformstudio.co.za ↗
-              </a>
               <a href="mailto:aiformstudio@gmail.com" className="link-arrow">
                 aiformstudio@gmail.com ↗
               </a>

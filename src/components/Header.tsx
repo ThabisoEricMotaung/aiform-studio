@@ -67,7 +67,7 @@ export default function Header() {
         >
           <AiFormLockup
             product="Studio"
-            variant="gold"
+            variant="studio"
             compactOnMobile
             className="text-[14px] text-text transition-opacity duration-200 group-hover:opacity-80"
             markClassName="h-9 md:h-10"
@@ -75,7 +75,7 @@ export default function Header() {
         </Link>
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-7 md:flex lg:gap-9"
+          className="hidden items-center gap-5 lg:flex xl:gap-8"
         >
           {links.map(({ href, label, section }) => (
             <Link
@@ -93,7 +93,7 @@ export default function Header() {
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen((open) => !open)}
-          className="min-h-11 min-w-11 text-right text-xs font-medium uppercase tracking-[.1em] text-green md:hidden"
+          className="min-h-11 min-w-11 text-right text-xs font-medium uppercase tracking-[.1em] text-green lg:hidden"
         >
           {menuOpen ? "Close" : activeSection || "Menu"}
         </button>
@@ -101,7 +101,7 @@ export default function Header() {
       <nav
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        className={`${menuOpen ? "grid" : "hidden"} grid-cols-2 border-t border-line bg-white px-6 py-5 md:hidden`}
+        className={`${menuOpen ? "grid" : "hidden"} grid-cols-2 border-t border-line bg-white px-6 py-5 lg:hidden`}
       >
         {links.map(({ href, label, section }) => (
           <Link

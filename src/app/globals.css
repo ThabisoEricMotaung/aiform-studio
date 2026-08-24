@@ -80,7 +80,7 @@ a:focus-visible {
 .nav-link {
   position: relative;
   padding-block: 0.75rem;
-  font-size: 13px;
+  font-size: 18px;
   color: var(--color-muted);
   transition:
     color 200ms ease,

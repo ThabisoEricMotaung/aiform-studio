@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import PretoriaPhoto from "@/components/PretoriaPhoto";
-import {
-  HeroBotanicalArtwork,
-  MothGeometryStudy,
-} from "@/components/BrandLineArt";
+import { MothGeometryStudy } from "@/components/BrandLineArt";
 import OperatingSystemMap from "@/components/OperatingSystemMap";
-import AiFormLockup from "@/components/AiFormLockup";
+import AiFormLockup, { AiFormMark } from "@/components/AiFormLockup";
+import SouthAfricaMap from "@/components/SouthAfricaMap";
 
 const engine = [
   ["01", "Parse", "Give messy, real-world information a useful shape."],
@@ -59,20 +57,18 @@ const systemLayers = [
 export default function Home() {
   return (
     <>
-      <section className="editorial-grid relative min-h-[78vh] items-center overflow-hidden py-20 md:py-28">
-        <HeroBotanicalArtwork />
-        <div className="relative z-10 col-span-12">
-          <p className="chapter-label mb-10">
-            A studio for expensive assumptions
+      <section className="editorial-grid relative overflow-hidden py-16 md:py-20 lg:py-24">
+        <div className="relative z-10 col-span-12 self-center lg:col-span-7">
+          <p className="mb-8 flex items-center gap-4 text-xl font-medium tracking-[-.01em] text-green md:text-[22px]">
+            <span aria-hidden="true" className="h-0.5 w-10 bg-gold" />A studio
+            for expensive assumptions
           </p>
           <h1 className="font-display hero-title">
             Noticed,
             <br />
             <span className="text-green">not invented.</span>
           </h1>
-        </div>
-        <div className="relative z-10 col-span-12 mt-16 md:col-start-8 md:col-span-5 md:mt-24">
-          <p className="text-lg leading-relaxed md:text-xl">
+          <p className="mt-10 max-w-xl text-lg leading-relaxed md:text-xl">
             We notice the problems people have learned to live with, understand
             why they persist, and build systems that make them easier to solve.
           </p>
@@ -85,11 +81,12 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        <div className="col-span-12 mt-12 self-center md:mt-14 lg:col-start-8 lg:col-span-5 lg:mt-0">
+          <SouthAfricaMap />
+        </div>
       </section>
       <PretoriaPhoto />
-      <section
-      className="editorial-grid bg-green py-16 text-white md:py-24"
-      >
+      <section className="editorial-grid bg-green py-16 text-white md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label chapter-label-light">
           01 / The studio
         </p>
@@ -107,7 +104,7 @@ export default function Home() {
           useful, and revise when reality disagrees.
         </p>
       </section>
-    <section id="engine" className="editorial-grid py-16 md:py-24">
+      <section id="engine" className="editorial-grid py-16 md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label">
           02 / The engine
         </p>
@@ -137,7 +134,7 @@ export default function Home() {
           Parse → Verify → Understand → Match
         </p>
       </section>
-    <section id="work" className="border-t border-line py-16 md:py-24">
+      <section id="work" className="border-t border-line py-16 md:py-24">
         <div className="editorial-grid">
           <p className="col-span-12 md:col-span-2 chapter-label">
             03 / Selected work
@@ -149,17 +146,17 @@ export default function Home() {
             </p>
           </div>
         </div>
-      <article
-        id="products"
-        className="mt-16 scroll-mt-24 bg-[#e9e1ca] py-14 md:mt-20 md:py-20"
-      >
+        <article
+          id="products"
+          className="mt-16 scroll-mt-24 bg-[#e9e1ca] py-14 md:mt-20 md:py-20"
+        >
           <div className="editorial-grid items-end">
             <div className="col-span-12 md:col-span-4 mb-12 md:mb-0 md:pr-8">
               <p className="chapter-label">Product / Procurement / Live</p>
               <div className="mt-7">
                 <AiFormLockup
                   product="Procure"
-                  variant="green"
+                  variant="gold"
                   className="text-xs text-green"
                   markClassName="h-9"
                 />
@@ -219,7 +216,7 @@ export default function Home() {
             </div>
           </div>
         </article>
-      <div className="editorial-grid mt-16 md:mt-24">
+        <div className="editorial-grid mt-16 md:mt-24">
           <div className="col-span-12 md:col-span-4 work-type">
             <p className="chapter-label">Products</p>
             <h3>Problems we choose to pursue.</h3>
@@ -243,7 +240,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    <section className="editorial-grid bg-clay py-16 text-white md:py-24">
+      <section className="editorial-grid bg-clay py-16 text-white md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label chapter-label-light">
           04 / Principle
         </p>
@@ -258,7 +255,7 @@ export default function Home() {
       </section>
       <section
         id="system"
-      className="editorial-grid border-b border-line bg-bg-alt py-16 md:py-24"
+        className="editorial-grid border-b border-line bg-bg-alt py-16 md:py-24"
       >
         <p className="col-span-12 md:col-span-2 chapter-label">
           05 / The system
@@ -347,7 +344,7 @@ export default function Home() {
           The products change. The system learns.
         </p>
       </section>
-    <section id="studio" className="editorial-grid py-16 md:py-24">
+      <section id="studio" className="editorial-grid py-16 md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label">06 / Founder</p>
         <div className="col-span-12 md:col-start-3 md:col-span-4 mt-10 md:mt-0 relative aspect-[4/5]">
           <Image
@@ -373,7 +370,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-    <section className="editorial-grid border-t border-line py-16 md:py-24">
+      <section className="editorial-grid border-t border-line py-16 md:py-24">
         <p className="col-span-12 chapter-label">07 / The mark</p>
         <div className="col-span-12 mt-12 grid gap-14 md:grid-cols-3 md:gap-7">
           <figure className="border-t border-line pt-5">
@@ -410,13 +407,9 @@ export default function Home() {
               <span className="mt-2 block text-sm text-muted">AiForm</span>
             </figcaption>
             <div className="mt-7 flex aspect-[4/5] items-center justify-center bg-bg-alt px-12">
-              <Image
-                src="/images/aiform-mark.png"
-                alt="The official gold AiForm A-moth mark"
-                width={472}
-                height={588}
-                sizes="(max-width: 768px) 60vw, 24vw"
-                className="brand-mark h-auto w-full max-w-[250px]"
+              <AiFormMark
+                variant="studio"
+                className="h-auto w-full max-w-[250px]"
               />
             </div>
           </figure>
@@ -429,23 +422,23 @@ export default function Home() {
           <div className="mt-6 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-12">
             <AiFormLockup
               product="Studio"
-              variant="gold"
+              variant="studio"
               className="text-[11px] text-text"
               markClassName="h-9"
             />
             <AiFormLockup
               product="Procure"
-              variant="green"
+              variant="gold"
               className="text-[11px] text-green"
               markClassName="h-9"
             />
           </div>
         </div>
       </section>
-    <section
-      id="journal"
-      className="editorial-grid border-t border-line bg-bg-alt py-16 md:py-24"
-    >
+      <section
+        id="journal"
+        className="editorial-grid border-t border-line bg-bg-alt py-16 md:py-24"
+      >
         <p className="col-span-12 md:col-span-2 chapter-label">08 / Journal</p>
         <div className="col-span-12 mt-10 md:col-start-3 md:col-span-6 md:mt-0">
           <h2 className="section-title">From the Journal</h2>
@@ -467,7 +460,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-    <section className="editorial-grid py-16 md:py-24">
+      <section className="editorial-grid py-16 md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label">
           09 / How we work
         </p>
@@ -485,7 +478,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-    <section className="editorial-grid border-t border-line py-16 md:py-24">
+      <section className="editorial-grid border-t border-line py-16 md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label">
           10 / Where next
         </p>

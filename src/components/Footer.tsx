@@ -90,7 +90,7 @@ export default function Footer() {
       <div className="flex flex-col gap-6 bg-green px-6 py-7 text-white md:flex-row md:items-center md:justify-between md:px-14">
         <AiFormLockup
           product="Studio"
-          variant="gold"
+          variant="studio"
           className="text-[11px] text-white"
           markClassName="h-8"
         />

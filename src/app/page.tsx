@@ -4,6 +4,7 @@ import PretoriaPhoto from "@/components/PretoriaPhoto";
 import { MothGeometryStudy } from "@/components/BrandLineArt";
 import OperatingSystemMap from "@/components/OperatingSystemMap";
 import AiFormLockup, { AiFormMark } from "@/components/AiFormLockup";
+import ProcureSocialLinks from "@/components/ProcureSocialLinks";
 import SouthAfricaMap from "@/components/SouthAfricaMap";
 
 const engine = [
@@ -185,44 +186,22 @@ export default function Home() {
               </div>
               <div className="product-ui">
                 <aside>
-                  <div className="product-ui-nav">
-                    <AiFormLockup
-                      product="Procure"
-                      variant="white"
-                      compactOnMobile
-                      className="text-[7px] text-white"
-                      markClassName="h-7"
-                    />
-                    <span>Opportunities</span>
-                    <span>Compliance</span>
-                    <span>SmartScore</span>
-                    <span>Buyers &amp; Suppliers</span>
-                  </div>
-                  <div className="product-ui-social">
-                    <p>Follow the build</p>
-                    <a
-                      href="https://www.reddit.com/user/AiForm-Procure/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span>Reddit</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                    <a
-                      href="https://www.aiformprocure.co.za"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="product-ui-website"
-                    >
-                      <span>aiformprocure.co.za</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
+                  <AiFormLockup
+                    product="Procure"
+                    variant="white"
+                    compactOnMobile
+                    className="text-[7px] text-white"
+                    markClassName="h-7"
+                  />
+                  <span>Opportunities</span>
+                  <span>Compliance</span>
+                  <span>SmartScore</span>
+                  <span>Buyers &amp; Suppliers</span>
                 </aside>
                 <main>
                   <p>SUPPLIER OVERVIEW</p>
                   <h4>Trust, made visible.</h4>
-                  <div>
+                  <div className="product-ui-capabilities">
                     <span>
                       <b>Compliance</b>CSD · Tax · B-BBEE
                     </span>
@@ -233,6 +212,7 @@ export default function Home() {
                       <b>SmartScore</b>Evidence-based supplier readiness
                     </span>
                   </div>
+                  <ProcureSocialLinks />
                 </main>
               </div>
             </div>

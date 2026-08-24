@@ -53,9 +53,17 @@ export default function Footer() {
             verification matters, and the obvious solution hasn&apos;t quite
             worked.
           </p>
-          <a href="mailto:hello@aiformstudio.co.za" className="link-arrow mt-8">
-            Start a conversation →
-          </a>
+          <div className="mt-8">
+            <p className="chapter-label uppercase">Email</p>
+            <div className="mt-4 flex flex-col items-start gap-2">
+              <a href="mailto:hello@aiformstudio.co.za" className="link-arrow">
+                hello@aiformstudio.co.za ↗
+              </a>
+              <a href="mailto:aiformstudio@gmail.com" className="link-arrow">
+                aiformstudio@gmail.com ↗
+              </a>
+            </div>
+          </div>
         </div>
         <div className="relative z-10 col-span-12 mt-10 grid grid-cols-2 gap-8 md:col-start-9 md:col-span-4 md:mt-0 md:grid-cols-3">
           {groups.map((group) => (

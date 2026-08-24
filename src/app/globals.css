@@ -183,8 +183,12 @@ a:focus-visible {
   padding: 12%;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
   font-size: clamp(7px, 0.8vw, 12px);
+}
+.product-ui-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
 }
 .product-ui aside b {
   font: 600 2em var(--font-inter-tight);
@@ -192,6 +196,56 @@ a:focus-visible {
 }
 .product-ui aside span {
   color: rgba(255, 255, 255, 0.7);
+}
+.product-ui-social {
+  margin-top: auto;
+  padding-top: 2rem;
+}
+.product-ui-social p {
+  color: var(--color-gold);
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.product-ui-social a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.25;
+  transition: color 200ms ease;
+}
+.product-ui-social a span {
+  color: inherit;
+}
+.product-ui-social a span:last-child {
+  flex: 0 0 auto;
+  color: var(--color-gold);
+  transition: transform 200ms ease;
+}
+.product-ui-social a:hover {
+  color: white;
+}
+.product-ui-social a:hover span:last-child {
+  transform: translate(2px, -2px);
+}
+.product-ui-social a:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 3px;
+}
+.product-ui-social .product-ui-website {
+  margin-top: 0.35rem;
+  border-top: 1px solid rgba(217, 179, 84, 0.25);
+  padding-top: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+.product-ui-website span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .product-ui main {
   padding: 9% 8%;
@@ -304,7 +358,9 @@ a:focus-visible {
   }
   .nav-link,
   .nav-link::after,
-  .hero-cta span {
+  .hero-cta span,
+  .product-ui-social a,
+  .product-ui-social a span:last-child {
     transition: none;
   }
 }

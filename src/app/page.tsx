@@ -185,17 +185,39 @@ export default function Home() {
               </div>
               <div className="product-ui">
                 <aside>
-                  <AiFormLockup
-                    product="Procure"
-                    variant="white"
-                    compactOnMobile
-                    className="text-[7px] text-white"
-                    markClassName="h-7"
-                  />
-                  <span>Opportunities</span>
-                  <span>Compliance</span>
-                  <span>SmartScore</span>
-                  <span>Buyers &amp; Suppliers</span>
+                  <div className="product-ui-nav">
+                    <AiFormLockup
+                      product="Procure"
+                      variant="white"
+                      compactOnMobile
+                      className="text-[7px] text-white"
+                      markClassName="h-7"
+                    />
+                    <span>Opportunities</span>
+                    <span>Compliance</span>
+                    <span>SmartScore</span>
+                    <span>Buyers &amp; Suppliers</span>
+                  </div>
+                  <div className="product-ui-social">
+                    <p>Follow the build</p>
+                    <a
+                      href="https://www.reddit.com/user/AiForm-Procure/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>Reddit</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                    <a
+                      href="https://www.aiformprocure.co.za"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="product-ui-website"
+                    >
+                      <span>aiformprocure.co.za</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
                 </aside>
                 <main>
                   <p>SUPPLIER OVERVIEW</p>

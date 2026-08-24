@@ -73,8 +73,8 @@ export default function Home() {
             why they persist, and build systems that make them easier to solve.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-8">
-            <Link href="#work" className="link-arrow">
-              Explore the work →
+            <Link href="#work" className="link-arrow hero-cta">
+              Explore our work <span aria-hidden="true">→</span>
             </Link>
             <Link href="/contact" className="text-lg font-semibold text-green">
               Start a project ↗

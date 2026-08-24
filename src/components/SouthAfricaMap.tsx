@@ -37,6 +37,29 @@ const provinces = [
   ],
 ] as const;
 
+const provinceColors: Record<(typeof provinces)[number][0], string> = {
+  "Northern Cape": "#D8C9A8",
+  "Western Cape": "#AFC5BE",
+  "North West": "#C7BCD1",
+  "Free State": "#C7D1AE",
+  Gauteng: "#55755E",
+  Mpumalanga: "#A7BFBB",
+  Limpopo: "#C9B39F",
+  "KwaZulu-Natal": "#D5B5AA",
+  "Eastern Cape": "#9FB5C4",
+};
+
+const provinceLabels = [
+  ["NORTHERN CAPE", 132, 270],
+  ["WESTERN CAPE", 118, 414],
+  ["NORTH WEST", 292, 160],
+  ["FREE STATE", 350, 250],
+  ["LIMPOPO", 447, 76],
+  ["MPUMALANGA", 482, 148],
+  ["KWAZULU-NATAL", 492, 252],
+  ["EASTERN CAPE", 340, 375],
+] as const;
+
 export default function SouthAfricaMap() {
   return (
     <figure className="w-full overflow-hidden lg:overflow-visible">
@@ -62,15 +85,40 @@ export default function SouthAfricaMap() {
         >
           <path d="M20 146H580M20 292H580" strokeDasharray="2 7" opacity=".5" />
           <path d="M142 18V458M418 18V458" strokeDasharray="2 7" opacity=".5" />
+          <path d="M84 80V42M84 42l-5 10M84 42l5 10" stroke="#9A968D" />
+        </g>
+        <g
+          aria-hidden="true"
+          stroke="#FFFFFF"
+          strokeWidth="1.35"
+          strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
+        >
           {provinces.map(([name, path]) => (
             <path
               key={name}
               d={path}
-              stroke={name === "Gauteng" ? "#9A968D" : undefined}
-              strokeWidth={name === "Gauteng" ? 1.5 : undefined}
+              fill={provinceColors[name]}
+              stroke={name === "Gauteng" ? "#173B2C" : undefined}
+              strokeWidth={name === "Gauteng" ? 2 : undefined}
             />
           ))}
-          <path d="M84 80V42M84 42l-5 10M84 42l5 10" stroke="#9A968D" />
+        </g>
+        <g
+          aria-hidden="true"
+          className="hidden lg:block"
+          fill="#31463B"
+          fontFamily="var(--font-geist), sans-serif"
+          fontSize="9"
+          fontWeight="600"
+          letterSpacing=".8"
+          textAnchor="middle"
+        >
+          {provinceLabels.map(([label, x, y]) => (
+            <text key={label} x={x} y={y}>
+              {label}
+            </text>
+          ))}
         </g>
         <g
           aria-hidden="true"

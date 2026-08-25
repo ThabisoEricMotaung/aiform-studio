@@ -21,6 +21,8 @@ export default function Header() {
   const activeSection =
     pathname === "/"
       ? observedSection
+      : pathname.startsWith("/work")
+        ? "work"
       : pathname.startsWith("/journal")
         ? "journal"
         : pathname.startsWith("/contact")

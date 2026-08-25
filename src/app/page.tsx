@@ -13,27 +13,43 @@ const engine = [
   ["03", "Understand", "Turn evidence into something people can act on."],
   ["04", "Match", "Connect the right buyer, supplier, answer, or fit."],
 ];
-const work = [
-  [
-    "Residential construction",
-    "Studio project / Gauteng",
-    "A clear portfolio for a building business, designed around proof of work and direct enquiries.",
-  ],
-  [
-    "Kutlwano Tutoring",
-    "Studio project / Education / Live",
-    "One focused experience for two audiences, with distinct learning needs and pricing models.",
-  ],
-  [
-    "Mathabo Crochet",
-    "Studio project / Brand",
-    "A visual foundation for a handmade business: identity, palette, typography, and social templates.",
-  ],
-  [
-    "AiForm Construct",
-    "Experiment / Construction",
-    "An early investigation into permits, contractor verification, and clearer project documentation.",
-  ],
+type WorkItem = {
+  name: string;
+  context?: string;
+  metadata: string;
+  summary: string;
+  caseStudyHref?: string;
+  externalHref?: string;
+};
+
+const work: WorkItem[] = [
+  {
+    name: "Residential construction",
+    metadata: "Studio project / Gauteng",
+    summary:
+      "A clear portfolio for a building business, designed around proof of work and direct enquiries.",
+  },
+  {
+    name: "WanoTuts",
+    context: "Kutlwano Tutoring",
+    metadata: "Studio project / Education / Delivered",
+    summary:
+      "A focused tutoring experience for South African and international learners, shaped around clearer learner journeys and lesson booking.",
+    caseStudyHref: "/work/wanotuts",
+    externalHref: "https://kutlwano-tutoring.vercel.app/",
+  },
+  {
+    name: "Mathabo Crochet",
+    metadata: "Studio project / Brand",
+    summary:
+      "A visual foundation for a handmade business: identity, palette, typography, and social templates.",
+  },
+  {
+    name: "AiForm Construct",
+    metadata: "Experiment / Construction",
+    summary:
+      "An early investigation into permits, contractor verification, and clearer project documentation.",
+  },
 ];
 const systemLayers = [
   [
@@ -232,11 +248,35 @@ export default function Home() {
             <h3>Things we&apos;re still figuring out.</h3>
           </div>
           <div className="col-span-12 mt-20 border-t border-line">
-            {work.map(([n, m, c]) => (
-              <article key={n} className="selected-row">
-                <p>{m}</p>
-                <h3>{n}</h3>
-                <p>{c}</p>
+            {work.map((item) => (
+              <article key={item.name} className="selected-row">
+                <p className="selected-row-meta">{item.metadata}</p>
+                <div>
+                  <h3>{item.name}</h3>
+                  {item.context ? (
+                    <p className="selected-row-context">{item.context}</p>
+                  ) : null}
+                </div>
+                <div className="selected-row-detail">
+                  <p>{item.summary}</p>
+                  {item.caseStudyHref || item.externalHref ? (
+                    <div className="selected-row-actions">
+                      {item.caseStudyHref ? (
+                        <Link href={item.caseStudyHref}>Read case study →</Link>
+                      ) : null}
+                      {item.externalHref ? (
+                        <a
+                          href={item.externalHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Visit ${item.name} website (opens in a new tab)`}
+                        >
+                          Visit website <span aria-hidden="true">↗</span>
+                        </a>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </div>
               </article>
             ))}
           </div>

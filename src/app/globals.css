@@ -331,20 +331,69 @@ a:focus-visible {
   border-bottom: 1px solid var(--color-line);
   padding: 2rem 0;
 }
-.selected-row > p:first-child {
+.selected-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-muted);
 }
+.selected-row-status {
+  border: 1px solid color-mix(in srgb, var(--color-gold) 72%, black);
+  padding: 0.2rem 0.42rem;
+  color: var(--color-green);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
 .selected-row h3 {
   font: 600 2rem/1.1 var(--font-inter-tight);
   letter-spacing: -0.025em;
 }
-.selected-row > p:last-child {
+.selected-row-context {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+.selected-row-summary > p {
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--color-muted);
+}
+.selected-row-link {
+  color: inherit;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+.selected-row-link:hover,
+.selected-row-link:focus-visible {
+  border-color: var(--color-gold);
+  background: color-mix(in srgb, var(--color-gold) 7%, transparent);
+}
+.selected-row-link:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+}
+.selected-row-action {
+  display: inline-flex;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 0.2rem;
+  color: var(--color-green);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.selected-row-action span {
+  color: var(--color-gold);
+  transition: transform 200ms ease;
+}
+.selected-row-link:hover .selected-row-action span,
+.selected-row-link:focus-visible .selected-row-action span {
+  transform: translate(2px, -2px);
 }
 .brand-mark {
   filter: drop-shadow(0 12px 28px rgba(182, 138, 58, 0.12));
@@ -399,6 +448,10 @@ a:focus-visible {
   .procure-social-grid a,
   .procure-social-grid a > span:last-child,
   .procure-website-link > span:last-child {
+    transition: none;
+  }
+  .selected-row-link,
+  .selected-row-action span {
     transition: none;
   }
 }

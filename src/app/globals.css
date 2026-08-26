@@ -364,6 +364,106 @@ a:focus-visible {
   font-size: 0.75rem;
   font-weight: 650;
 }
+.build-filter {
+  position: relative;
+  min-height: 2.75rem;
+  padding: 0 0 0.7rem;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.build-filter::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--color-gold);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+.build-filter:hover,
+.build-filter-active {
+  color: var(--color-green);
+}
+.build-filter-active::after {
+  transform: scaleX(1);
+}
+.build-filter:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+.build-index-header,
+.build-row {
+  display: grid;
+  grid-template-columns: 2fr 4fr 2fr 2fr 1.5fr 2fr;
+  column-gap: clamp(0.75rem, 1.6vw, 1.75rem);
+  align-items: center;
+}
+.build-index-header {
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.build-row {
+  min-height: 5rem;
+  border-bottom: 1px solid var(--color-line);
+  transition: border-color 180ms ease;
+}
+.build-row:hover,
+.build-row:focus-within {
+  border-color: var(--color-gold);
+}
+.build-number,
+.build-type,
+.build-sector,
+.build-status {
+  color: var(--color-muted);
+  font-size: 0.7rem;
+}
+.build-type,
+.build-status {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.build-name > span {
+  font: 600 clamp(1.15rem, 1.6vw, 1.45rem) / 1.1 var(--font-inter-tight);
+  letter-spacing: -0.02em;
+  transition: color 180ms ease;
+}
+.build-row:hover .build-name > span,
+.build-row:focus-within .build-name > span {
+  color: var(--color-green);
+}
+.build-name small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--color-muted);
+  font-size: 0.65rem;
+}
+.build-action a {
+  display: inline-flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 0.2rem;
+  color: var(--color-green);
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+.build-action a span {
+  color: var(--color-gold);
+  transition: transform 180ms ease;
+}
+.build-action a:hover span,
+.build-action a:focus-visible span {
+  transform: translateX(2px);
+}
 .case-study-lead {
   font: 700 clamp(3.5rem, 7vw, 7rem) / 0.9 var(--font-inter-tight);
   letter-spacing: -0.05em;
@@ -430,6 +530,40 @@ a:focus-visible {
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
+  .build-index-header {
+    display: none;
+  }
+  .build-row {
+    grid-template-columns: auto 1fr;
+    gap: 0.55rem 1rem;
+    align-items: start;
+    padding-block: 1.5rem;
+  }
+  .build-number {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .build-type {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .build-name,
+  .build-sector,
+  .build-status,
+  .build-action {
+    grid-column: 2;
+  }
+  .build-name {
+    margin-top: 0.15rem;
+  }
+  .build-sector,
+  .build-status {
+    display: inline;
+  }
+  .build-status::before {
+    content: "Status / ";
+    color: var(--color-text);
+  }
   .case-study-meta {
     grid-template-columns: 1fr 1fr;
   }
@@ -475,6 +609,12 @@ a:focus-visible {
   .procure-social-grid a,
   .procure-social-grid a > span:last-child,
   .procure-website-link > span:last-child {
+    transition: none;
+  }
+  .build-filter::after,
+  .build-row,
+  .build-name > span,
+  .build-action a span {
     transition: none;
   }
 }

@@ -6,6 +6,8 @@ import OperatingSystemMap from "@/components/OperatingSystemMap";
 import AiFormLockup, { AiFormMark } from "@/components/AiFormLockup";
 import ProcureSocialLinks from "@/components/ProcureSocialLinks";
 import SouthAfricaMap from "@/components/SouthAfricaMap";
+import BuildIndex from "@/components/BuildIndex";
+import { projects } from "@/content/projects";
 
 const engine = [
   ["01", "Parse", "Give messy, real-world information a useful shape."],
@@ -13,44 +15,7 @@ const engine = [
   ["03", "Understand", "Turn evidence into something people can act on."],
   ["04", "Match", "Connect the right buyer, supplier, answer, or fit."],
 ];
-type WorkItem = {
-  name: string;
-  context?: string;
-  metadata: string;
-  summary: string;
-  caseStudyHref?: string;
-  externalHref?: string;
-};
-
-const work: WorkItem[] = [
-  {
-    name: "Residential construction",
-    metadata: "Studio project / Gauteng",
-    summary:
-      "A clear portfolio for a building business, designed around proof of work and direct enquiries.",
-  },
-  {
-    name: "WanoTuts",
-    context: "Kutlwano Tutoring",
-    metadata: "Studio project / Education / Delivered",
-    summary:
-      "A focused tutoring experience for South African and international learners, shaped around clearer learner journeys and lesson booking.",
-    caseStudyHref: "/work/wanotuts",
-    externalHref: "https://kutlwano-tutoring.vercel.app/",
-  },
-  {
-    name: "Mathabo Crochet",
-    metadata: "Studio project / Brand",
-    summary:
-      "A visual foundation for a handmade business: identity, palette, typography, and social templates.",
-  },
-  {
-    name: "AiForm Construct",
-    metadata: "Experiment / Construction",
-    summary:
-      "An early investigation into permits, contractor verification, and clearer project documentation.",
-  },
-];
+const selectedWork = projects.filter((project) => project.id !== "aiform-procure");
 const systemLayers = [
   [
     "01",
@@ -248,9 +213,9 @@ export default function Home() {
             <h3>Things we&apos;re still figuring out.</h3>
           </div>
           <div className="col-span-12 mt-20 border-t border-line">
-            {work.map((item) => (
+            {selectedWork.map((item) => (
               <article key={item.name} className="selected-row">
-                <p className="selected-row-meta">{item.metadata}</p>
+                <p className="selected-row-meta">{item.category} / {item.sector} / {item.status}</p>
                 <div>
                   <h3>{item.name}</h3>
                   {item.context ? (
@@ -259,14 +224,14 @@ export default function Home() {
                 </div>
                 <div className="selected-row-detail">
                   <p>{item.summary}</p>
-                  {item.caseStudyHref || item.externalHref ? (
+                  {item.caseStudyUrl || item.liveUrl ? (
                     <div className="selected-row-actions">
-                      {item.caseStudyHref ? (
-                        <Link href={item.caseStudyHref}>Read case study →</Link>
+                      {item.caseStudyUrl ? (
+                        <Link href={item.caseStudyUrl}>Read case study →</Link>
                       ) : null}
-                      {item.externalHref ? (
+                      {item.liveUrl ? (
                         <a
-                          href={item.externalHref}
+                          href={item.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Visit ${item.name} website (opens in a new tab)`}
@@ -282,9 +247,23 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="editorial-grid border-t border-line bg-bg-alt py-16 md:py-24">
+        <p className="col-span-12 chapter-label md:col-span-2">Case study 01 / AiForm Procure</p>
+        <div className="col-span-12 mt-9 md:col-start-3 md:col-span-6 md:mt-0">
+          <h2 className="secondary-title">Procurement information is abundant. Finding what is current, relevant and trustworthy is the harder part.</h2>
+        </div>
+        <div className="col-span-12 mt-10 md:col-start-9 md:col-span-4 md:mt-0">
+          <p className="leading-relaxed text-muted">See the problem, the product decisions, the verified capabilities and what the build is teaching us.</p>
+          <div className="mt-8 flex flex-wrap gap-6">
+            <Link href="/work/aiform-procure" className="link-arrow">View case study →</Link>
+            <a href="https://www.aiformprocure.co.za/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-green">Open live product <span className="text-gold" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+      <BuildIndex />
       <section className="editorial-grid bg-clay py-16 text-white md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label chapter-label-light">
-          04 / Principle
+          05 / Principle
         </p>
         <h2 className="col-span-12 md:col-start-3 md:col-span-8 principle-title mt-10 md:mt-0">
           Claims should survive contact with reality.
@@ -300,7 +279,7 @@ export default function Home() {
         className="editorial-grid border-b border-line bg-bg-alt py-16 md:py-24"
       >
         <p className="col-span-12 md:col-span-2 chapter-label">
-          05 / The system
+          06 / The system
         </p>
         <div className="col-span-12 mt-10 md:col-start-3 md:col-span-8 md:mt-0">
           <h2 className="section-title">
@@ -387,7 +366,7 @@ export default function Home() {
         </p>
       </section>
       <section id="studio" className="editorial-grid py-16 md:py-24">
-        <p className="col-span-12 md:col-span-2 chapter-label">06 / Founder</p>
+        <p className="col-span-12 md:col-span-2 chapter-label">07 / Founder</p>
         <div className="col-span-12 md:col-start-3 md:col-span-4 mt-10 md:mt-0 relative aspect-[4/5]">
           <Image
             src="/images/founder.jpg"
@@ -413,7 +392,7 @@ export default function Home() {
         </div>
       </section>
       <section className="editorial-grid border-t border-line py-16 md:py-24">
-        <p className="col-span-12 chapter-label">07 / The mark</p>
+        <p className="col-span-12 chapter-label">08 / The mark</p>
         <div className="col-span-12 mt-12 grid gap-14 md:grid-cols-3 md:gap-7">
           <figure className="border-t border-line pt-5">
             <figcaption>
@@ -481,7 +460,7 @@ export default function Home() {
         id="journal"
         className="editorial-grid border-t border-line bg-bg-alt py-16 md:py-24"
       >
-        <p className="col-span-12 md:col-span-2 chapter-label">08 / Journal</p>
+        <p className="col-span-12 md:col-span-2 chapter-label">09 / Journal</p>
         <div className="col-span-12 mt-10 md:col-start-3 md:col-span-6 md:mt-0">
           <h2 className="section-title">From the Journal</h2>
           <p className="mt-7 text-xl font-semibold text-green">
@@ -504,7 +483,7 @@ export default function Home() {
       </section>
       <section className="editorial-grid py-16 md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label">
-          09 / How we work
+          10 / How we work
         </p>
         <h2 className="col-span-12 md:col-start-3 md:col-span-6 section-title mt-10 md:mt-0">
           We don&apos;t start with <span className="text-green">AI.</span>
@@ -522,7 +501,7 @@ export default function Home() {
       </section>
       <section className="editorial-grid border-t border-line py-16 md:py-24">
         <p className="col-span-12 md:col-span-2 chapter-label">
-          10 / Where next
+          11 / Where next
         </p>
         <h2 className="col-span-12 md:col-start-3 md:col-span-7 section-title mt-10 md:mt-0">
           What haven&apos;t we <span className="text-green">noticed yet?</span>

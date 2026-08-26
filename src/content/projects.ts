@@ -1,74 +1,33 @@
 export type ProjectCategory = "Products" | "Client Systems" | "Experiments";
+export type ProjectStatus = "LIVE" | "PILOT" | "IN DEVELOPMENT" | "DELIVERED" | "DESIGN COMPLETE" | "R&D" | "ACTIVE" | "WRITING";
 
 export type Project = {
   id: string;
   name: string;
-  context?: string;
+  context: string;
   category: ProjectCategory;
+  type: "Product" | "Client System" | "Experiment";
   sector: string;
-  status: "LIVE" | "CLIENT" | "EXPERIMENT";
+  status: ProjectStatus;
   summary: string;
-  caseStudyUrl?: string;
+  actionLabel: string;
+  actionUrl?: string;
+  externalAction?: boolean;
   liveUrl?: string;
+  caseStudyUrl?: string;
   featured?: boolean;
 };
 
 export const projects: Project[] = [
-  {
-    id: "aiform-procure",
-    name: "AiForm Procure",
-    category: "Products",
-    sector: "Procurement",
-    status: "LIVE",
-    summary:
-      "Public opportunity discovery, supplier compliance evidence and readiness signals in one procurement system.",
-    caseStudyUrl: "/work/aiform-procure",
-    liveUrl: "https://www.aiformprocure.co.za/",
-    featured: true,
-  },
-  {
-    id: "wanotuts",
-    name: "WanoTuts",
-    context: "Kutlwano Tutoring",
-    category: "Client Systems",
-    sector: "Education",
-    status: "CLIENT",
-    summary:
-      "A naming, identity and tutoring website built around clearer learner journeys and lesson booking.",
-    caseStudyUrl: "/work/wanotuts",
-    liveUrl: "https://kutlwano-tutoring.vercel.app/",
-    featured: true,
-  },
-  {
-    id: "residential-construction",
-    name: "Residential construction",
-    category: "Client Systems",
-    sector: "Construction",
-    status: "CLIENT",
-    summary:
-      "A portfolio for a Gauteng building business, organised around completed work and direct enquiries.",
-  },
-  {
-    id: "mathabo-crochet",
-    name: "Mathabo Crochet",
-    category: "Client Systems",
-    sector: "Identity",
-    status: "CLIENT",
-    summary:
-      "A visual foundation for a handmade business: identity, palette, typography and social templates.",
-  },
-  {
-    id: "aiform-construct",
-    name: "AiForm Construct",
-    category: "Experiments",
-    sector: "Construction",
-    status: "EXPERIMENT",
-    summary:
-      "An early investigation into permits, contractor verification and clearer project documentation.",
-  },
+  { id: "aiform-procure", name: "AiForm Procure", context: "Procurement Suite", category: "Products", type: "Product", sector: "Government Procurement", status: "LIVE", summary: "Public opportunity discovery, supplier compliance evidence and readiness signals in one procurement system.", actionLabel: "View case study", actionUrl: "/work/aiform-procure", caseStudyUrl: "/work/aiform-procure", liveUrl: "https://www.aiformprocure.co.za/", featured: true },
+  { id: "aiform-health", name: "AiForm Health", context: "Clinical Practice Platform", category: "Products", type: "Product", sector: "Healthcare", status: "PILOT", summary: "A clinical practice platform entering pilot development.", actionLabel: "Preview platform" },
+  { id: "aiform-cruise", name: "AiForm Cruise", context: "Cruise Booking System", category: "Products", type: "Product", sector: "Tourism", status: "IN DEVELOPMENT", summary: "A cruise booking system in development.", actionLabel: "Coming soon" },
+  { id: "wanotuts", name: "WanoTuts", context: "Kutlwano Tutoring Platform", category: "Client Systems", type: "Client System", sector: "Education", status: "LIVE", summary: "A naming, identity and tutoring website built around clearer learner journeys and lesson booking.", actionLabel: "View case study", actionUrl: "/work/wanotuts", caseStudyUrl: "/work/wanotuts", liveUrl: "https://kutlwano-tutoring.vercel.app/", featured: true },
+  { id: "residential-construction", name: "Residential Construction", context: "NYAUTSA SS Trading", category: "Client Systems", type: "Client System", sector: "Construction", status: "DELIVERED", summary: "A portfolio for a Gauteng building business, organised around completed work and direct enquiries.", actionLabel: "Visit live website", actionUrl: "https://incredible-cannoli-9f2144.netlify.app/", externalAction: true, liveUrl: "https://incredible-cannoli-9f2144.netlify.app/", featured: true },
+  { id: "mathabo-crochet", name: "Mathabo Crochet", context: "Brand Identity & Digital Presence", category: "Client Systems", type: "Client System", sector: "Creative Commerce", status: "DESIGN COMPLETE", summary: "A visual foundation for a handmade business: identity, palette, typography and social templates.", actionLabel: "Identity case study", featured: true },
+  { id: "aiform-construct", name: "AiForm Construct", context: "Construction Operations Platform", category: "Experiments", type: "Experiment", sector: "Construction", status: "R&D", summary: "An investigation into permits, contractor verification and clearer project documentation.", actionLabel: "Read experiment", featured: true },
+  { id: "aiform-engine", name: "AiForm Engine", context: "Internal Operating System", category: "Experiments", type: "Experiment", sector: "AI Infrastructure", status: "ACTIVE", summary: "The internal operating system behind AiForm's work.", actionLabel: "Explore architecture", actionUrl: "/#system" },
+  { id: "procurement-knowledge-base", name: "Procurement Knowledge Base", context: "South African Procurement Reference Book", category: "Experiments", type: "Experiment", sector: "Research / Publishing", status: "WRITING", summary: "A South African procurement reference in development.", actionLabel: "Read journal", actionUrl: "/journal" },
 ];
 
-export const projectCategories = [
-  "All Work",
-  ...new Set(projects.map((project) => project.category)),
-] as const;
+export const projectCategories = ["All Work", "Products", "Client Systems", "Experiments"] as const;

@@ -15,7 +15,9 @@ const engine = [
   ["03", "Understand", "Turn evidence into something people can act on."],
   ["04", "Match", "Connect the right buyer, supplier, answer, or fit."],
 ];
-const selectedWork = projects.filter((project) => project.id !== "aiform-procure");
+const selectedWork = projects.filter(
+  (project) => project.featured && project.id !== "aiform-procure",
+);
 const systemLayers = [
   [
     "01",

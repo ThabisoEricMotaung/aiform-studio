@@ -1,26 +1,22 @@
 create table if not exists studio_inquiries (
   id uuid primary key,
   created_at timestamptz not null default now(),
-  inquiry_type text not null,
-  collaboration_type jsonb,
-  problem_description text,
-  project_description text,
-  desired_outcome text,
-  current_stage text,
-  existing_url text,
-  current_state_note text,
-  reference_notes text,
-  help_types jsonb,
-  timing text,
-  budget_range text,
+  enquiry_type text not null,
+  current_problems jsonb,
+  other_problem_note text,
+  audiences jsonb,
+  desired_outcomes jsonb,
+  project_stage text,
+  additional_context text,
+  timeline text,
+  budget text,
   name text not null,
   email text not null,
   phone text,
   organisation text,
-  role text,
-  preferred_contact text,
   status text not null default 'new',
-  internal_summary text
+  internal_summary text,
+  summary text not null default ''
 );
 
 create index if not exists studio_inquiries_created_at_idx on studio_inquiries (created_at desc);

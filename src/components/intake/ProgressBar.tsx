@@ -1,4 +1,4 @@
-const STEP_LABELS = ["Problem", "Context", "Outcome", "Stage", "Details", "Contact"];
+const STEP_LABELS = ["Purpose", "Situation", "Audience", "Outcomes", "Stage", "Details"];
 
 export default function ProgressBar({ step, total }: { step: number; total: number }) {
   const percent = ((step + 1) / total) * 100;

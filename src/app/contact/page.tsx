@@ -9,11 +9,10 @@ export default function Contact() {
       <div className="mx-auto max-w-6xl">
         <p className="chapter-label mb-7">Start a conversation</p>
         <h1 className="font-display max-w-3xl text-4xl leading-[1.05] md:text-6xl">
-          Tell me what isn&apos;t working.
+          Tell us what you&apos;re trying to solve.
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-          You don&apos;t need to know the solution yet. Describe the problem, the context and
-          what you&apos;d like to change. I&apos;ll take it from there.
+          You don&apos;t need a technical brief. A few quick answers are enough.
         </p>
 
         <div className="mt-16 grid gap-16 md:grid-cols-[0.8fr_1.2fr] md:gap-x-20">

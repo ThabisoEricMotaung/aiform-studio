@@ -1,11 +1,11 @@
 import {
-  inquiryTypeOptions,
-  collaborationTypeOptions,
-  currentStageOptions,
-  helpTypeOptions,
-  timingOptions,
-  budgetRangeOptions,
-  preferredContactOptions,
+  enquiryTypeOptions,
+  currentProblemOptions,
+  audienceOptions,
+  desiredOutcomeOptions,
+  projectStageOptions,
+  timelineOptions,
+  budgetOptions,
   labelFor,
 } from "@/lib/inquiry";
 import type { Draft } from "./types";
@@ -19,45 +19,40 @@ export default function ReviewPanel({
   draft: Draft;
   onEdit: (step: number) => void;
 }) {
-  const type = draft.inquiryType;
-  const situation =
-    type === "project" || type === "collaborate" ? draft.projectDescription : draft.problemDescription;
+  const problemLines = (draft.currentProblems ?? []).map((value) =>
+    value === "other" && draft.otherProblemNote
+      ? `Something else: ${draft.otherProblemNote}`
+      : labelFor(currentProblemOptions, value),
+  );
 
   const rows: Row[] = [
-    { label: "You're asking about", value: labelFor(inquiryTypeOptions, type), editStep: 0 },
-    ...(type === "collaborate" && draft.collaborationType?.length
-      ? [
-          {
-            label: "Collaboration areas",
-            value: draft.collaborationType.map((v) => labelFor(collaborationTypeOptions, v)).join(" · "),
-            editStep: 1,
-          },
-        ]
-      : []),
-    { label: "Current situation", value: situation ?? "", editStep: 1 },
-    { label: "Desired outcome", value: draft.desiredOutcome ?? "", editStep: 2 },
-    { label: "Where things stand", value: labelFor(currentStageOptions, draft.currentStage), editStep: 3 },
-    ...(draft.existingUrl ? [{ label: "Link shared", value: draft.existingUrl, editStep: 3 }] : []),
+    { label: "Looking for", value: labelFor(enquiryTypeOptions, draft.enquiryType), editStep: 0 },
+    { label: "Current problem", value: problemLines.join("\n") || "—", editStep: 1 },
     {
-      label: "Help requested",
-      value: (draft.helpTypes ?? []).map((v) => labelFor(helpTypeOptions, v)).join(" · ") || "—",
-      editStep: 4,
+      label: "For",
+      value: (draft.audiences ?? []).map((v) => labelFor(audienceOptions, v)).join(", ") || "—",
+      editStep: 2,
     },
-    { label: "Timing", value: labelFor(timingOptions, draft.timing) || "—", editStep: 4 },
-    ...(draft.budgetRange
-      ? [{ label: "Budget range", value: labelFor(budgetRangeOptions, draft.budgetRange), editStep: 4 }]
+    {
+      label: "Desired outcome",
+      value: (draft.desiredOutcomes ?? []).map((v) => labelFor(desiredOutcomeOptions, v)).join("\n") || "—",
+      editStep: 3,
+    },
+    { label: "Current stage", value: labelFor(projectStageOptions, draft.projectStage), editStep: 4 },
+    ...(draft.additionalContext
+      ? [{ label: "Additional context", value: `"${draft.additionalContext}"`, editStep: 4 }]
       : []),
+    { label: "Timeline", value: labelFor(timelineOptions, draft.timeline) || "—", editStep: 5 },
+    ...(draft.budget ? [{ label: "Budget", value: labelFor(budgetOptions, draft.budget), editStep: 5 }] : []),
     { label: "Name", value: draft.name ?? "", editStep: 5 },
     { label: "Email", value: draft.email ?? "", editStep: 5 },
     ...(draft.phone ? [{ label: "Phone / WhatsApp", value: draft.phone, editStep: 5 }] : []),
-    ...(draft.preferredContact
-      ? [{ label: "Preferred contact", value: labelFor(preferredContactOptions, draft.preferredContact), editStep: 5 }]
-      : []),
+    ...(draft.organisation ? [{ label: "Organisation", value: draft.organisation, editStep: 5 }] : []),
   ];
 
   return (
     <div>
-      <p className="chapter-label">Review</p>
+      <p className="chapter-label uppercase">Your brief</p>
       <h2 id="review-heading" className="secondary-title mt-4">
         Here&apos;s what I&apos;ve got.
       </h2>

@@ -7,21 +7,21 @@ import ProgressBar from "./ProgressBar";
 import ReviewPanel from "./ReviewPanel";
 import Confirmation from "./Confirmation";
 import Step1BringsYouHere from "./steps/Step1BringsYouHere";
-import Step2Context from "./steps/Step2Context";
-import Step3Outcome from "./steps/Step3Outcome";
-import Step4Stage from "./steps/Step4Stage";
-import Step5Details from "./steps/Step5Details";
-import Step6Contact from "./steps/Step6Contact";
+import Step2CurrentSituation from "./steps/Step2CurrentSituation";
+import Step3Audience from "./steps/Step3Audience";
+import Step4Outcomes from "./steps/Step4Outcomes";
+import Step5Stage from "./steps/Step5Stage";
+import Step6Practical from "./steps/Step6Practical";
 
-const STORAGE_KEY = "aiform-intake-draft-v1";
+const STORAGE_KEY = "aiform-intake-draft-v2";
 
 const STEPS: ComponentType<StepProps>[] = [
   Step1BringsYouHere,
-  Step2Context,
-  Step3Outcome,
-  Step4Stage,
-  Step5Details,
-  Step6Contact,
+  Step2CurrentSituation,
+  Step3Audience,
+  Step4Outcomes,
+  Step5Stage,
+  Step6Practical,
 ];
 
 export default function IntakeForm() {
@@ -173,6 +173,10 @@ export default function IntakeForm() {
         </p>
       ) : null}
 
+      {reviewing && !submitError ? (
+        <p className="field-help mt-6">No polished proposal needed. We&apos;ll start with the problem.</p>
+      ) : null}
+
       <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
         <button
           type="button"
@@ -189,7 +193,7 @@ export default function IntakeForm() {
             disabled={submitting}
             className="font-display min-h-11 rounded-md bg-green px-6 py-3 text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
           >
-            {submitting ? "Sending…" : "Send the brief →"}
+            {submitting ? "Sending…" : "Send project brief →"}
           </button>
         ) : (
           <button

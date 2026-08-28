@@ -11,7 +11,7 @@ const links = [
   { href: "/#system", label: "System", section: "system" },
   { href: "/#studio", label: "Studio", section: "studio" },
   { href: "/#journal", label: "Journal", section: "journal" },
-  { href: "/#contact", label: "Contact", section: "contact" },
+  { href: "/contact", label: "Contact", section: "contact" },
 ];
 
 export default function Header() {

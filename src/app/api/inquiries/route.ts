@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { after } from "next/server";
 import { randomUUID } from "crypto";
-import { inquirySchema, type Inquiry } from "@/lib/inquiry";
+import { inquirySchema, buildInquirySummary, type Inquiry } from "@/lib/inquiry";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { sendInquiryNotification } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -66,49 +66,42 @@ export async function POST(request: Request) {
   const inquiry: Inquiry = {
     id: randomUUID(),
     createdAt: new Date().toISOString(),
-    inquiryType: data.inquiryType,
-    collaborationType: data.collaborationType,
-    problemDescription: data.problemDescription || undefined,
-    projectDescription: data.projectDescription || undefined,
-    desiredOutcome: data.desiredOutcome || undefined,
-    currentStage: data.currentStage,
-    existingUrl: data.existingUrl || undefined,
-    currentStateNote: data.currentStateNote || undefined,
-    referenceNotes: data.referenceNotes || undefined,
-    helpTypes: data.helpTypes,
-    timing: data.timing,
-    budgetRange: data.budgetRange,
+    enquiryType: data.enquiryType,
+    currentProblems: data.currentProblems,
+    otherProblemNote: data.otherProblemNote || undefined,
+    audiences: data.audiences,
+    desiredOutcomes: data.desiredOutcomes,
+    projectStage: data.projectStage,
+    additionalContext: data.additionalContext || undefined,
+    timeline: data.timeline,
+    budget: data.budget,
     name: data.name,
     email: data.email,
     phone: data.phone || undefined,
     organisation: data.organisation || undefined,
-    role: data.role || undefined,
-    preferredContact: data.preferredContact,
     status: "new",
+    summary: "",
   };
+  inquiry.summary = buildInquirySummary(inquiry);
 
   const { error } = await supabase.from("studio_inquiries").insert({
     id: inquiry.id,
     created_at: inquiry.createdAt,
-    inquiry_type: inquiry.inquiryType,
-    collaboration_type: inquiry.collaborationType ?? null,
-    problem_description: inquiry.problemDescription ?? null,
-    project_description: inquiry.projectDescription ?? null,
-    desired_outcome: inquiry.desiredOutcome ?? null,
-    current_stage: inquiry.currentStage ?? null,
-    existing_url: inquiry.existingUrl ?? null,
-    current_state_note: inquiry.currentStateNote ?? null,
-    reference_notes: inquiry.referenceNotes ?? null,
-    help_types: inquiry.helpTypes ?? null,
-    timing: inquiry.timing ?? null,
-    budget_range: inquiry.budgetRange ?? null,
+    enquiry_type: inquiry.enquiryType,
+    current_problems: inquiry.currentProblems ?? null,
+    other_problem_note: inquiry.otherProblemNote ?? null,
+    audiences: inquiry.audiences ?? null,
+    desired_outcomes: inquiry.desiredOutcomes ?? null,
+    project_stage: inquiry.projectStage ?? null,
+    additional_context: inquiry.additionalContext ?? null,
+    timeline: inquiry.timeline ?? null,
+    budget: inquiry.budget ?? null,
     name: inquiry.name,
     email: inquiry.email,
     phone: inquiry.phone ?? null,
     organisation: inquiry.organisation ?? null,
-    role: inquiry.role ?? null,
-    preferred_contact: inquiry.preferredContact ?? null,
     status: inquiry.status,
+    summary: inquiry.summary,
   });
 
   if (error) {

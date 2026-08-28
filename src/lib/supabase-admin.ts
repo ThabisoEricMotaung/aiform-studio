@@ -8,15 +8,16 @@ let cachedClient: SupabaseClient | null = null;
  */
 export function getSupabaseAdmin(): SupabaseClient | null {
   const url = process.env.SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const secretKey =
+    process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!url || !serviceRoleKey) {
+  if (!url || !secretKey) {
     return null;
   }
 
   if (!cachedClient) {
-    cachedClient = createClient(url, serviceRoleKey, {
-      auth: { persistSession: false },
+    cachedClient = createClient(url, secretKey, {
+      auth: { autoRefreshToken: false, persistSession: false },
     });
   }
 

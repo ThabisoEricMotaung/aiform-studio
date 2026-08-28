@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   const supabase = getSupabaseAdmin();
   if (!supabase) {
     console.error(
-      "[inquiries] Supabase is not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.",
+      "[inquiries] Supabase is not configured. Set SUPABASE_URL and SUPABASE_SECRET_KEY.",
     );
     return NextResponse.json({ ok: false, error: GENERIC_ERROR }, { status: 500 });
   }

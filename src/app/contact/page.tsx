@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import IntakeForm from "@/components/intake/IntakeForm";
+import AlternativeContact from "@/components/contact/AlternativeContact";
 
 export const metadata: Metadata = { title: "Contact | AiForm Studio" };
 
@@ -20,10 +21,10 @@ export default function Contact() {
             <div className="rule-gold mb-8" />
             <p className="chapter-label mb-3">Email</p>
             <a
-              href="mailto:aiformstudio@gmail.com"
+              href="mailto:hello@aiformstudio.co.za"
               className="font-display break-all text-2xl transition-colors hover:text-green md:text-3xl"
             >
-              aiformstudio@gmail.com
+              hello@aiformstudio.co.za
             </a>
             <div className="mt-9 border-t border-line pt-7">
               <p className="chapter-label mb-3">Based in</p>
@@ -32,12 +33,7 @@ export default function Contact() {
             <p className="font-display mt-12 text-xl text-muted">
               The best conversations begin with the problem, not the proposed technology.
             </p>
-            <div className="mt-9 border-t border-line pt-7">
-              <p className="chapter-label mb-3">Prefer email?</p>
-              <p className="text-sm leading-relaxed text-muted">
-                Not everyone wants to fill out a form — a short email works just as well.
-              </p>
-            </div>
+            <AlternativeContact />
           </div>
 
           <div>

@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { buildInquirySummary, labelFor, enquiryTypeOptions, type Inquiry } from "@/lib/inquiry";
 
-const DEFAULT_NOTIFICATION_EMAIL = "aiformstudio@gmail.com";
+const DEFAULT_NOTIFICATION_EMAIL = "hello@aiformstudio.co.za";
 
 /**
  * Fire-and-forget. Never throws — a failed notification must not surface as

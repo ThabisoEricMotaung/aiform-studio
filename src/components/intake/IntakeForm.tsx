@@ -184,7 +184,7 @@ export default function IntakeForm() {
   }
 
   if (submitted) {
-    return <Confirmation />;
+    return <Confirmation name={draft.name} email={draft.email} />;
   }
 
   const StepComponent = STEPS[step];

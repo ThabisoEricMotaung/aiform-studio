@@ -7,7 +7,7 @@ import { sendInquiryNotification } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const GENERIC_ERROR =
-  "I couldn't send that yet. Your answers haven't been lost. Please try again, or email aiformstudio@gmail.com directly.";
+  "I couldn't send that yet. Your answers haven't been lost. Please try again, or email hello@aiformstudio.co.za directly.";
 
 export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       {
         ok: false,
         error:
-          "You've sent a few of these already — I'll get to them. If it's urgent, please email aiformstudio@gmail.com directly.",
+          "You've sent a few of these already — I'll get to them. If it's urgent, please email hello@aiformstudio.co.za directly.",
       },
       { status: 429 },
     );

@@ -981,6 +981,149 @@ a:focus-visible {
   color: var(--color-text);
 }
 
+/* Alternative contact: Calendly / WhatsApp */
+.contact-alt-action {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.85rem;
+  border: none;
+  border-top: 1px solid var(--color-line);
+  background: none;
+  padding: 0.9rem 0;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+.contact-alt-action:last-child {
+  border-bottom: 1px solid var(--color-line);
+}
+.contact-alt-action:hover {
+  color: var(--color-green);
+}
+.contact-alt-action:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+.contact-alt-action-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--color-green);
+}
+.contact-alt-action-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.contact-alt-action-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.contact-alt-action-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.contact-alt-action-subtitle {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.calendly-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(24, 26, 24, 0.45);
+}
+.calendly-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 42rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: var(--color-bg);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 24px 64px rgba(23, 59, 44, 0.22);
+}
+.calendly-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.calendly-dialog-title {
+  margin-top: 0.5rem;
+  font: 600 clamp(1.35rem, 2vw, 1.65rem) / 1.15 var(--font-inter-tight);
+  letter-spacing: -0.01em;
+}
+.calendly-dialog-subtitle {
+  margin-top: 0.5rem;
+  max-width: 30rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+.calendly-dialog-close {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  color: var(--color-muted);
+  transition: border-color 150ms ease, color 150ms ease;
+}
+.calendly-dialog-close:hover {
+  border-color: var(--color-green);
+  color: var(--color-green);
+}
+.calendly-dialog-close:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+.calendly-embed-container {
+  margin-top: 1.25rem;
+  min-height: 630px;
+}
+.calendly-fallback-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 0.15rem;
+  font-size: 0.78rem;
+  color: var(--color-green);
+}
+.calendly-fallback-link:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .calendly-overlay {
+    padding: 0;
+  }
+  .calendly-dialog {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  .calendly-embed-container {
+    min-height: 520px;
+  }
+}
+
 .review-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

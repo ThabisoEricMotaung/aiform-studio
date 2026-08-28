@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AiFormLockup from "@/components/AiFormLockup";
+import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
 
 const groups = [
   {
@@ -85,10 +86,20 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <p className="chapter-label uppercase">Based in</p>
             <p className="mt-5 text-sm leading-relaxed text-muted">
-              Pretoria
+              607 Fred Messenger Avenue
               <br />
-              South Africa
+              Andeon AH, Pretoria
+              <br />
+              0183, South Africa
             </p>
+            <a
+              href={STUDIO_ADDRESS_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-block border-b border-line pb-0.5 text-xs text-muted transition-colors hover:border-green hover:text-green"
+            >
+              View on Google Maps ↗
+            </a>
           </div>
         </div>
       </div>

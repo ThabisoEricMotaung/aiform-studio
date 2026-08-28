@@ -15,7 +15,7 @@ export default function Contact() {
           You don&apos;t need a technical brief. A few quick answers are enough.
         </p>
 
-        <div className="mt-16 grid gap-16 md:grid-cols-[0.8fr_1.2fr] md:gap-x-20">
+        <div className="mt-16 grid grid-cols-1 gap-16 md:grid-cols-[0.8fr_1.2fr] md:gap-x-20">
           <div className="md:border-r md:border-line md:pr-12">
             <div className="rule-gold mb-8" />
             <p className="chapter-label mb-3">Email</p>

@@ -1,5 +1,6 @@
 import { desiredOutcomeOptions } from "@/lib/inquiry";
 import OptionRow from "../OptionRow";
+import SelectionMeta from "../SelectionMeta";
 import type { StepProps } from "../types";
 
 export default function Step4Outcomes({ draft, errors, update }: StepProps) {
@@ -14,10 +15,11 @@ export default function Step4Outcomes({ draft, errors, update }: StepProps) {
 
   return (
     <div>
-      <h2 className="secondary-title">What would make this successful?</h2>
+      <h2 className="secondary-title intake-question-title">What would make this successful?</h2>
       <p className="field-help mt-3 max-w-2xl text-[0.95rem]">Choose the outcomes that matter most.</p>
+      <SelectionMeta count={selected.length} />
       <div
-        className="mt-8 grid gap-3 sm:grid-cols-2"
+        className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2"
         role="group"
         aria-label="What would make this successful?"
       >

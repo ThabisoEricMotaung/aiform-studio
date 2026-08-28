@@ -1,6 +1,30 @@
-import { currentProblemOptions } from "@/lib/inquiry";
+import { currentProblemOptions, isRecommendedProblem } from "@/lib/inquiry";
 import OptionRow from "../OptionRow";
+import SelectionMeta from "../SelectionMeta";
 import type { StepProps } from "../types";
+import {
+  IconRepeat,
+  IconScattered,
+  IconTable,
+  IconPersonAlert,
+  IconBroken,
+  IconEmptyBox,
+  IconClock,
+  IconVerify,
+  IconOther,
+} from "../icons";
+
+const ICONS: Record<string, React.ReactNode> = {
+  manual_work: <IconRepeat />,
+  scattered_info: <IconScattered />,
+  spreadsheets_whatsapp: <IconTable />,
+  customer_struggle: <IconPersonAlert />,
+  system_not_working: <IconBroken />,
+  nothing_yet: <IconEmptyBox />,
+  time_consuming: <IconClock />,
+  hard_to_track: <IconVerify />,
+  other: <IconOther />,
+};
 
 export default function Step2CurrentSituation({ draft, errors, update }: StepProps) {
   const selected = draft.currentProblems ?? [];
@@ -15,10 +39,13 @@ export default function Step2CurrentSituation({ draft, errors, update }: StepPro
 
   return (
     <div>
-      <h2 className="secondary-title">What&apos;s happening right now?</h2>
-      <p className="field-help mt-3 max-w-2xl text-[0.95rem]">Pick anything that sounds familiar.</p>
+      <h2 className="secondary-title intake-question-title">What&apos;s happening right now?</h2>
+      <p className="field-help mt-3 max-w-2xl text-[0.95rem]">
+        Select anything that sounds familiar.
+      </p>
+      <SelectionMeta count={selected.length} />
       <div
-        className="mt-8 grid gap-3 sm:grid-cols-2"
+        className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2"
         role="group"
         aria-label="What's happening right now?"
       >
@@ -29,6 +56,8 @@ export default function Step2CurrentSituation({ draft, errors, update }: StepPro
             name="currentProblems"
             value={option.value}
             label={option.label}
+            icon={ICONS[option.value]}
+            hint={isRecommendedProblem(draft.enquiryType, option.value) ? "Likely relevant" : undefined}
             checked={selected.includes(option.value)}
             onChange={(checked) => toggle(option.value, checked)}
           />

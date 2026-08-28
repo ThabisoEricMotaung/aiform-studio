@@ -2,13 +2,26 @@ import { timelineOptions, budgetOptions } from "@/lib/inquiry";
 import OptionRow from "../OptionRow";
 import type { StepProps } from "../types";
 
+const IMPLIES_EXISTING = new Set(["existing_system", "already_built", "needs_fixing"]);
+
 export default function Step6Practical({ draft, errors, update }: StepProps) {
+  // Budget framing assumes a commissioned, paid engagement — skip it for
+  // people exploring a collaboration rather than asking us to build for them.
+  const showBudget = draft.enquiryType !== "collaborate";
+  const referencesExisting = IMPLIES_EXISTING.has(draft.projectStage ?? "");
+  const contextLabel = referencesExisting
+    ? "What's not working with it right now?"
+    : "Anything else you'd like us to know?";
+  const contextPlaceholder = referencesExisting
+    ? "A sentence or two on what's not working is enough."
+    : "A sentence or two is enough.";
+
   return (
     <div className="flex flex-col gap-12">
       <div>
-        <h2 className="secondary-title">Is there a timeline?</h2>
+        <h2 className="secondary-title intake-question-title">Is there a timeline?</h2>
         <div
-          className="mt-6 grid gap-3 sm:grid-cols-2"
+          className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2"
           role="radiogroup"
           aria-label="Is there a timeline?"
         >
@@ -31,33 +44,35 @@ export default function Step6Practical({ draft, errors, update }: StepProps) {
         ) : null}
       </div>
 
-      <div>
-        <h2 className="font-display text-2xl md:text-[1.75rem]">
-          Do you have a working budget?{" "}
-          <span className="text-base font-normal text-muted">(optional)</span>
-        </h2>
-        <div
-          className="mt-6 grid gap-3 sm:grid-cols-2"
-          role="radiogroup"
-          aria-label="Do you have a working budget?"
-        >
-          {budgetOptions.map((option) => (
-            <OptionRow
-              key={option.value}
-              type="radio"
-              name="budget"
-              value={option.value}
-              label={option.label}
-              checked={draft.budget === option.value}
-              onChange={() => update({ budget: option.value })}
-            />
-          ))}
+      {showBudget ? (
+        <div>
+          <h2 className="font-display text-2xl md:text-[1.75rem]">
+            Do you have a working budget?{" "}
+            <span className="text-base font-normal text-muted">(optional)</span>
+          </h2>
+          <div
+            className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2"
+            role="radiogroup"
+            aria-label="Do you have a working budget?"
+          >
+            {budgetOptions.map((option) => (
+              <OptionRow
+                key={option.value}
+                type="radio"
+                name="budget"
+                value={option.value}
+                label={option.label}
+                checked={draft.budget === option.value}
+                onChange={() => update({ budget: option.value })}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="border-t border-line pt-10">
         <h2 className="font-display text-2xl md:text-[1.75rem]">Your contact details</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <label className="field-label" htmlFor="contact-name">
               Name
@@ -129,14 +144,13 @@ export default function Step6Practical({ draft, errors, update }: StepProps) {
 
         <div className="mt-6">
           <label className="field-label" htmlFor="additional-context">
-            Anything else you&apos;d like us to know?{" "}
-            <span className="font-normal text-muted">(optional)</span>
+            {contextLabel} <span className="font-normal text-muted">(optional)</span>
           </label>
           <textarea
             id="additional-context"
             className="field-textarea"
             style={{ minHeight: "5rem" }}
-            placeholder="A sentence or two is enough."
+            placeholder={contextPlaceholder}
             maxLength={600}
             value={draft.additionalContext ?? ""}
             onChange={(event) => update({ additionalContext: event.target.value })}

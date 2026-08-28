@@ -7,6 +7,7 @@ import {
   timelineOptions,
   budgetOptions,
   labelFor,
+  buildLiveInterpretation,
 } from "@/lib/inquiry";
 import type { Draft } from "./types";
 
@@ -40,7 +41,7 @@ export default function ReviewPanel({
     },
     { label: "Current stage", value: labelFor(projectStageOptions, draft.projectStage), editStep: 4 },
     ...(draft.additionalContext
-      ? [{ label: "Additional context", value: `"${draft.additionalContext}"`, editStep: 4 }]
+      ? [{ label: "Additional context", value: `"${draft.additionalContext}"`, editStep: 5 }]
       : []),
     { label: "Timeline", value: labelFor(timelineOptions, draft.timeline) || "—", editStep: 5 },
     ...(draft.budget ? [{ label: "Budget", value: labelFor(budgetOptions, draft.budget), editStep: 5 }] : []),
@@ -50,10 +51,12 @@ export default function ReviewPanel({
     ...(draft.organisation ? [{ label: "Organisation", value: draft.organisation, editStep: 5 }] : []),
   ];
 
+  const interpretation = buildLiveInterpretation(draft);
+
   return (
     <div>
       <p className="chapter-label uppercase">Your brief</p>
-      <h2 id="review-heading" className="secondary-title mt-4">
+      <h2 id="review-heading" className="secondary-title intake-question-title mt-4">
         Here&apos;s what I&apos;ve got.
       </h2>
       <div className="mt-8">
@@ -74,6 +77,13 @@ export default function ReviewPanel({
           </div>
         ))}
       </div>
+
+      {interpretation ? (
+        <div className="intake-interpretation">
+          <p className="chapter-label uppercase">What we&apos;re hearing</p>
+          <p className="intake-interpretation-text">{interpretation}</p>
+        </div>
+      ) : null}
     </div>
   );
 }

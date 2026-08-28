@@ -250,3 +250,79 @@ export function buildInquirySummary(data: SummaryInput): string {
 
   return lines.join("\n");
 }
+
+/**
+ * Deterministic hints only — a lightweight lookup table, not a model or
+ * scoring system. Guides attention toward likely-relevant answers without
+ * hiding anything else; every option stays fully selectable regardless.
+ */
+const recommendedProblemsByEnquiryType: Partial<Record<EnquiryType, CurrentProblem[]>> = {
+  automation: ["manual_work", "spreadsheets_whatsapp", "time_consuming"],
+  improve_existing: ["system_not_working", "customer_struggle", "hard_to_track", "scattered_info"],
+  website: ["customer_struggle", "scattered_info", "system_not_working"],
+  process_problem: ["manual_work", "time_consuming", "hard_to_track"],
+  system: ["system_not_working", "scattered_info"],
+  idea: ["nothing_yet"],
+};
+
+export function isRecommendedProblem(enquiryType: string | undefined, problem: string): boolean {
+  if (!enquiryType) return false;
+  const list = recommendedProblemsByEnquiryType[enquiryType as EnquiryType];
+  return list ? (list as string[]).includes(problem) : false;
+}
+
+type InterpretationInput = {
+  enquiryType?: string;
+  currentProblems?: string[];
+  desiredOutcomes?: string[];
+};
+
+/**
+ * Deterministic, rule-based composition — no model call. Reflects the
+ * visitor's own selections back in plain language once there's enough to
+ * say something useful; returns null until then.
+ */
+export function buildLiveInterpretation(data: InterpretationInput): string | null {
+  const problems = data.currentProblems ?? [];
+  const outcomes = data.desiredOutcomes ?? [];
+  const type = data.enquiryType;
+
+  if (!type || (problems.length === 0 && outcomes.length === 0)) {
+    return null;
+  }
+
+  const hasManual = problems.includes("manual_work") || problems.includes("time_consuming");
+  const hasScattered = problems.includes("scattered_info") || problems.includes("spreadsheets_whatsapp");
+  const hasCustomerFriction = problems.includes("customer_struggle");
+  const hasBrokenSystem = problems.includes("system_not_working");
+  const hasTracking = problems.includes("hard_to_track");
+  const wantsAutomation = outcomes.includes("automate_repetitive") || type === "automation";
+  const wantsOrganise = outcomes.includes("organise_info") || outcomes.includes("findable_info");
+  const wantsCustomerExp = outcomes.includes("customer_experience") || outcomes.includes("sales_leads");
+
+  if (type === "website" || wantsCustomerExp || hasCustomerFriction) {
+    return "This sounds like a customer-facing project where easier access to information and a clearer digital experience matter most.";
+  }
+  if (hasBrokenSystem || (type === "improve_existing" && (wantsAutomation || wantsOrganise))) {
+    return "This sounds like an existing workflow that could benefit from automation and better information management.";
+  }
+  if (hasManual && hasScattered) {
+    return "This sounds like a workflow problem involving manual processes and scattered information.";
+  }
+  if (hasManual) {
+    return "This sounds like a process that's taking more manual effort than it needs to.";
+  }
+  if (hasScattered || wantsOrganise) {
+    return "This sounds like information that's scattered and could use a clearer home.";
+  }
+  if (hasTracking) {
+    return "This sounds like something that's difficult to track or verify right now.";
+  }
+  if (type === "idea") {
+    return "This sounds like an early idea that's still taking shape.";
+  }
+  if (type === "collaborate") {
+    return "This sounds like the beginning of a possible collaboration.";
+  }
+  return "This is starting to take shape — a few more answers will sharpen the picture.";
+}

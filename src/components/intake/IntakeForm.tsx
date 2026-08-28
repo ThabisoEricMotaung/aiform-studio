@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ComponentType } from "react";
 import type { Draft, StepProps } from "./types";
 import { validateStep, stepForField, TOTAL_STEPS } from "./validation";
+import { buildLiveInterpretation } from "@/lib/inquiry";
 import ProgressBar from "./ProgressBar";
 import ReviewPanel from "./ReviewPanel";
 import Confirmation from "./Confirmation";
@@ -188,6 +189,9 @@ export default function IntakeForm() {
 
   const StepComponent = STEPS[step];
   const isAutoAdvanceStep = !reviewing && AUTO_ADVANCE_STEPS.has(step);
+  // ReviewPanel shows its own final version of this, so it's only rendered
+  // here while still moving through the steps.
+  const liveInterpretation = reviewing ? null : buildLiveInterpretation(draft);
 
   return (
     <div className="intake-panel">
@@ -205,6 +209,13 @@ export default function IntakeForm() {
           />
         )}
       </div>
+
+      {liveInterpretation ? (
+        <div className="intake-interpretation">
+          <p className="chapter-label uppercase">What we&apos;re hearing</p>
+          <p className="intake-interpretation-text">{liveInterpretation}</p>
+        </div>
+      ) : null}
 
       {submitError ? (
         <p className="field-error mt-6" role="alert">

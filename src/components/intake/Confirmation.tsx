@@ -4,7 +4,7 @@ export default function Confirmation() {
   return (
     <div className="intake-panel" role="status">
       <p className="chapter-label">Sent</p>
-      <h2 id="confirmation-heading" className="secondary-title mt-4">
+      <h2 id="confirmation-heading" className="secondary-title intake-question-title mt-4">
         Got it. I&apos;ll read this properly.
       </h2>
       <p className="mt-4 max-w-xl leading-relaxed text-muted">

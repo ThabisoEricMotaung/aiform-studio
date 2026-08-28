@@ -1,5 +1,6 @@
 import { audienceOptions } from "@/lib/inquiry";
 import OptionRow from "../OptionRow";
+import SelectionMeta from "../SelectionMeta";
 import type { StepProps } from "../types";
 
 export default function Step3Audience({ draft, errors, update }: StepProps) {
@@ -14,9 +15,10 @@ export default function Step3Audience({ draft, errors, update }: StepProps) {
 
   return (
     <div>
-      <h2 className="secondary-title">Who is this mainly for?</h2>
+      <h2 className="secondary-title intake-question-title">Who is this mainly for?</h2>
+      <SelectionMeta count={selected.length} />
       <div
-        className="mt-8 grid gap-3 sm:grid-cols-2"
+        className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2"
         role="group"
         aria-label="Who is this mainly for?"
       >

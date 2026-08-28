@@ -2,7 +2,7 @@ import { projectStageOptions } from "@/lib/inquiry";
 import OptionRow from "../OptionRow";
 import type { StepProps } from "../types";
 
-export default function Step5Stage({ draft, errors, update }: StepProps) {
+export default function Step5Stage({ draft, errors, selectAndAdvance }: StepProps) {
   return (
     <div>
       <h2 className="secondary-title">Where are you currently?</h2>
@@ -19,7 +19,7 @@ export default function Step5Stage({ draft, errors, update }: StepProps) {
             value={option.value}
             label={option.label}
             checked={draft.projectStage === option.value}
-            onChange={() => update({ projectStage: option.value })}
+            onChange={() => selectAndAdvance({ projectStage: option.value })}
           />
         ))}
       </div>
@@ -28,21 +28,6 @@ export default function Step5Stage({ draft, errors, update }: StepProps) {
           {errors.projectStage}
         </p>
       ) : null}
-
-      <div className="mt-8">
-        <label className="field-label" htmlFor="additional-context">
-          Anything we should know? <span className="font-normal text-muted">(optional)</span>
-        </label>
-        <textarea
-          id="additional-context"
-          className="field-textarea"
-          style={{ minHeight: "5rem" }}
-          placeholder="One or two sentences is plenty."
-          maxLength={600}
-          value={draft.additionalContext ?? ""}
-          onChange={(event) => update({ additionalContext: event.target.value })}
-        />
-      </div>
     </div>
   );
 }

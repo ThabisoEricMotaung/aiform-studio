@@ -127,6 +127,23 @@ export default function Step6Practical({ draft, errors, update }: StepProps) {
           </div>
         </div>
 
+        <div className="mt-6">
+          <label className="field-label" htmlFor="additional-context">
+            Anything else you&apos;d like us to know?{" "}
+            <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <textarea
+            id="additional-context"
+            className="field-textarea"
+            style={{ minHeight: "5rem" }}
+            placeholder="A sentence or two is enough."
+            maxLength={600}
+            value={draft.additionalContext ?? ""}
+            onChange={(event) => update({ additionalContext: event.target.value })}
+          />
+          <p className="field-help">Optional. A sentence or two is enough.</p>
+        </div>
+
         {/* Honeypot: invisible to real visitors, left for bots to fill in. */}
         <div className="intake-honeypot" aria-hidden="true">
           <label htmlFor="company_website">Company website</label>

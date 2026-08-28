@@ -14,6 +14,7 @@ import Step5Stage from "./steps/Step5Stage";
 import Step6Practical from "./steps/Step6Practical";
 
 const STORAGE_KEY = "aiform-intake-draft-v2";
+const AUTO_ADVANCE_DELAY_MS = 200;
 
 const STEPS: ComponentType<StepProps>[] = [
   Step1BringsYouHere,
@@ -23,6 +24,12 @@ const STEPS: ComponentType<StepProps>[] = [
   Step5Stage,
   Step6Practical,
 ];
+
+// Steps whose question has one mutually-exclusive answer auto-advance
+// instead of waiting for a Continue click. Steps with genuine multi-select
+// questions (or a mix of question types, like the final practical/contact
+// step) keep Continue, since nothing else signals "I'm done choosing."
+const AUTO_ADVANCE_STEPS = new Set([0, 4]);
 
 export default function IntakeForm() {
   const [hydrated, setHydrated] = useState(false);
@@ -34,6 +41,16 @@ export default function IntakeForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const autoAdvanceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelAutoAdvance = () => {
+    if (autoAdvanceTimeout.current) {
+      clearTimeout(autoAdvanceTimeout.current);
+      autoAdvanceTimeout.current = null;
+    }
+  };
+
+  useEffect(() => cancelAutoAdvance, []);
 
   useEffect(() => {
     let restored: Draft = {};
@@ -77,7 +94,21 @@ export default function IntakeForm() {
     setErrors({});
   };
 
+  // For single-select, mutually-exclusive questions: the checked style
+  // shows the instant the input's native `checked` state changes (pure CSS,
+  // independent of this re-render), then this waits briefly so the
+  // selection reads as acknowledged before moving on.
+  const selectAndAdvance = (patch: Draft) => {
+    setDraft((prev) => ({ ...prev, ...patch }));
+    setErrors({});
+    cancelAutoAdvance();
+    autoAdvanceTimeout.current = setTimeout(() => {
+      setStep((current) => Math.min(current + 1, TOTAL_STEPS - 1));
+    }, AUTO_ADVANCE_DELAY_MS);
+  };
+
   const goNext = () => {
+    cancelAutoAdvance();
     const stepErrors = validateStep(step, draft);
     if (Object.keys(stepErrors).length > 0) {
       setErrors(stepErrors);
@@ -92,6 +123,7 @@ export default function IntakeForm() {
   };
 
   const goBack = () => {
+    cancelAutoAdvance();
     if (reviewing) {
       setReviewing(false);
       return;
@@ -101,6 +133,7 @@ export default function IntakeForm() {
   };
 
   const editStep = (targetStep: number) => {
+    cancelAutoAdvance();
     setReviewing(false);
     setStep(targetStep);
   };
@@ -154,6 +187,7 @@ export default function IntakeForm() {
   }
 
   const StepComponent = STEPS[step];
+  const isAutoAdvanceStep = !reviewing && AUTO_ADVANCE_STEPS.has(step);
 
   return (
     <div className="intake-panel">
@@ -163,7 +197,12 @@ export default function IntakeForm() {
         {reviewing ? (
           <ReviewPanel draft={draft} onEdit={editStep} />
         ) : (
-          <StepComponent draft={draft} errors={errors} update={update} />
+          <StepComponent
+            draft={draft}
+            errors={errors}
+            update={update}
+            selectAndAdvance={selectAndAdvance}
+          />
         )}
       </div>
 
@@ -195,7 +234,7 @@ export default function IntakeForm() {
           >
             {submitting ? "Sending…" : "Send project brief →"}
           </button>
-        ) : (
+        ) : isAutoAdvanceStep ? null : (
           <button
             type="button"
             onClick={goNext}

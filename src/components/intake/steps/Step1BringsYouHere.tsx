@@ -2,7 +2,7 @@ import { enquiryTypeOptions } from "@/lib/inquiry";
 import OptionRow from "../OptionRow";
 import type { StepProps } from "../types";
 
-export default function Step1BringsYouHere({ draft, errors, update }: StepProps) {
+export default function Step1BringsYouHere({ draft, errors, selectAndAdvance }: StepProps) {
   return (
     <div>
       <h2 className="secondary-title">What brings you here?</h2>
@@ -22,7 +22,7 @@ export default function Step1BringsYouHere({ draft, errors, update }: StepProps)
             value={option.value}
             label={option.label}
             checked={draft.enquiryType === option.value}
-            onChange={() => update({ enquiryType: option.value })}
+            onChange={() => selectAndAdvance({ enquiryType: option.value })}
           />
         ))}
       </div>

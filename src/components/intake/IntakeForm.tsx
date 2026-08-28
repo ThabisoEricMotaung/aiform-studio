@@ -1,0 +1,206 @@
+"use client";
+
+import { useEffect, useRef, useState, type ComponentType } from "react";
+import type { Draft, StepProps } from "./types";
+import { validateStep, stepForField, TOTAL_STEPS } from "./validation";
+import ProgressBar from "./ProgressBar";
+import ReviewPanel from "./ReviewPanel";
+import Confirmation from "./Confirmation";
+import Step1BringsYouHere from "./steps/Step1BringsYouHere";
+import Step2Context from "./steps/Step2Context";
+import Step3Outcome from "./steps/Step3Outcome";
+import Step4Stage from "./steps/Step4Stage";
+import Step5Details from "./steps/Step5Details";
+import Step6Contact from "./steps/Step6Contact";
+
+const STORAGE_KEY = "aiform-intake-draft-v1";
+
+const STEPS: ComponentType<StepProps>[] = [
+  Step1BringsYouHere,
+  Step2Context,
+  Step3Outcome,
+  Step4Stage,
+  Step5Details,
+  Step6Contact,
+];
+
+export default function IntakeForm() {
+  const [hydrated, setHydrated] = useState(false);
+  const [step, setStep] = useState(0);
+  const [draft, setDraft] = useState<Draft>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [reviewing, setReviewing] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let restored: Draft = {};
+    let restoredStep = 0;
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as { draft?: Draft; step?: number };
+        restored = saved.draft ?? {};
+        restoredStep = saved.step ?? 0;
+      }
+    } catch {
+      // Storage may be unavailable (private mode, quota) — start fresh.
+    }
+    // One-time sync from sessionStorage on mount, gated behind `hydrated` so
+    // the server-rendered markup never has to guess at browser-only state
+    // (the same pattern libraries like next-themes use to avoid a hydration
+    // mismatch). A lazy useState initializer would run during the
+    // hydration render itself and reintroduce that mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDraft({ ...restored, startedAt: restored.startedAt ?? Date.now() });
+    setStep(restoredStep);
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, step }));
+    } catch {
+      // Draft still lives in memory even if it can't persist.
+    }
+  }, [draft, step, hydrated]);
+
+  useEffect(() => {
+    panelRef.current?.focus();
+  }, [step, reviewing, submitted]);
+
+  const update = (patch: Draft) => {
+    setDraft((prev) => ({ ...prev, ...patch }));
+    setErrors({});
+  };
+
+  const goNext = () => {
+    const stepErrors = validateStep(step, draft);
+    if (Object.keys(stepErrors).length > 0) {
+      setErrors(stepErrors);
+      return;
+    }
+    setErrors({});
+    if (step === TOTAL_STEPS - 1) {
+      setReviewing(true);
+    } else {
+      setStep((current) => current + 1);
+    }
+  };
+
+  const goBack = () => {
+    if (reviewing) {
+      setReviewing(false);
+      return;
+    }
+    setErrors({});
+    setStep((current) => Math.max(0, current - 1));
+  };
+
+  const editStep = (targetStep: number) => {
+    setReviewing(false);
+    setStep(targetStep);
+  };
+
+  const submit = async () => {
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draft),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        if (result.fieldErrors) {
+          setErrors(result.fieldErrors);
+          const firstField = Object.keys(result.fieldErrors)[0];
+          if (firstField) {
+            setReviewing(false);
+            setStep(stepForField(firstField));
+          }
+        }
+        setSubmitError(
+          result.error ||
+            "I couldn't send that yet. Your answers haven't been lost. Please try again.",
+        );
+        return;
+      }
+
+      setSubmitted(true);
+      try {
+        sessionStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // Nothing else to clean up if storage isn't available.
+      }
+    } catch {
+      setSubmitError("I couldn't send that yet. Your answers haven't been lost. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (!hydrated) {
+    return <div className="intake-panel" style={{ minHeight: "28rem" }} aria-hidden="true" />;
+  }
+
+  if (submitted) {
+    return <Confirmation />;
+  }
+
+  const StepComponent = STEPS[step];
+
+  return (
+    <div className="intake-panel">
+      {!reviewing ? <ProgressBar step={step} total={TOTAL_STEPS} /> : null}
+
+      <div ref={panelRef} tabIndex={-1} className="mt-8 outline-none">
+        {reviewing ? (
+          <ReviewPanel draft={draft} onEdit={editStep} />
+        ) : (
+          <StepComponent draft={draft} errors={errors} update={update} />
+        )}
+      </div>
+
+      {submitError ? (
+        <p className="field-error mt-6" role="alert">
+          {submitError}
+        </p>
+      ) : null}
+
+      <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
+        <button
+          type="button"
+          onClick={goBack}
+          disabled={step === 0 && !reviewing}
+          className="min-h-11 text-sm font-medium text-muted transition-colors hover:text-green disabled:pointer-events-none disabled:opacity-0"
+        >
+          ← Back
+        </button>
+        {reviewing ? (
+          <button
+            type="button"
+            onClick={submit}
+            disabled={submitting}
+            className="font-display min-h-11 rounded-md bg-green px-6 py-3 text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          >
+            {submitting ? "Sending…" : "Send the brief →"}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={goNext}
+            className="font-display min-h-11 rounded-md bg-green px-6 py-3 text-sm text-white transition-opacity hover:opacity-90"
+          >
+            Continue →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}

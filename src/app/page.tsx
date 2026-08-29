@@ -37,15 +37,17 @@ const ownedWork = projects.filter((project) => project.type !== "Client System")
 export default function Home() {
   return <>
     <section className="editorial-grid relative overflow-hidden py-16 md:py-20 lg:py-24">
-      <div className="relative z-10 col-span-12 self-center lg:col-span-7">
-        <p className="mb-8 flex items-center gap-4 text-xl font-medium text-green md:text-[22px]"><span aria-hidden="true" className="h-0.5 w-10 bg-gold" />A Pretoria studio for expensive assumptions</p>
-        <h1 className="hero-title font-display">Noticed,<br /><span className="text-green">not invented.</span></h1>
-        <p className="mt-9 max-w-2xl text-lg leading-relaxed md:text-xl">We notice the problems people have learned to live with, understand why they persist, and build systems that make them easier to solve.</p>
-        <p className="mt-7 max-w-3xl border-l-2 border-gold pl-5 text-xl font-semibold leading-snug text-green md:text-2xl">Websites, business systems and digital products built around how your organisation actually works.</p>
-        <div className="mt-10 flex flex-wrap items-center gap-8"><Link href="#work" className="link-arrow hero-cta">Explore our work <span aria-hidden="true">→</span></Link><Link href="/contact" className="text-lg font-semibold text-green">Start a project →</Link></div>
-      </div>
-      <div className="col-span-12 mt-12 self-center md:mt-14 lg:col-start-8 lg:col-span-5 lg:mt-0 lg:-ml-[14%] lg:w-[114%] xl:-ml-[24%] xl:w-[124%] 2xl:-ml-[28%] 2xl:w-[128%]">
-        <SouthAfricaMap />
+      <div className="col-span-12 grid gap-x-14 gap-y-12 lg:grid-cols-[56fr_44fr] lg:items-start">
+        <div className="min-w-0">
+          <p className="mb-8 flex items-center gap-4 text-xl font-medium text-green md:text-[22px]"><span aria-hidden="true" className="h-0.5 w-10 bg-gold" />A Pretoria studio for expensive assumptions</p>
+          <h1 className="hero-title font-display" style={{ textWrap: "wrap" }}>Noticed,<br /><span className="text-green">not invented.</span></h1>
+          <p className="mt-9 max-w-2xl text-lg leading-relaxed md:text-xl">We notice the problems people have learned to live with, understand why they persist, and build systems that make them easier to solve.</p>
+          <p className="mt-7 max-w-3xl border-l-2 border-gold pl-5 text-xl font-semibold leading-snug text-green md:text-2xl">Websites, business systems and digital products built around how your organisation actually works.</p>
+          <div className="mt-10 flex flex-wrap items-center gap-8"><Link href="#work" className="link-arrow hero-cta">Explore our work <span aria-hidden="true">→</span></Link><Link href="/contact" className="text-lg font-semibold text-green">Start a project →</Link></div>
+        </div>
+        <div className="min-w-0 lg:mt-6">
+          <SouthAfricaMap />
+        </div>
       </div>
     </section>
     <PretoriaPhoto />

@@ -16,6 +16,7 @@ const groups = [
     links: [
       ["/#studio", "About"],
       ["/contact", "Contact"],
+      ["/privacy", "Privacy"],
     ],
   },
 ];

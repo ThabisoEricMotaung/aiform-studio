@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentType } from "react";
+import Link from "next/link";
 import type { Draft, StepProps } from "./types";
 import { validateStep, stepForField, TOTAL_STEPS } from "./validation";
 import { buildLiveInterpretation } from "@/lib/inquiry";
@@ -224,7 +225,14 @@ export default function IntakeForm() {
       ) : null}
 
       {reviewing && !submitError ? (
-        <p className="field-help mt-6">No polished proposal needed. We&apos;ll start with the problem.</p>
+        <div className="mt-6 space-y-2">
+          <p className="field-help">No polished proposal needed. We&apos;ll start with the problem.</p>
+          <p className="field-help">
+            We&apos;ll use the information you provide to understand your enquiry and respond to you. Your enquiry will be stored so that we can review and respond to it.{" "}
+            <Link href="/privacy" className="underline">Read our Privacy Notice.</Link>
+          </p>
+          <p className="field-help">Please don&apos;t include passwords, access credentials or unnecessary sensitive information.</p>
+        </div>
       ) : null}
 
       <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">

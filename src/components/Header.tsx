@@ -6,11 +6,10 @@ import { usePathname } from "next/navigation";
 import AiFormLockup from "@/components/AiFormLockup";
 
 const links = [
-  { href: "/#work", label: "Work", section: "work" },
-  { href: "/#products", label: "Products", section: "products" },
-  { href: "/#system", label: "System", section: "system" },
+  { href: "/work", label: "Work", section: "work" },
+  { href: "/#services", label: "What we build", section: "services" },
+  { href: "/#system", label: "How we work", section: "system" },
   { href: "/#studio", label: "Studio", section: "studio" },
-  { href: "/#journal", label: "Journal", section: "journal" },
   { href: "/contact", label: "Contact", section: "contact" },
 ];
 

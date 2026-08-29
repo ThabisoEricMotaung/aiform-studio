@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 const liveWebsite = "https://kutlwano-tutoring.vercel.app/";
-const canonicalUrl = "https://aiform-studio.vercel.app/work/wanotuts";
+const canonicalUrl = "https://aiformstudio.co.za/work/wanotuts";
 
 export const metadata: Metadata = {
   title: "WanoTuts case study | AiForm Studio",

@@ -17,9 +17,21 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "AiForm Studio | Noticed, Not Invented",
+  metadataBase: new URL("https://aiformstudio.co.za"),
+  title: { default: "AiForm Studio | Noticed, not invented", template: "%s | AiForm Studio" },
   description:
-    "A studio that notices real problems before deciding what technology they need. We build where assumption becomes expensive.",
+    "Websites, business systems and digital products built around how your organisation actually works. Founder-led in Pretoria, South Africa.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: "/",
+    siteName: "AiForm Studio",
+    title: "AiForm Studio | Noticed, not invented",
+    description: "Websites, business systems and digital products built around how your organisation actually works.",
+    images: [{ url: "/images/aiform-story.png", width: 1200, height: 630, alt: "AiForm Studio — Noticed, not invented" }],
+  },
+  twitter: { card: "summary_large_image", title: "AiForm Studio | Noticed, not invented", description: "Websites, business systems and digital products built around how your organisation actually works.", images: ["/images/aiform-story.png"] },
   icons: {
     icon: [
       {

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import IntakeForm from "@/components/intake/IntakeForm";
 import AlternativeContact from "@/components/contact/AlternativeContact";
-import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
 
-export const metadata: Metadata = { title: "Contact | AiForm Studio" };
+export const metadata: Metadata = { title: "Start a project | AiForm Studio", description: "Tell AiForm Studio what you are trying to solve. No technical brief required.", alternates: { canonical: "/contact" } };
 
 export default function Contact() {
   return (
@@ -30,20 +29,9 @@ export default function Contact() {
             <div className="mt-9 border-t border-line pt-7">
               <p className="chapter-label mb-3">Based in</p>
               <p className="text-muted">
-                607 Fred Messenger Avenue
-                <br />
-                Andeon AH, Pretoria
-                <br />
-                0183, South Africa
+                Pretoria, Gauteng
+                <br />South Africa
               </p>
-              <a
-                href={STUDIO_ADDRESS_MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-block border-b border-line pb-0.5 text-xs text-muted transition-colors hover:border-green hover:text-green"
-              >
-                View on Google Maps ↗
-              </a>
             </div>
             <p className="font-display mt-12 text-xl text-muted">
               The best conversations begin with the problem, not the proposed technology.

@@ -1,5 +1,5 @@
 export type ProjectCategory = "Products" | "Client Systems" | "Experiments";
-export type ProjectStatus = "LIVE" | "PILOT" | "IN DEVELOPMENT" | "DELIVERED" | "DESIGN COMPLETE" | "R&D" | "ACTIVE" | "WRITING";
+export type ProjectStatus = "LIVE" | "PILOT" | "PROTOTYPE" | "IN DEVELOPMENT" | "DELIVERED" | "DESIGN COMPLETE" | "R&D" | "ACTIVE" | "WRITING";
 
 export type Project = {
   id: string;
@@ -20,7 +20,7 @@ export type Project = {
 
 export const projects: Project[] = [
   { id: "aiform-procure", name: "AiForm Procure", context: "Procurement Suite", category: "Products", type: "Product", sector: "Government Procurement", status: "LIVE", summary: "Public opportunity discovery, supplier compliance evidence and readiness signals in one procurement system.", actionLabel: "View case study", actionUrl: "/work/aiform-procure", caseStudyUrl: "/work/aiform-procure", liveUrl: "https://www.aiformprocure.co.za/", featured: true },
-  { id: "aiform-health", name: "AiForm Health", context: "Clinical Practice Platform", category: "Products", type: "Product", sector: "Healthcare", status: "PILOT", summary: "A clinical practice platform entering pilot development.", actionLabel: "Preview platform" },
+  { id: "aiform-health", name: "AiForm Health", context: "Clinical Practice Platform", category: "Products", type: "Product", sector: "Healthcare", status: "PROTOTYPE", summary: "A working website concept was designed and shared with the prospective practice for review, but the project did not progress to production delivery.", actionLabel: "Preview platform" },
   { id: "aiform-cruise", name: "AiForm Cruise", context: "Cruise Booking System", category: "Products", type: "Product", sector: "Tourism", status: "IN DEVELOPMENT", summary: "A cruise booking system in development.", actionLabel: "Coming soon" },
   { id: "wanotuts", name: "WanoTuts", context: "Kutlwano Tutoring Platform", category: "Client Systems", type: "Client System", sector: "Education", status: "LIVE", summary: "A naming, identity and tutoring website built around clearer learner journeys and lesson booking.", actionLabel: "View case study", actionUrl: "/work/wanotuts", caseStudyUrl: "/work/wanotuts", liveUrl: "https://kutlwano-tutoring.vercel.app/", featured: true },
   { id: "residential-construction", name: "Residential Construction", context: "NYAUTSA SS Trading", category: "Client Systems", type: "Client System", sector: "Construction", status: "DELIVERED", summary: "A portfolio for a Gauteng building business, organised around completed work and direct enquiries.", actionLabel: "Visit live website", actionUrl: "https://incredible-cannoli-9f2144.netlify.app/", externalAction: true, liveUrl: "https://incredible-cannoli-9f2144.netlify.app/", featured: true },

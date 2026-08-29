@@ -1,16 +1,260 @@
 "use client";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import { budgetOptions } from "@/lib/inquiry";
-type SimpleDraft = { name: string; organisation: string; email: string; phone: string; problem: string; budget: string; honeypot: string; startedAt: number };
-const EMPTY: SimpleDraft = { name: "", organisation: "", email: "", phone: "", problem: "", budget: "", honeypot: "", startedAt: 0 };
-const STORAGE_KEY = "aiform-simple-inquiry-v1";
+
+import { useEffect, useRef, useState, type ComponentType } from "react";
+import type { Draft, StepProps } from "./types";
+import { validateStep, stepForField, TOTAL_STEPS } from "./validation";
+import { buildLiveInterpretation } from "@/lib/inquiry";
+import ProgressBar from "./ProgressBar";
+import ReviewPanel from "./ReviewPanel";
+import Confirmation from "./Confirmation";
+import Step1BringsYouHere from "./steps/Step1BringsYouHere";
+import Step2CurrentSituation from "./steps/Step2CurrentSituation";
+import Step3Audience from "./steps/Step3Audience";
+import Step4Outcomes from "./steps/Step4Outcomes";
+import Step5Stage from "./steps/Step5Stage";
+import Step6Practical from "./steps/Step6Practical";
+
+const STORAGE_KEY = "aiform-intake-draft-v2";
+const AUTO_ADVANCE_DELAY_MS = 200;
+
+const STEPS: ComponentType<StepProps>[] = [
+  Step1BringsYouHere,
+  Step2CurrentSituation,
+  Step3Audience,
+  Step4Outcomes,
+  Step5Stage,
+  Step6Practical,
+];
+
+// Steps whose question has one mutually-exclusive answer auto-advance
+// instead of waiting for a Continue click. Steps with genuine multi-select
+// questions (or a mix of question types, like the final practical/contact
+// step) keep Continue, since nothing else signals "I'm done choosing."
+const AUTO_ADVANCE_STEPS = new Set([0, 4]);
+
 export default function IntakeForm() {
-  const [draft, setDraft] = useState<SimpleDraft>(EMPTY); const [errors, setErrors] = useState<Record<string, string>>({}); const [submitting, setSubmitting] = useState(false); const [submitted, setSubmitted] = useState(false); const [submitError, setSubmitError] = useState("");
-  useEffect(() => { const restore = window.setTimeout(() => { try { const saved = sessionStorage.getItem(STORAGE_KEY); const restored = saved ? JSON.parse(saved) as Partial<SimpleDraft> : {}; setDraft({ ...EMPTY, ...restored, startedAt: Date.now() }); } catch { setDraft({ ...EMPTY, startedAt: Date.now() }); } }, 0); return () => window.clearTimeout(restore); }, []);
-  useEffect(() => { if (!draft.startedAt || submitted) return; try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draft)); } catch {} }, [draft, submitted]);
-  const update = (field: keyof SimpleDraft, value: string) => { setDraft((current) => ({ ...current, [field]: value })); setErrors((current) => ({ ...current, [field]: "" })); };
-  async function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); const nextErrors: Record<string, string> = {}; if (!draft.name.trim()) nextErrors.name = "Please let us know your name."; if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email.trim())) nextErrors.email = "Please enter a valid email address."; if (!draft.problem.trim()) nextErrors.problem = "Tell us a little about what you are trying to solve."; if (Object.keys(nextErrors).length) { setErrors(nextErrors); return; } setSubmitting(true); setSubmitError(""); try { const response = await fetch("/api/inquiries", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ enquiryType: "unsure", currentProblems: ["other"], otherProblemNote: draft.problem, audiences: ["not_sure"], desiredOutcomes: ["still_figuring_out"], projectStage: "not_sure", timeline: "flexible", additionalContext: draft.problem, budget: draft.budget || undefined, name: draft.name, organisation: draft.organisation, email: draft.email, phone: draft.phone, honeypot: draft.honeypot, startedAt: draft.startedAt }) }); const result = await response.json() as { ok?: boolean; error?: string }; if (!response.ok || !result.ok) throw new Error(result.error || "We couldn't send that yet. Please try again."); setSubmitted(true); try { sessionStorage.removeItem(STORAGE_KEY); } catch {} } catch (error) { setSubmitError(error instanceof Error ? error.message : "We couldn't send that yet. Please try again."); } finally { setSubmitting(false); } }
-  if (submitted) return <div className="border-t-2 border-gold pt-8" role="status"><p className="chapter-label">Enquiry received</p><h2 className="mt-5 font-display text-4xl text-green">Thank you. We&apos;ll be in touch.</h2><p className="mt-5 max-w-xl leading-relaxed text-muted">Your note is safely with AiForm. Expect a reply at the email address you provided.</p></div>;
-  return <form onSubmit={submit} noValidate aria-labelledby="inquiry-form-title" className="border-t-2 border-gold pt-8"><div><p className="chapter-label">A short note is enough</p><h2 id="inquiry-form-title" className="mt-4 font-display text-3xl">Tell us about the problem.</h2></div><div className="mt-8 grid gap-6 sm:grid-cols-2"><Field label="Name" required error={errors.name}><input className="field-input" value={draft.name} onChange={(e) => update("name", e.target.value)} autoComplete="name" aria-invalid={Boolean(errors.name)} /></Field><Field label="Business / organisation"><input className="field-input" value={draft.organisation} onChange={(e) => update("organisation", e.target.value)} autoComplete="organization" /></Field><Field label="Email" required error={errors.email}><input className="field-input" type="email" value={draft.email} onChange={(e) => update("email", e.target.value)} autoComplete="email" aria-invalid={Boolean(errors.email)} /></Field><Field label="WhatsApp / phone" optional><input className="field-input" type="tel" value={draft.phone} onChange={(e) => update("phone", e.target.value)} autoComplete="tel" /></Field><div className="sm:col-span-2"><Field label="What are you trying to solve?" required error={errors.problem}><textarea className="field-textarea" value={draft.problem} onChange={(e) => update("problem", e.target.value)} placeholder="Describe what is difficult, slow, unclear or not working." aria-invalid={Boolean(errors.problem)} /></Field></div><div className="sm:col-span-2"><Field label="Budget range" optional><select className="field-input" value={draft.budget} onChange={(e) => update("budget", e.target.value)}><option value="">Prefer not to say yet</option>{budgetOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></Field></div></div><div className="intake-honeypot" aria-hidden="true"><label>Website<input tabIndex={-1} autoComplete="off" value={draft.honeypot} onChange={(e) => update("honeypot", e.target.value)} /></label></div>{submitError ? <p className="mt-6 text-sm text-clay" role="alert">{submitError} You can also email <a className="underline" href="mailto:hello@aiformstudio.co.za">hello@aiformstudio.co.za</a>.</p> : null}<button type="submit" disabled={submitting} className="mt-8 min-h-12 bg-green px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-clay focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold disabled:opacity-60">{submitting ? "Sending…" : "Tell us about the problem"}</button></form>;
+  const [hydrated, setHydrated] = useState(false);
+  const [step, setStep] = useState(0);
+  const [draft, setDraft] = useState<Draft>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [reviewing, setReviewing] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const autoAdvanceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelAutoAdvance = () => {
+    if (autoAdvanceTimeout.current) {
+      clearTimeout(autoAdvanceTimeout.current);
+      autoAdvanceTimeout.current = null;
+    }
+  };
+
+  useEffect(() => cancelAutoAdvance, []);
+
+  useEffect(() => {
+    let restored: Draft = {};
+    let restoredStep = 0;
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as { draft?: Draft; step?: number };
+        restored = saved.draft ?? {};
+        restoredStep = saved.step ?? 0;
+      }
+    } catch {
+      // Storage may be unavailable (private mode, quota) — start fresh.
+    }
+    // One-time sync from sessionStorage on mount, gated behind `hydrated` so
+    // the server-rendered markup never has to guess at browser-only state
+    // (the same pattern libraries like next-themes use to avoid a hydration
+    // mismatch). A lazy useState initializer would run during the
+    // hydration render itself and reintroduce that mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDraft({ ...restored, startedAt: restored.startedAt ?? Date.now() });
+    setStep(restoredStep);
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ draft, step }));
+    } catch {
+      // Draft still lives in memory even if it can't persist.
+    }
+  }, [draft, step, hydrated]);
+
+  useEffect(() => {
+    panelRef.current?.focus();
+  }, [step, reviewing, submitted]);
+
+  const update = (patch: Draft) => {
+    setDraft((prev) => ({ ...prev, ...patch }));
+    setErrors({});
+  };
+
+  // For single-select, mutually-exclusive questions: the checked style
+  // shows the instant the input's native `checked` state changes (pure CSS,
+  // independent of this re-render), then this waits briefly so the
+  // selection reads as acknowledged before moving on.
+  const selectAndAdvance = (patch: Draft) => {
+    setDraft((prev) => ({ ...prev, ...patch }));
+    setErrors({});
+    cancelAutoAdvance();
+    autoAdvanceTimeout.current = setTimeout(() => {
+      setStep((current) => Math.min(current + 1, TOTAL_STEPS - 1));
+    }, AUTO_ADVANCE_DELAY_MS);
+  };
+
+  const goNext = () => {
+    cancelAutoAdvance();
+    const stepErrors = validateStep(step, draft);
+    if (Object.keys(stepErrors).length > 0) {
+      setErrors(stepErrors);
+      return;
+    }
+    setErrors({});
+    if (step === TOTAL_STEPS - 1) {
+      setReviewing(true);
+    } else {
+      setStep((current) => current + 1);
+    }
+  };
+
+  const goBack = () => {
+    cancelAutoAdvance();
+    if (reviewing) {
+      setReviewing(false);
+      return;
+    }
+    setErrors({});
+    setStep((current) => Math.max(0, current - 1));
+  };
+
+  const editStep = (targetStep: number) => {
+    cancelAutoAdvance();
+    setReviewing(false);
+    setStep(targetStep);
+  };
+
+  const submit = async () => {
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draft),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        if (result.fieldErrors) {
+          setErrors(result.fieldErrors);
+          const firstField = Object.keys(result.fieldErrors)[0];
+          if (firstField) {
+            setReviewing(false);
+            setStep(stepForField(firstField));
+          }
+        }
+        setSubmitError(
+          result.error ||
+            "I couldn't send that yet. Your answers haven't been lost. Please try again.",
+        );
+        return;
+      }
+
+      setSubmitted(true);
+      try {
+        sessionStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // Nothing else to clean up if storage isn't available.
+      }
+    } catch {
+      setSubmitError("I couldn't send that yet. Your answers haven't been lost. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (!hydrated) {
+    return <div className="intake-panel" style={{ minHeight: "28rem" }} aria-hidden="true" />;
+  }
+
+  if (submitted) {
+    return <Confirmation name={draft.name} email={draft.email} />;
+  }
+
+  const StepComponent = STEPS[step];
+  const isAutoAdvanceStep = !reviewing && AUTO_ADVANCE_STEPS.has(step);
+  // ReviewPanel shows its own final version of this, so it's only rendered
+  // here while still moving through the steps.
+  const liveInterpretation = reviewing ? null : buildLiveInterpretation(draft);
+
+  return (
+    <div className="intake-panel">
+      {!reviewing ? <ProgressBar step={step} total={TOTAL_STEPS} /> : null}
+
+      <div ref={panelRef} tabIndex={-1} className="mt-8 outline-none">
+        {reviewing ? (
+          <ReviewPanel draft={draft} onEdit={editStep} />
+        ) : (
+          <StepComponent
+            draft={draft}
+            errors={errors}
+            update={update}
+            selectAndAdvance={selectAndAdvance}
+          />
+        )}
+      </div>
+
+      {liveInterpretation ? (
+        <div className="intake-interpretation">
+          <p className="chapter-label uppercase">What we&apos;re hearing</p>
+          <p className="intake-interpretation-text">{liveInterpretation}</p>
+        </div>
+      ) : null}
+
+      {submitError ? (
+        <p className="field-error mt-6" role="alert">
+          {submitError}
+        </p>
+      ) : null}
+
+      {reviewing && !submitError ? (
+        <p className="field-help mt-6">No polished proposal needed. We&apos;ll start with the problem.</p>
+      ) : null}
+
+      <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
+        <button
+          type="button"
+          onClick={goBack}
+          disabled={step === 0 && !reviewing}
+          className="min-h-11 text-sm font-medium text-muted transition-colors hover:text-green disabled:pointer-events-none disabled:opacity-0"
+        >
+          ← Back
+        </button>
+        {reviewing ? (
+          <button
+            type="button"
+            onClick={submit}
+            disabled={submitting}
+            className="font-display min-h-11 rounded-md bg-green px-6 py-3 text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          >
+            {submitting ? "Sending…" : "Send project brief →"}
+          </button>
+        ) : isAutoAdvanceStep ? null : (
+          <button
+            type="button"
+            onClick={goNext}
+            className="font-display min-h-11 rounded-md bg-green px-6 py-3 text-sm text-white transition-opacity hover:opacity-90"
+          >
+            Continue →
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }
-function Field({ label, optional = false, required = false, error, children }: { label: string; optional?: boolean; required?: boolean; error?: string; children: ReactNode }) { return <label className="block"><span className="field-label">{label} {optional ? <span className="font-normal text-muted">(optional)</span> : null}{required ? <span className="text-clay" aria-hidden="true"> *</span> : null}</span>{children}{error ? <span className="field-error" role="alert">{error}</span> : null}</label>; }

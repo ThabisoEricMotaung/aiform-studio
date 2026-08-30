@@ -89,6 +89,7 @@ export default function SouthAfricaMap() {
         </g>
         <g
           aria-hidden="true"
+          className="sa-map-silhouette"
           stroke="#FFFFFF"
           strokeWidth="1.35"
           strokeLinejoin="round"

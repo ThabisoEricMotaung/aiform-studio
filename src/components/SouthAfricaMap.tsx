@@ -136,7 +136,7 @@ export default function SouthAfricaMap() {
             strokeWidth="2"
           />
           <path
-            d="M426 145.9H581"
+            d="M426 145.9L455 163H581"
             strokeWidth="1.25"
             className="hidden lg:block"
           />

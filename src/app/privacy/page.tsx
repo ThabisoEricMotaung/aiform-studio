@@ -13,8 +13,9 @@ const sections = [
     body: (
       <>
         <p className="mt-5 text-lg leading-8 text-text/85">
-          AiForm Studio is a Pretoria-based studio led by Thabiso Eric
-          Motaung. For the purposes of this notice, AiForm Studio is
+          AiForm Studio (Pty) Ltd (registration number 2026/692621/07) is a
+          South African private company based in Pretoria, led by Thabiso
+          Eric Motaung. For the purposes of this notice, AiForm Studio is
           responsible for deciding how information submitted through this
           website is used.
         </p>

@@ -44,6 +44,9 @@ export default function Contact() {
               >
                 View on Google Maps ↗
               </a>
+              <p className="mt-4 text-xs text-muted">
+                AiForm Studio (Pty) Ltd · Registration no. 2026/692621/07
+              </p>
             </div>
             <p className="font-display mt-12 text-xl text-muted">
               The best conversations begin with the problem, not the proposed technology.

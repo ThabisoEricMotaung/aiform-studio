@@ -118,7 +118,9 @@ export default function Footer() {
         </div>
         <div className="text-xs text-white/65 md:text-right">
           <p>© {new Date().getFullYear()} AiForm Studio</p>
-          <p className="mt-1 text-[#e0c98f]">Noticed, not invented.</p>
+          <p className="mt-1 text-[10px] text-white/45">AiForm Studio (Pty) Ltd · Reg. 2026/692621/07</p>
+          <p className="mt-1 text-[10px] text-white/45">B-BBEE Level 1 Contributor</p>
+          <p className="mt-2 text-[#e0c98f]">Noticed, not invented.</p>
         </div>
       </div>
     </footer>

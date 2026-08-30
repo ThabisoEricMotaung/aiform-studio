@@ -158,14 +158,15 @@ a:focus-visible {
 /* Two-layer drop-shadow on the province group only (not the Pretoria
    marker/labels), so the shadow follows South Africa's silhouette — a
    tight contact shadow plus a softer, wider ambient one — rather than a
-   flat rectangular card shadow. Tinted with the brand green instead of
-   black to read as paper, not a UI sticker. Blur radii are kept modest
-   relative to the Lesotho gap between Free State/KwaZulu-Natal/Eastern
-   Cape (~60-80 viewBox units) so the shadow doesn't bridge into it. */
+   flat rectangular card shadow. Values are in the map's own viewBox user
+   units (this filter sits on an SVG <g>, not an HTML box), which render
+   at roughly 0.7-0.8x on screen at desktop widths. Kept comfortably
+   under the Lesotho gap between Free State/KwaZulu-Natal/Eastern Cape
+   (~60-80 viewBox units) so the ambient blur can't bridge into it. */
 .sa-map-silhouette {
   filter:
-    drop-shadow(1px 4px 3px rgba(23, 59, 44, 0.22))
-    drop-shadow(3px 11px 12px rgba(23, 59, 44, 0.12));
+    drop-shadow(2px 6px 5px rgba(20, 30, 24, 0.3))
+    drop-shadow(5px 16px 22px rgba(20, 30, 24, 0.2));
 }
 .engine-step {
   border-bottom: 1px solid var(--color-line);

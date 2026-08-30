@@ -66,8 +66,8 @@ export default function SouthAfricaMap() {
       <svg
         role="img"
         aria-labelledby="south-africa-map-title south-africa-map-description"
-        viewBox="0 0 760 500"
-        className="h-auto w-[126%] max-w-none overflow-visible lg:w-full"
+        viewBox="14 10 677 480"
+        className="h-auto w-[112%] max-w-none overflow-visible lg:w-full"
       >
         <title id="south-africa-map-title">
           AiForm Studio in Pretoria, South Africa
@@ -136,7 +136,7 @@ export default function SouthAfricaMap() {
             strokeWidth="2"
           />
           <path
-            d="M426 145.9H650"
+            d="M426 145.9H581"
             strokeWidth="1.25"
             className="hidden lg:block"
           />
@@ -151,7 +151,7 @@ export default function SouthAfricaMap() {
             N
           </text>
           <text
-            x="662"
+            x="593"
             y="143"
             fontSize="15"
             fontWeight="600"
@@ -159,10 +159,10 @@ export default function SouthAfricaMap() {
           >
             PRETORIA
           </text>
-          <text x="662" y="163" fontSize="9" letterSpacing="1.1" fill="#565B57">
+          <text x="593" y="163" fontSize="9" letterSpacing="1.1" fill="#565B57">
             GAUTENG / SOUTH AFRICA
           </text>
-          <text x="662" y="181" fontSize="8" letterSpacing=".8" fill="#7A7E79">
+          <text x="593" y="181" fontSize="8" letterSpacing=".8" fill="#7A7E79">
             25.7479° S / 28.2293° E
           </text>
           <text x="20" y="482" fontSize="8" letterSpacing="1.1" fill="#8B8F89">

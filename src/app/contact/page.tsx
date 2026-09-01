@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <section className="min-h-[70vh] px-6 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <p className="chapter-label mb-7">Start a conversation</p>
+        <p className="chapter-label mb-7">Smart project intake</p>
         <h1 className="font-display max-w-3xl text-4xl leading-[1.05] md:text-6xl">
           Tell us what you&apos;re trying to solve.
         </h1>
@@ -18,14 +18,14 @@ export default function Contact() {
         </p>
 
         <div className="mt-16 grid grid-cols-1 gap-16 md:grid-cols-[0.8fr_1.2fr] md:gap-x-20">
-          <div className="md:border-r md:border-line md:pr-12">
+          <div className="order-2 md:order-1 md:border-r md:border-line md:pr-12">
             <div className="rule-gold mb-8" />
             <p className="chapter-label mb-3">Email</p>
             <a
-              href="mailto:hello@aiformstudio.co.za"
+              href="mailto:aiformstudio@gmail.com"
               className="font-display break-all text-2xl transition-colors hover:text-green md:text-3xl"
             >
-              hello@aiformstudio.co.za
+              aiformstudio@gmail.com
             </a>
             <div className="mt-9 border-t border-line pt-7">
               <p className="chapter-label mb-3">Based in</p>
@@ -54,7 +54,8 @@ export default function Contact() {
             <AlternativeContact />
           </div>
 
-          <div>
+          <div className="order-1 md:order-2">
+            <p className="chapter-label mb-5">Start a project</p>
             <IntakeForm />
           </div>
         </div>

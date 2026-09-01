@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import AiFormLockup from "@/components/AiFormLockup";
 
 const links = [
-  { href: "/work", label: "Work", section: "work" },
-  { href: "/#services", label: "What we build", section: "services" },
-  { href: "/#system", label: "How we work", section: "system" },
-  { href: "/#studio", label: "Studio", section: "studio" },
+  { href: "/", label: "Home", section: "home" },
+  { href: "/#services", label: "What We Build", section: "services" },
+  { href: "/work", label: "Our Work", section: "work" },
+  { href: "/#about", label: "About", section: "about" },
   { href: "/contact", label: "Contact", section: "contact" },
 ];
 
@@ -22,8 +22,6 @@ export default function Header() {
       ? observedSection
       : pathname.startsWith("/work")
         ? "work"
-      : pathname.startsWith("/journal")
-        ? "journal"
         : pathname.startsWith("/contact")
           ? "contact"
           : "";
@@ -60,7 +58,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-sm">
-      <div className="flex h-[76px] items-center justify-between px-6 md:h-20 md:px-14">
+      <div className="flex h-[72px] items-center justify-between px-6 md:px-14">
         <Link
           href="/"
           aria-label="AiForm Studio home"
@@ -76,7 +74,7 @@ export default function Header() {
         </Link>
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-5 lg:flex xl:gap-8"
+          className="hidden items-center gap-5 md:flex xl:gap-8"
         >
           {links.map(({ href, label, section }) => (
             <Link
@@ -94,7 +92,7 @@ export default function Header() {
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen((open) => !open)}
-          className="min-h-11 min-w-11 text-right text-xs font-medium uppercase tracking-[.1em] text-green lg:hidden"
+          className="min-h-11 min-w-11 text-right text-xs font-medium uppercase tracking-[.1em] text-green md:hidden"
         >
           {menuOpen ? "Close" : activeSection || "Menu"}
         </button>
@@ -102,7 +100,7 @@ export default function Header() {
       <nav
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        className={`${menuOpen ? "grid" : "hidden"} grid-cols-2 border-t border-line bg-white px-6 py-5 lg:hidden`}
+        className={`${menuOpen ? "grid" : "hidden"} grid-cols-1 border-t border-line bg-white px-6 py-4 md:hidden`}
       >
         {links.map(({ href, label, section }) => (
           <Link

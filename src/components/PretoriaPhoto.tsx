@@ -1,2 +1,8 @@
 import Image from "next/image";
-export default function PretoriaPhoto(){return <figure className="relative w-full overflow-hidden bg-green"><Image src="/images/Panoramic_View_Of_The_Union_Building_Pretoria,_South_Africa.jpg" alt="Panoramic view of the Union Buildings and Pretoria" width={8916} height={2432} preload sizes="100vw" className="w-full h-auto min-h-[260px] object-cover"/><div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"/><figcaption className="absolute inset-x-0 bottom-0 editorial-grid pb-6 md:pb-8 text-white"><p className="col-span-7 text-[10px] md:text-xs tracking-[.13em]">PRETORIA / SOUTH AFRICA</p><p className="col-span-5 text-right text-[10px] md:text-xs text-white/80">25.7479° S / 28.2293° E</p></figcaption></figure>}
+
+export default function PretoriaPhoto() {
+  return <figure className="pretoria-photo" aria-label="AiForm Studio is based in Pretoria, South Africa">
+    <Image src="/images/Panoramic_View_Of_The_Union_Building_Pretoria,_South_Africa.jpg" alt="Panoramic view of the Union Buildings and Pretoria" fill preload sizes="(max-width: 767px) 100vw, 58vw" className="object-cover object-center" />
+    <figcaption>Pretoria / South Africa</figcaption>
+  </figure>;
+}

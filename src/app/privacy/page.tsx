@@ -21,8 +21,8 @@ const sections = [
         </p>
         <p className="mt-5 text-lg leading-8 text-text/85">
           You can reach us at{" "}
-          <a href="mailto:hello@aiformstudio.co.za" className="underline decoration-line underline-offset-4 hover:text-green">
-            hello@aiformstudio.co.za
+          <a href="mailto:aiformstudio@gmail.com" className="underline decoration-line underline-offset-4 hover:text-green">
+            aiformstudio@gmail.com
           </a>
           , or at 607 Fred Messenger Avenue, Andeon AH, Pretoria, 0183, South
           Africa.
@@ -197,8 +197,8 @@ const sections = [
         <p className="mt-5 text-lg leading-8 text-text/85">
           If you have a question about this notice, or want to exercise any
           of the rights above, contact us at{" "}
-          <a href="mailto:hello@aiformstudio.co.za" className="underline decoration-line underline-offset-4 hover:text-green">
-            hello@aiformstudio.co.za
+          <a href="mailto:aiformstudio@gmail.com" className="underline decoration-line underline-offset-4 hover:text-green">
+            aiformstudio@gmail.com
           </a>{" "}
           or 607 Fred Messenger Avenue, Andeon AH, Pretoria, 0183, South
           Africa.

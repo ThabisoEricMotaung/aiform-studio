@@ -1,13 +1,7 @@
 "use client";
 
+import { buildWhatsAppHref } from "@/lib/contact-links";
 import { IconWhatsApp } from "./icons";
-
-const WHATSAPP_MESSAGE = "Hi AiForm Studio, I'd like to talk about something I'm working on.";
-
-function buildWhatsAppHref(rawNumber: string): string {
-  const digitsOnly = rawNumber.replace(/[^\d]/g, "");
-  return `https://wa.me/${digitsOnly}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
-}
 
 type WhatsAppLinkProps = {
   className?: string;

@@ -1,128 +1,65 @@
 import Link from "next/link";
-import AiFormLockup from "@/components/AiFormLockup";
+import CalendlyBooking from "@/components/contact/CalendlyBooking";
+import WhatsAppLink from "@/components/contact/WhatsAppLink";
+import { IconCalendar, IconMail, IconWhatsApp } from "@/components/contact/icons";
+import { buildWhatsAppHref } from "@/lib/contact-links";
 import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
 
-const groups = [
-  {
-    title: "Explore",
-    links: [
-      ["/work", "Work"],
-      ["/#services", "What we build"],
-      ["/#system", "How we work"],
-    ],
-  },
-  {
-    title: "Studio",
-    links: [
-      ["/#studio", "About"],
-      ["/contact", "Contact"],
-      ["/privacy", "Privacy"],
-    ],
-  },
-];
-
-function FooterBotanical() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 460 420"
-      className="pointer-events-none absolute -bottom-20 -right-20 w-[420px] text-green opacity-[.055] md:right-2 md:w-[500px]"
-    >
-      <g fill="none" stroke="currentColor" strokeWidth="1">
-        <path d="M430 12C344 104 293 192 262 286c-18 53-51 94-99 123" />
-        <path d="M344 104c-50-12-94-3-132 29 54 11 98 1 132-29Z" />
-        <path d="M293 192c46-2 86 14 119 48-51 3-91-14-119-48Z" />
-        <path d="M262 286c-52-10-98 2-137 36 55 9 100-4 137-36Z" />
-        <circle cx="293" cy="192" r="3" fill="currentColor" stroke="none" />
-      </g>
-    </svg>
-  );
-}
+const buildLinks = [["/#services", "Websites"], ["/#services", "Business Systems"], ["/#services", "Automation & AI"], ["/#how-we-work", "How We Work"]];
+const exploreLinks = [["/work", "Our Work"], ["/#about", "About"], ["/contact", "Contact"], ["/privacy", "Privacy"]];
 
 export default function Footer() {
-  return (
-    <footer id="contact" className="scroll-mt-24 border-t border-line">
-      <div className="editorial-grid relative overflow-hidden bg-[#F7F4EC] py-16 md:py-20">
-        <FooterBotanical />
-        <div className="relative z-10 col-span-12 border-b border-line pb-12 md:col-span-7 md:border-b-0 md:pb-0">
-          <p className="chapter-label">Start a conversation</p>
-          <h2 className="secondary-title mt-6 max-w-2xl">
-            Have something worth figuring out?
-          </h2>
-          <p className="mt-6 max-w-xl leading-relaxed text-muted">
-            We&apos;re interested in problems where information is messy,
-            verification matters, and the obvious solution hasn&apos;t quite
-            worked.
-          </p>
-          <div className="mt-8">
-            <p className="chapter-label uppercase">Email</p>
-            <div className="mt-4 flex flex-col items-start gap-2">
-              <a href="mailto:hello@aiformstudio.co.za" className="link-arrow">
-                hello@aiformstudio.co.za ↗
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="relative z-10 col-span-12 mt-10 grid grid-cols-2 gap-8 md:col-start-9 md:col-span-4 md:mt-0 md:grid-cols-3">
-          {groups.map((group) => (
-            <div key={group.title}>
-              <p className="chapter-label uppercase">{group.title}</p>
-              <nav
-                aria-label={`${group.title} links`}
-                className="mt-5 flex flex-col gap-3"
-              >
-                {group.links.map(([href, label]) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    className="text-sm text-muted transition-colors hover:text-green"
-                  >
-                    {label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          ))}
-          <div className="col-span-2 md:col-span-1">
-            <p className="chapter-label uppercase">Based in</p>
-            <p className="mt-5 text-sm leading-relaxed text-muted">
-              607 Fred Messenger Avenue
-              <br />
-              Andeon AH, Pretoria
-              <br />
-              0183, South Africa
-            </p>
-            <a
-              href={STUDIO_ADDRESS_MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 inline-block border-b border-line pb-0.5 text-xs text-muted transition-colors hover:border-green hover:text-green"
-            >
-              View on Google Maps ↗
-            </a>
+  const whatsappNumber = process.env.NEXT_PUBLIC_STUDIO_WHATSAPP;
+  const whatsappHref = whatsappNumber ? buildWhatsAppHref(whatsappNumber) : undefined;
+  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+
+  return <footer id="contact" className="border-t border-line bg-white">
+    <div className="footer-closing editorial-grid">
+      <div className="col-span-12 lg:col-span-6">
+        <p className="footer-eyebrow">AiForm Studio</p>
+        <p className="footer-statement">Useful digital infrastructure, shaped around the work.</p>
+        <p className="footer-statement-support">Founder-led in Pretoria, South Africa.</p>
+      </div>
+      <div className="col-span-12 mt-10 lg:col-span-6 lg:mt-0 lg:border-l lg:border-line lg:pl-12">
+        <h3 className="footer-cta-heading">Have something worth figuring out?</h3>
+        <div className="footer-cta-actions">
+          <Link href="/contact" className="button-primary">Start a project <span aria-hidden="true">→</span></Link>
+          <div className="footer-cta-secondary">
+            <CalendlyBooking triggerLabel="Book a conversation →" triggerSubtitle="" triggerClassName="text-link footer-cta-link" />
+            <WhatsAppLink title="Chat on WhatsApp →" subtitle="" className="text-link footer-cta-link footer-cta-link-icon" />
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-6 bg-green px-6 py-7 text-white md:flex-row md:items-center md:justify-between md:px-14">
-        <AiFormLockup
-          product="Studio"
-          variant="studio"
-          className="text-[11px] text-white"
-          markClassName="h-8"
-        />
-        <div className="text-xs text-white/70">
-          <p>Pretoria, South Africa</p>
-          <p className="mt-1 text-[10px] text-white/45">
-            Union Buildings photograph: CC BY-SA / Wikimedia Commons
-          </p>
-        </div>
-        <div className="text-xs text-white/65 md:text-right">
-          <p>© {new Date().getFullYear()} AiForm Studio</p>
-          <p className="mt-1 text-[10px] text-white/45">AiForm Studio (Pty) Ltd · Reg. 2026/692621/07</p>
-          <p className="mt-1 text-[10px] text-white/45">B-BBEE Level 1 Contributor</p>
-          <p className="mt-2 text-[#e0c98f]">Noticed, not invented.</p>
+    </div>
+
+    <div className="footer-nav editorial-grid border-t border-line">
+      <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+        <p className="footer-heading">What We Build</p>
+        <nav aria-label="What we build links" className="footer-links">{buildLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
+      </div>
+      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-0 lg:col-span-3">
+        <p className="footer-heading">Explore</p>
+        <nav aria-label="Explore links" className="footer-links">{exploreLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
+      </div>
+      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
+        <p className="footer-heading">Visit</p>
+        <p className="footer-address">607 Fred Messenger Avenue<br />Andeon AH<br />Pretoria, 0183<br />South Africa</p>
+        <a href={STUDIO_ADDRESS_MAPS_URL} target="_blank" rel="noopener noreferrer" className="text-link mt-3">View on Google Maps <span aria-hidden="true">↗</span></a>
+      </div>
+      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
+        <p className="footer-heading">Connect</p>
+        <div className="footer-links footer-links-icon">
+          <a href="mailto:aiformstudio@gmail.com"><IconMail className="footer-link-icon" aria-hidden="true" /> aiformstudio@gmail.com</a>
+          {whatsappHref ? <a href={whatsappHref} target="_blank" rel="noopener noreferrer"><IconWhatsApp className="footer-link-icon" aria-hidden="true" /> Chat on WhatsApp</a> : null}
+          {calendlyUrl ? <a href={calendlyUrl} target="_blank" rel="noopener noreferrer"><IconCalendar className="footer-link-icon" aria-hidden="true" /> Book a conversation</a> : null}
         </div>
       </div>
-    </footer>
-  );
+    </div>
+
+    <div className="footer-meta border-t border-line">
+      <p>© {new Date().getFullYear()} AiForm Studio (Pty) Ltd</p>
+      <p>B-BBEE Level 1 Contributor</p>
+      <p className="text-green">Noticed, not invented.</p>
+    </div>
+  </footer>;
 }

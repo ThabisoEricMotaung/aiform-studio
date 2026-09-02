@@ -62,7 +62,7 @@ export default function Footer() {
     <div className="footer-meta border-t border-line">
       <p>© {new Date().getFullYear()} AiForm Studio (Pty) Ltd</p>
       <p>B-BBEE Level 1 Contributor</p>
-      <p className="text-green">Noticed, not invented.</p>
+      <p className="footer-meta-brand">Noticed, not invented.</p>
     </div>
   </footer>;
 }

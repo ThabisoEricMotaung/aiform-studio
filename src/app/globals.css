@@ -157,10 +157,12 @@ a:focus-visible {
   z-index: 0;
   width: min(58%, 70rem);
   overflow: hidden;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 16%, rgba(0,0,0,.45) 42%, rgba(0,0,0,.78) 66%, rgba(0,0,0,.85) 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.08) 18%, rgba(0,0,0,.45) 38%, rgba(0,0,0,.8) 58%, #000 75%, #000 100%);
 }
 .pretoria-photo img { filter: contrast(1.04) saturate(1.05); }
-.pretoria-photo figcaption { position: absolute; right: 1.25rem; bottom: 1rem; z-index: 1; border-radius: 999px; background: rgba(255,255,255,.85); padding: .3rem .7rem; color: var(--color-green); font-size: 0.6rem; letter-spacing: .12em; text-transform: uppercase; }
+.pretoria-caption { position: absolute; right: 1.75rem; bottom: 2rem; z-index: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 0.2rem; text-align: right; text-shadow: 0 1px 2px rgba(255,255,255,.9), 0 1px 10px rgba(255,255,255,.75); }
+.pretoria-caption-name { font-size: 0.7rem; font-weight: 650; letter-spacing: .16em; text-transform: uppercase; color: var(--color-green); }
+.pretoria-caption-coords { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 0.62rem; letter-spacing: .05em; color: rgba(23,59,44,.72); }
 .philosophy-block { max-width: 42rem; margin-top: clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--color-text); padding-top: 1.5rem; }
 .philosophy-block h3 { margin-top: 1.25rem; font: 650 clamp(1.75rem, 3.3vw, 3rem)/1.08 var(--font-inter-tight); letter-spacing: -0.035em; }
 .philosophy-block > p:last-child { margin-top: 1.5rem; color: var(--color-muted); line-height: 1.7; }
@@ -201,9 +203,11 @@ a:focus-visible {
   .capability-row, .work-row { grid-template-columns: 2.5rem 1fr; gap: .75rem 1rem; }
   .capability-row > p:last-child, .work-row > div:last-child { grid-column: 2; }
   .process-step + .process-step { border-top: 1px solid var(--color-line); }
-  .pretoria-photo { position: relative; inset: auto; grid-column: 1 / -1; width: calc(100% + 3rem); height: 12rem; margin: 2.25rem -1.5rem 0; mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.5) 14%, rgba(0,0,0,.62) 55%, rgba(0,0,0,.62) 85%, transparent 100%); }
+  .pretoria-photo { position: relative; inset: auto; grid-column: 1 / -1; width: calc(100% + 3rem); height: 12rem; margin: 2.25rem -1.5rem 0; mask-image: linear-gradient(90deg, rgba(0,0,0,.55) 0%, #000 10%, #000 90%, rgba(0,0,0,.55) 100%); }
   .pretoria-photo img { filter: contrast(1.04) saturate(1.05); }
-  .pretoria-photo figcaption { right: 1.5rem; bottom: 1.25rem; }
+  .pretoria-caption { right: 1.25rem; bottom: 1.25rem; }
+  .pretoria-caption-name { font-size: 0.62rem; }
+  .pretoria-caption-coords { font-size: 0.56rem; }
   .founder-row { grid-template-columns: 1fr; gap: 1.5rem; }
   .footer-meta { grid-template-columns: 1fr; text-align: left; gap: .35rem; }
   .footer-meta > :last-child { text-align: left; }

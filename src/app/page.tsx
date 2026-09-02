@@ -62,12 +62,11 @@ export default function Home() {
         <h2 id="founder-title" className="section-title">Built close to the problem.</h2>
         <div className="founder-row">
           <div>
-            <Image src="/images/founder.jpg" alt="Dr Thabiso Eric Motaung, Founder of AiForm Studio" width={104} height={104} className="founder-portrait" />
-            <p className="founder-name">Dr Thabiso Eric Motaung</p>
+            <Image src="/images/founder.jpg" alt="TE Motaung, Founder of AiForm Studio" width={104} height={104} className="founder-portrait" />
+            <p className="founder-name">TE Motaung</p>
             <p className="founder-role">Founder &amp; Builder</p>
-            <p className="founder-academic">Senior Lecturer, University of Pretoria</p>
           </div>
-          <p className="section-intro">AiForm Studio is led by Dr Thabiso Eric Motaung, a builder and academic based in Pretoria. The Studio grew from a simple approach: understand how people actually work, notice where systems create unnecessary friction, and build something better around that reality.</p>
+          <p className="section-intro">AiForm Studio is led by TE Motaung, a builder based in Pretoria. The Studio grew from a simple approach: understand how people actually work, notice where systems create unnecessary friction, and build something better around that reality.</p>
         </div>
       </div>
     </section>

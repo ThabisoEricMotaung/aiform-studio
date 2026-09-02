@@ -43,11 +43,11 @@ export default function Footer() {
     <div className="footer-nav editorial-grid border-t border-line">
       <div className="col-span-12 sm:col-span-6 lg:col-span-3">
         <p className="footer-heading">Services</p>
-        <nav aria-label="Services links" className="footer-links">{buildLinks.map(([href, label]) => <Link key={label} href={href}>{label} <span className="footer-link-arrow" aria-hidden="true">→</span></Link>)}</nav>
+        <nav aria-label="Services links" className="footer-links">{buildLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
       </div>
       <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-0 lg:col-span-3">
         <p className="footer-heading">Explore</p>
-        <nav aria-label="Explore links" className="footer-links">{exploreLinks.map(([href, label]) => <Link key={label} href={href}>{label} <span className="footer-link-arrow" aria-hidden="true">→</span></Link>)}</nav>
+        <nav aria-label="Explore links" className="footer-links">{exploreLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
       </div>
       <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
         <p className="footer-heading">Visit</p>
@@ -73,7 +73,7 @@ export default function Footer() {
       <div className="footer-signoff">
         <span className="footer-signoff-rule" aria-hidden="true" />
         <div>
-          <p className="text-green">Noticed, not invented.</p>
+          <p className="footer-signoff-brand text-green">Noticed, not invented.</p>
           <p className="footer-signoff-location">Pretoria, South Africa.</p>
         </div>
       </div>

@@ -181,18 +181,19 @@ a:focus-visible {
 .footer-cta-heading { max-width: 24rem; font: 650 clamp(1.4rem, 2.2vw, 1.85rem)/1.25 var(--font-inter-tight); letter-spacing: -0.02em; }
 .footer-cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 1.75rem; }
 .footer-cta-secondary { display: flex; flex-wrap: wrap; gap: 1.5rem; }
-.footer-cta-link { border: none; background: none; padding: 0; cursor: pointer; }
+.footer-cta-link { display: inline-flex; align-items: center; min-height: 44px; border: none; background: none; padding: 0; cursor: pointer; }
 .footer-cta-link .contact-alt-action-icon { display: none; }
 .footer-cta-link .contact-alt-action-body { display: contents; }
 .footer-cta-link .contact-alt-action-subtitle { display: none; }
 .footer-cta-link-icon .contact-alt-action-icon { display: inline-flex; width: 18px; height: 18px; }
 .footer-nav { padding-block: clamp(2.5rem, 5vw, 3.25rem); }
 .footer-heading { color: var(--color-green); font-size: 0.68rem; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
-.footer-links { display: flex; flex-direction: column; align-items: flex-start; gap: .7rem; margin-top: 1rem; color: var(--color-muted); font-size: .85rem; }
-.footer-links a { display: inline-flex; align-items: center; gap: .5rem; transition: color 180ms ease; }
+.footer-links { display: flex; flex-direction: column; align-items: flex-start; margin-top: 1rem; color: var(--color-muted); font-size: .85rem; }
+.footer-links a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; transition: color 180ms ease; }
 .footer-links a:hover { color: var(--color-green); }
-.footer-address { margin-top: 1rem; color: var(--color-muted); font-size: .85rem; line-height: 1.6; }
+.footer-address { margin-top: 1rem; color: var(--color-muted); font-size: .85rem; line-height: 1.6; white-space: nowrap; }
 .footer-link-icon { width: 15px; height: 15px; flex-shrink: 0; color: var(--color-green); }
+.footer-maps-link { display: inline-flex; align-items: center; min-height: 44px; }
 .footer-meta { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; padding-block: 1.1rem; padding-inline: clamp(1.5rem, 4vw, 4.5rem); color: var(--color-muted); font-size: .75rem; }
 .footer-meta > :last-child { text-align: right; }
 

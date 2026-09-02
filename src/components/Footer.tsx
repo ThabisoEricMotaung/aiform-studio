@@ -6,14 +6,14 @@ import { buildWhatsAppHref } from "@/lib/contact-links";
 import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
 
 const buildLinks = [["/#services", "Websites"], ["/#services", "Business Systems"], ["/#services", "Automation & AI"], ["/#how-we-work", "How We Work"]];
-const exploreLinks = [["/work", "Our Work"], ["/#about", "About"], ["/contact", "Contact"], ["/privacy", "Privacy"]];
+const exploreLinks = [["/work", "Work"], ["/journal", "Journal"], ["/#about", "About"], ["/contact", "Contact"], ["/privacy", "Privacy"]];
 
 export default function Footer() {
   const whatsappNumber = process.env.NEXT_PUBLIC_STUDIO_WHATSAPP;
   const whatsappHref = whatsappNumber ? buildWhatsAppHref(whatsappNumber) : undefined;
   const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
-  return <footer id="contact" className="border-t border-line bg-white">
+  return <footer id="contact" className="border-t border-line bg-white overflow-x-hidden">
     <div className="footer-closing editorial-grid">
       <div className="col-span-12 lg:col-span-6">
         <p className="footer-eyebrow">AiForm Studio</p>
@@ -34,8 +34,8 @@ export default function Footer() {
 
     <div className="footer-nav editorial-grid border-t border-line">
       <div className="col-span-12 sm:col-span-6 lg:col-span-3">
-        <p className="footer-heading">What We Build</p>
-        <nav aria-label="What we build links" className="footer-links">{buildLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
+        <p className="footer-heading">Services</p>
+        <nav aria-label="Services links" className="footer-links">{buildLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
       </div>
       <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-0 lg:col-span-3">
         <p className="footer-heading">Explore</p>
@@ -44,7 +44,7 @@ export default function Footer() {
       <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
         <p className="footer-heading">Visit</p>
         <p className="footer-address">607 Fred Messenger Avenue<br />Andeon AH<br />Pretoria, 0183<br />South Africa</p>
-        <a href={STUDIO_ADDRESS_MAPS_URL} target="_blank" rel="noopener noreferrer" className="text-link mt-3">View on Google Maps <span aria-hidden="true">↗</span></a>
+        <a href={STUDIO_ADDRESS_MAPS_URL} target="_blank" rel="noopener noreferrer" className="text-link footer-maps-link mt-3">View on Google Maps <span aria-hidden="true">↗</span></a>
       </div>
       <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
         <p className="footer-heading">Connect</p>

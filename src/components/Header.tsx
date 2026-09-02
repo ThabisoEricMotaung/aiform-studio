@@ -7,8 +7,9 @@ import AiFormLockup from "@/components/AiFormLockup";
 
 const links = [
   { href: "/", label: "Home", section: "home" },
-  { href: "/#services", label: "What We Build", section: "services" },
-  { href: "/work", label: "Our Work", section: "work" },
+  { href: "/#services", label: "Services", section: "services" },
+  { href: "/work", label: "Work", section: "work" },
+  { href: "/journal", label: "Journal", section: "journal" },
   { href: "/#about", label: "About", section: "about" },
   { href: "/contact", label: "Contact", section: "contact" },
 ];
@@ -22,9 +23,11 @@ export default function Header() {
       ? observedSection
       : pathname.startsWith("/work")
         ? "work"
-        : pathname.startsWith("/contact")
-          ? "contact"
-          : "";
+        : pathname.startsWith("/journal")
+          ? "journal"
+          : pathname.startsWith("/contact")
+            ? "contact"
+            : "";
 
   useEffect(() => {
     if (pathname !== "/") {

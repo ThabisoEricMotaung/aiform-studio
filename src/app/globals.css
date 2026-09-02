@@ -173,7 +173,14 @@ a:focus-visible {
 .founder-portrait { width: 6.5rem; height: 6.5rem; border-radius: 9999px; object-fit: cover; }
 .founder-name { margin-top: 1.25rem; font: 650 1.05rem/1.3 var(--font-inter-tight); letter-spacing: -0.01em; }
 .founder-role { margin-top: 0.2rem; color: var(--color-muted); font-size: 0.85rem; }
-.footer-closing { padding-block: clamp(3rem, 6vw, 4.5rem); }
+.site-footer {
+  background-color: #fff;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(23,59,44,.035) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(23,59,44,.02) 0 1px, transparent 1px 32px);
+}
+.footer-closing { position: relative; z-index: 0; overflow: hidden; padding-block: clamp(3rem, 6vw, 4.5rem); }
+.footer-watermark { position: absolute; z-index: -1; top: -18%; left: -6%; height: 170%; width: auto; opacity: 0.035; pointer-events: none; user-select: none; }
 .footer-eyebrow { color: var(--color-gold); font-size: 0.72rem; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; }
 .footer-statement { margin-top: 1rem; max-width: 22rem; font: 700 clamp(1.75rem, 3vw, 2.5rem)/1.12 var(--font-inter-tight); letter-spacing: -0.03em; }
 .footer-statement-support { margin-top: 1rem; color: var(--color-muted); font-size: 0.9rem; }
@@ -217,6 +224,7 @@ a:focus-visible {
   .pretoria-caption-name { font-size: 0.62rem; }
   .pretoria-caption-coords { font-size: 0.56rem; }
   .founder-row { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer-watermark { display: none; }
   .footer-meta { grid-template-columns: 1fr; text-align: left; gap: .35rem; }
   .footer-meta > :last-child { text-align: left; }
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CalendlyBooking from "@/components/contact/CalendlyBooking";
 import WhatsAppLink from "@/components/contact/WhatsAppLink";
+import { AiFormMark } from "@/components/AiFormLockup";
 import { IconCalendar, IconMail, IconShield, IconWhatsApp } from "@/components/contact/icons";
 import { buildWhatsAppHref } from "@/lib/contact-links";
 import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
@@ -13,8 +14,9 @@ export default function Footer() {
   const whatsappHref = whatsappNumber ? buildWhatsAppHref(whatsappNumber) : undefined;
   const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
-  return <footer id="contact" className="border-t border-line bg-white overflow-x-hidden">
+  return <footer id="contact" className="site-footer border-t border-line bg-white overflow-x-hidden">
     <div className="footer-closing editorial-grid">
+      <AiFormMark variant="green" className="footer-watermark" />
       <div className="col-span-12 lg:col-span-7">
         <p className="footer-eyebrow">AiForm Studio</p>
         <p className="footer-statement">Useful digital infrastructure, shaped around the work.</p>
@@ -37,16 +39,16 @@ export default function Footer() {
         <p className="footer-heading">Services</p>
         <nav aria-label="Services links" className="footer-links">{buildLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
       </div>
-      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-0 lg:col-span-3">
+      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-0 lg:col-span-3 lg:border-l lg:border-line lg:pl-6">
         <p className="footer-heading">Explore</p>
         <nav aria-label="Explore links" className="footer-links">{exploreLinks.map(([href, label]) => <Link key={label} href={href}>{label}</Link>)}</nav>
       </div>
-      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
+      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0 lg:border-l lg:border-line lg:pl-6">
         <p className="footer-heading">Visit</p>
         <p className="footer-address">607 Fred Messenger Avenue<br />Andeon AH, Pretoria 0183<br />South Africa</p>
         <a href={STUDIO_ADDRESS_MAPS_URL} target="_blank" rel="noopener noreferrer" className="text-link footer-maps-link mt-3">View on Google Maps <span aria-hidden="true">↗</span></a>
       </div>
-      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0">
+      <div className="col-span-12 mt-8 sm:col-span-6 sm:mt-8 lg:col-span-3 lg:mt-0 lg:border-l lg:border-line lg:pl-6">
         <p className="footer-heading">Connect</p>
         <div className="footer-links footer-links-icon">
           <a href="mailto:aiformstudio@gmail.com"><IconMail className="footer-link-icon" aria-hidden="true" /> aiformstudio@gmail.com</a>

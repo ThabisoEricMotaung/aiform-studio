@@ -29,6 +29,15 @@ export function IconMail(props: IconProps) {
   );
 }
 
+export function IconShield(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 3.5l7 2.7v5.1c0 4.4-3 7.6-7 9.2-4-1.6-7-4.8-7-9.2V6.2l7-2.7z" />
+      <path d="M9 12.2l2 2 4-4.2" />
+    </svg>
+  );
+}
+
 // A recognisable but monochrome speech-bubble glyph — inherits currentColor
 // rather than WhatsApp's brand green.
 export function IconWhatsApp(props: IconProps) {

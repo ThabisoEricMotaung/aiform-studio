@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import PretoriaPhoto from "@/components/PretoriaPhoto";
+import { AiFormMark } from "@/components/AiFormLockup";
 import { projects, type Project } from "@/content/projects";
 
 const capabilities = [
-  ["01", "Websites", "Not just brochure sites — clear digital entry points built around what customers need to do."],
-  ["02", "Business Systems", "Replace fragmented spreadsheets, manual admin and disconnected workflows with purpose-built tools."],
-  ["03", "Automation & AI", "Use automation or AI where it removes real friction — not because it is fashionable."],
-  ["04", "How We Work", "Understand the problem first, then design around the actual workflow."],
+  ["ENTRY POINT", "Websites", "Clear digital entry points built around what customers need to do."],
+  ["CORE ENGINE", "Business Systems", "Replace fragmented spreadsheets, manual admin and disconnected workflows with purpose-built systems."],
+  ["EFFICIENCY LAYER", "Automation & AI", "Use automation or AI where it removes real friction — not because it is fashionable."],
+  ["METHOD", "How We Work", "Understand the problem first, then design around the actual workflow."],
 ];
 const outcomes = [
   ["Less manual work", "Reduce repetitive admin and fragmented workflows."],
@@ -50,16 +51,16 @@ export default function Home() {
     </section>
 
     <section id="services" className="editorial-grid home-section border-t border-line" aria-labelledby="services-title">
-      <p className="col-span-12 chapter-label md:col-span-2">01 / What we build</p>
+      <p className="col-span-12 chapter-label md:col-span-2">SYS // Capabilities</p>
       <div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="services-title" className="section-title">Digital tools built around real work.</h2><p className="section-intro">From the first useful website to a purpose-built business system, we create the right level of technology for the problem.</p></div>
       <div className="col-span-12 mt-14 border-t border-line md:col-start-4 md:col-span-9">
-        {capabilities.map(([number, title, copy]) => <article key={title} className="capability-row"><p className="chapter-label">{number}</p><h3>{title}</h3><p>{copy}</p></article>)}
+        {capabilities.map(([classification, title, copy]) => <article key={title} className="capability-row"><p className="capability-classification">[{classification}]</p><h3>{title}</h3><p>{copy}</p></article>)}
         <Link href="#how-we-work" className="text-link mt-8">See how we work <span aria-hidden="true">→</span></Link>
       </div>
     </section>
 
     <section id="outcomes" className="editorial-grid home-section border-t border-line" aria-labelledby="outcomes-title">
-      <p className="col-span-12 chapter-label md:col-span-2">02 / Why it matters</p>
+      <p className="col-span-12 chapter-label md:col-span-2">Output // Business effect</p>
       <div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="outcomes-title" className="secondary-title">What the right system actually changes.</h2></div>
       <div className="col-span-12 mt-12 grid gap-x-8 gap-y-10 border-t border-line pt-10 md:col-start-4 md:col-span-9 md:grid-cols-2">
         {outcomes.map(([title, copy]) => <div key={title}><p className="outcomes-label">{title}</p><p className="mt-3 text-sm leading-relaxed text-muted">{copy}</p></div>)}
@@ -67,7 +68,7 @@ export default function Home() {
     </section>
 
     <section id="work" className="home-section border-t border-line" aria-labelledby="work-title">
-      <div className="editorial-grid"><p className="col-span-12 chapter-label md:col-span-2">03 / Selected work</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="work-title" className="section-title">Work you can point to.</h2><p className="section-intro">Websites, products and systems delivered for clients or developed by AiForm.</p></div></div>
+      <div className="editorial-grid"><p className="col-span-12 chapter-label md:col-span-2">Index // Selected systems</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="work-title" className="section-title">Work you can point to.</h2><p className="section-intro">Websites, products and systems delivered for clients or developed by AiForm.</p></div></div>
       <div className="editorial-grid mt-14"><div className="col-span-12 border-t border-line md:col-start-4 md:col-span-9">
         {selectedWork.map((project, index) => <article key={project.id} className="work-row"><p className="work-number">0{index + 1}</p><div><p className="chapter-label">{project.type} / {project.status}</p><h3>{project.name}</h3><p className="mt-2 text-sm text-muted">{project.context}</p></div><div><p className="work-summary">{project.summary}</p><div className="mt-5 flex flex-wrap gap-5">{project.caseStudyUrl ? <Link href={project.caseStudyUrl} className="text-link">Case study <span aria-hidden="true">→</span></Link> : null}{project.liveUrl ? <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-link" aria-label={`Visit ${project.name} (opens in a new tab)`}>Visit site <span aria-hidden="true">↗</span></a> : null}</div></div></article>)}
         <Link href="/work" className="button-secondary mt-10">View all work <span aria-hidden="true">→</span></Link>
@@ -89,16 +90,27 @@ export default function Home() {
     </section>
 
     <section id="approach" className="infrastructure-section border-t border-line" aria-labelledby="infrastructure-title">
-      <div className="editorial-grid relative z-10 home-section"><p className="col-span-12 chapter-label md:col-span-2">05 / Our approach</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="infrastructure-title" className="section-title">Useful digital infrastructure, shaped around the work.</h2><p className="section-intro text-text">We help organisations build what actually matters — from websites and internal tools to automation and purpose-built systems.</p><div className="philosophy-block"><p className="chapter-label">Noticed, not invented.</p><h3>We look for the problem people have learned to live with.</h3><p>Then we inspect the people, processes and constraints around it before deciding what should be built. The result is software grounded in the way the organisation actually works.</p></div></div></div>
+      <div className="editorial-grid relative z-10 home-section"><p className="col-span-12 chapter-label md:col-span-2">Principle // Our approach</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="infrastructure-title" className="section-title">Useful digital infrastructure, shaped around the work.</h2><p className="section-intro text-text">We help organisations build what actually matters — from websites and internal tools to automation and purpose-built systems.</p><div className="philosophy-block"><p className="chapter-label">Noticed, not invented.</p><h3>We look for the problem people have learned to live with.</h3><p>Then we inspect the people, processes and constraints around it before deciding what should be built. The result is software grounded in the way the organisation actually works.</p></div></div></div>
     </section>
 
     <section id="how-we-work" className="editorial-grid home-section border-t border-line" aria-labelledby="process-title">
-      <p className="col-span-12 chapter-label md:col-span-2">06 / How we work</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="process-title" className="section-title">Clear from first conversation to working product.</h2></div>
+      <p className="col-span-12 chapter-label md:col-span-2">Method // Delivery</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="process-title" className="section-title">Clear from first conversation to working product.</h2></div>
       <div className="col-span-12 mt-14 grid border-t border-line md:col-start-4 md:col-span-9 md:grid-cols-3">{process.map(([number, title, copy], index) => <article key={title} className={`process-step ${index ? "md:border-l md:border-line md:pl-7" : "md:pr-7"}`}><p className="chapter-label">{number}</p><h3>{title}</h3><p>{copy}</p></article>)}</div>
     </section>
 
-    <section id="about" className="editorial-grid home-section border-t border-line" aria-labelledby="founder-title">
-      <p className="col-span-12 chapter-label md:col-span-2">07 / Founder-led</p>
+    <section id="about" className="founder-section editorial-grid home-section border-t border-line" aria-labelledby="founder-title">
+      <div className="founder-system" aria-hidden="true">
+        <AiFormMark variant="green" className="founder-system-mark" />
+        <svg className="founder-system-orbits" viewBox="0 0 900 620" fill="none">
+          <ellipse className="founder-orbit founder-orbit-1" cx="330" cy="310" rx="235" ry="190" />
+          <ellipse className="founder-orbit founder-orbit-2" cx="330" cy="310" rx="330" ry="255" />
+          <ellipse className="founder-orbit founder-orbit-3" cx="330" cy="310" rx="440" ry="325" />
+          <circle className="founder-node founder-node-1" cx="545" cy="232" r="5" />
+          <circle className="founder-node founder-node-2" cx="159" cy="446" r="4" />
+          <circle className="founder-node founder-node-3" cx="671" cy="411" r="5" />
+        </svg>
+      </div>
+      <p className="col-span-12 chapter-label md:col-span-2">Origin // Founder-led</p>
       <div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0">
         <h2 id="founder-title" className="section-title">Built close to the problem.</h2>
         <div className="founder-row">
@@ -128,6 +140,6 @@ export default function Home() {
       </div>
     </section>
 
-    <section className="editorial-grid home-section border-t border-line" aria-labelledby="contact-title"><p className="col-span-12 chapter-label md:col-span-2">08 / Start a project</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="contact-title" className="section-title">Have something your business needs to work better?</h2><p className="section-intro">Tell us what you are trying to solve. You do not need a technical brief.</p><div className="mt-9 flex flex-wrap gap-3"><Link href="/contact" className="button-primary">Start a project <span aria-hidden="true">→</span></Link><a href="mailto:aiformstudio@gmail.com" className="button-secondary">Email us</a></div></div></section>
+    <section className="editorial-grid home-section border-t border-line" aria-labelledby="contact-title"><p className="col-span-12 chapter-label md:col-span-2">Input // Start a project</p><div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="contact-title" className="section-title">Have something your business needs to work better?</h2><p className="section-intro">Tell us what you are trying to solve. You do not need a technical brief.</p><div className="mt-9 flex flex-wrap gap-3"><Link href="/contact" className="button-primary">Start a project <span aria-hidden="true">→</span></Link><a href="mailto:aiformstudio@gmail.com" className="button-secondary">Email us</a></div></div></section>
   </>;
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ProcureFlow from "@/components/ProcureFlow";
 
 const liveProduct = "https://www.aiformprocure.co.za/";
 
@@ -8,13 +9,6 @@ export const metadata: Metadata = {
   description:
     "How AiForm Studio is building a clearer way to discover procurement opportunities and inspect supplier readiness.",
 };
-
-const productLayers = [
-  ["Discover", "A current feed of public tenders and RFQs, linked back to original sources."],
-  ["Prepare", "Supplier profiles bring compliance evidence and readiness information into one place."],
-  ["Assess", "SmartScore makes evidence-based supplier readiness easier to inspect."],
-  ["Connect", "Buyer and supplier workflows support RFQs, matching and quote comparison."],
-];
 
 const technicalLayers = [
   ["Application", "Next.js"],
@@ -65,11 +59,7 @@ export default function AiFormProcureCaseStudy() {
         <p className="col-span-12 chapter-label md:col-span-2">02 / What we built</p>
         <div className="col-span-12 mt-9 md:col-start-3 md:col-span-9 md:mt-0">
           <h2 className="case-study-statement max-w-5xl">One place to discover opportunities, inspect evidence and move between supplier and buyer workflows.</h2>
-          <div className="mt-14 grid border-t border-line md:grid-cols-4">
-            {productLayers.map(([title, copy], index) => (
-              <div key={title} className={`py-7 md:px-6 ${index ? "border-t border-line md:border-l md:border-t-0" : ""}`}><p className="chapter-label">0{index + 1} / {title}</p><p className="mt-4 text-sm leading-relaxed text-muted">{copy}</p></div>
-            ))}
-          </div>
+          <div className="mt-14"><ProcureFlow /></div>
           <a href={liveProduct} target="_blank" rel="noopener noreferrer" className="link-arrow mt-10">Inspect the live product <span aria-hidden="true">↗</span></a>
         </div>
       </section>

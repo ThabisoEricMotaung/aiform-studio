@@ -5,6 +5,13 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import AiFormLockup from "@/components/AiFormLockup";
 
+const pretoriaTimeFormatter = new Intl.DateTimeFormat("en-ZA", {
+  timeZone: "Africa/Johannesburg",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+});
+
 const links = [
   { href: "/", label: "Home", section: "home" },
   { href: "/#services", label: "Services", section: "services" },
@@ -13,6 +20,24 @@ const links = [
   { href: "/#about", label: "About", section: "about" },
   { href: "/contact", label: "Contact", section: "contact" },
 ];
+
+function PretoriaTime() {
+  const [time, setTime] = useState("--:-- --");
+
+  useEffect(() => {
+    const updateTime = () => setTime(pretoriaTimeFormatter.format(new Date()).toUpperCase());
+    updateTime();
+    const interval = window.setInterval(updateTime, 60_000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  return (
+    <span className="header-time" aria-label={`Pretoria local time ${time}`}>
+      <span>PTA</span>
+      <time key={time}>{time}</time>
+    </span>
+  );
+}
 
 export default function Header() {
   const pathname = usePathname();
@@ -60,8 +85,8 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-sm">
-      <div className="flex h-[72px] items-center justify-between px-6 md:px-14">
+    <header className="site-header sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-sm">
+      <div className="site-header-inner">
         <Link
           href="/"
           aria-label="AiForm Studio home"
@@ -77,7 +102,7 @@ export default function Header() {
         </Link>
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-5 md:flex xl:gap-8"
+          className="primary-navigation"
         >
           {links.map(({ href, label, section }) => (
             <Link
@@ -90,20 +115,26 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <button
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="mobile-navigation"
-          onClick={() => setMenuOpen((open) => !open)}
-          className="min-h-11 min-w-11 text-right text-xs font-medium uppercase tracking-[.1em] text-green md:hidden"
-        >
-          {menuOpen ? "Close" : activeSection || "Menu"}
-        </button>
+        <div className="header-utilities">
+          <PretoriaTime />
+          <Link href="/contact" className="header-mail" aria-label="Contact AiForm Studio">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.75 5.75h16.5v12.5H3.75zM4.5 6.5l7.5 6 7.5-6" /></svg>
+          </Link>
+          <button
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="mobile-menu-trigger"
+          >
+            {menuOpen ? "Close" : "Menu"}
+          </button>
+        </div>
       </div>
       <nav
         id="mobile-navigation"
         aria-label="Mobile navigation"
-        className={`${menuOpen ? "grid" : "hidden"} grid-cols-1 border-t border-line bg-white px-6 py-4 md:hidden`}
+        className={`${menuOpen ? "grid" : "hidden"} mobile-navigation`}
       >
         {links.map(({ href, label, section }) => (
           <Link
@@ -111,7 +142,7 @@ export default function Header() {
             href={href}
             onClick={() => setMenuOpen(false)}
             aria-current={activeSection === section ? "location" : undefined}
-            className={`min-h-11 border-b border-line py-3 text-sm ${activeSection === section ? "font-semibold text-green underline decoration-gold decoration-2 underline-offset-8" : "text-muted"}`}
+            className={`mobile-nav-link ${activeSection === section ? "mobile-nav-link-active" : ""}`}
           >
             {label}
           </Link>

@@ -168,6 +168,25 @@ a:focus-visible {
   align-items: center;
   padding-block: clamp(2rem, 4vw, 3.5rem);
 }
+/* Restrained architectural grid: a broad, low-contrast line mesh plus two
+   slightly-stronger guide lines, standing in for a technical planning sheet
+   rather than graph paper. Sits behind the text and the Union Buildings
+   photo (z-index -1, within the hero's own stacking context) and fades out
+   toward the photo side on its own, independent of the photo's mask. */
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(33.333% - 1px), rgba(89, 100, 93, 0.09) calc(33.333% - 1px), rgba(89, 100, 93, 0.09) 33.333%, transparent 33.333%),
+    linear-gradient(to right, transparent 0, transparent calc(75% - 1px), rgba(89, 100, 93, 0.09) calc(75% - 1px), rgba(89, 100, 93, 0.09) 75%, transparent 75%),
+    repeating-linear-gradient(to right, rgba(89, 100, 93, 0.06) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(to bottom, rgba(89, 100, 93, 0.05) 0 1px, transparent 1px 64px);
+  mask-image: linear-gradient(to right, black 0%, black 42%, transparent 82%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 42%, transparent 82%);
+}
 .hero-eyebrow {
   display: flex;
   flex-wrap: wrap;
@@ -193,6 +212,11 @@ a:focus-visible {
   font-size: clamp(1.1rem, 1.8vw, 1.35rem);
   line-height: 1.6;
 }
+/* Restrained glassmorphism, related to the nav's dark-active / soft-grey-
+   inactive pill language without copying it exactly — smoked/soft glass,
+   not frosted-tech glass. Backdrop-filter is additive polish; the base
+   background colour alone (boosted under @supports below) already reads
+   correctly with no blur at all. */
 .button-primary,
 .button-secondary {
   display: inline-flex;
@@ -200,19 +224,36 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  border: 1px solid var(--color-green);
   border-radius: 6px;
   padding: 0.8rem 1.15rem;
   font-size: 0.9rem;
   font-weight: 650;
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
-.button-primary { background: var(--color-green); color: white; }
-.button-primary:hover { background: #0f2d21; }
-.button-primary:active { background: #0a1f17; }
-.button-secondary { background: white; color: var(--color-text); border-color: var(--color-line); }
-.button-secondary:hover { border-color: var(--color-green); color: var(--color-green); }
-.button-secondary:active { background: var(--color-line); }
+.button-primary {
+  background: rgba(20, 20, 20, 0.82);
+  color: #f7f6f2;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.4);
+}
+.button-primary:hover { background: rgba(32, 32, 32, 0.88); border-color: rgba(255, 255, 255, 0.18); transform: translateY(-1px); }
+.button-primary:active { background: rgba(12, 12, 12, 0.92); transform: translateY(0); }
+.button-secondary {
+  background: rgba(245, 245, 242, 0.72);
+  color: var(--color-text);
+  border: 1px solid rgba(30, 30, 30, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px -8px rgba(20, 20, 20, 0.12);
+}
+.button-secondary:hover { background: rgba(245, 245, 242, 0.88); border-color: rgba(30, 30, 30, 0.22); transform: translateY(-1px); }
+.button-secondary:active { background: rgba(232, 231, 227, 0.92); transform: translateY(0); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .button-primary { background: rgba(20, 20, 20, 0.94); }
+  .button-secondary { background: rgba(245, 245, 242, 0.94); }
+}
 .home-section { padding-block: clamp(4.5rem, 9vw, 8rem); }
 .section-intro { max-width: 42rem; margin-top: 1.5rem; color: var(--color-muted); font-size: clamp(1rem, 1.5vw, 1.15rem); line-height: 1.7; }
 .capability-row { display: grid; grid-template-columns: 8.5rem minmax(11rem, 0.75fr) 1.25fr; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--color-line); padding-block: 1.6rem; }
@@ -565,6 +606,13 @@ a:focus-visible {
 @media (max-width: 767px) {
   .home-hero { min-height: auto; padding-bottom: 2rem; }
   .home-hero-title { letter-spacing: -0.045em; }
+  .home-hero::before {
+    background-image:
+      repeating-linear-gradient(to right, rgba(89, 100, 93, 0.045) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(to bottom, rgba(89, 100, 93, 0.04) 0 1px, transparent 1px 56px);
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 92%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 92%);
+  }
   .button-primary, .button-secondary { width: 100%; }
   .capability-row { grid-template-columns: minmax(7.5rem, .65fr) 1fr; gap: .75rem 1rem; }
   .work-row { grid-template-columns: 2.5rem 1fr; gap: .75rem 1rem; }
@@ -1148,6 +1196,122 @@ a:focus-visible {
   font-weight: 650;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* AiForm Engine page — hero artwork, conceptual architecture diagram,
+   proprietary-boundary line and the portfolio proof grid. Everything else
+   on that page reuses the case-study/capability-row primitives above. */
+.engine-hero-art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: #f4f1ea;
+  box-shadow: 0 10px 28px -18px rgba(23, 59, 44, 0.2);
+}
+.engine-hero-art img { border-radius: inherit; }
+
+.engine-architecture-connector { display: block; width: 100%; margin-bottom: 1.5rem; }
+.engine-architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem;
+  border-top: 1px solid var(--color-line);
+  padding-top: 2rem;
+}
+.engine-architecture-stage h3 {
+  font: 650 0.85rem/1.2 var(--font-inter-tight);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-green);
+}
+.engine-architecture-stage ul {
+  margin-top: 1rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.95;
+}
+@media (max-width: 900px) {
+  .engine-architecture-connector { display: none; }
+  .engine-architecture-grid {
+    grid-template-columns: 1fr;
+    position: relative;
+    border-top: none;
+    padding-top: 0;
+    padding-left: 1.5rem;
+  }
+  .engine-architecture-grid::before {
+    content: "";
+    position: absolute;
+    left: 0.3rem;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 1px;
+    background: var(--color-line);
+  }
+  .engine-architecture-stage {
+    position: relative;
+    border-top: 1px solid var(--color-line);
+    padding: 1.75rem 0 1.75rem 1.75rem;
+  }
+  .engine-architecture-stage:first-child { border-top: none; padding-top: 0.25rem; }
+  .engine-architecture-stage::before {
+    content: "";
+    position: absolute;
+    left: -1.2rem;
+    top: 2rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-gold);
+    background: var(--color-bg);
+  }
+}
+
+.engine-boundary-line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+}
+.engine-boundary-line span { flex: 1; height: 1px; }
+.engine-boundary-line span:first-child { background: rgba(255, 255, 255, 0.35); }
+.engine-boundary-line span:last-child {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.35) 0 4px, transparent 4px 10px);
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+}
+.engine-boundary-line em {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-gold);
+  font-style: normal;
+}
+
+.engine-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 2.5rem;
+}
+.engine-proof-figure {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: #f4f1ea;
+  box-shadow: 0 8px 20px -16px rgba(23, 59, 44, 0.25);
+}
+.engine-proof-figure img { border-radius: inherit; transition: transform 260ms ease; }
+a.engine-proof-item:hover .engine-proof-figure img { transform: scale(1.03); }
+.engine-proof-caption { margin-top: 0.9rem; }
+.engine-proof-caption p:first-child { font: 650 1rem/1.2 var(--font-inter-tight); color: var(--color-green); }
+.engine-proof-caption p:last-child { margin-top: 0.2rem; color: var(--color-muted); font-size: 0.85rem; }
+@media (max-width: 640px) {
+  .engine-proof-grid { grid-template-columns: 1fr; }
 }
 .brand-mark {
   filter: drop-shadow(0 12px 28px rgba(182, 138, 58, 0.12));

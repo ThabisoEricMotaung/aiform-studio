@@ -5,17 +5,24 @@ const liveWebsite = "https://kutlwano-tutoring.vercel.app/";
 const canonicalUrl = "https://aiformstudio.co.za/work/wanotuts";
 
 export const metadata: Metadata = {
-  title: "WanoTuts case study | AiForm Studio",
+  title: "WanoTuts case study",
   description:
-    "How Kutlwano Tutoring became WanoTuts: a concise naming, identity and tutoring website case study by AiForm Studio.",
-  alternates: { canonical: canonicalUrl },
+    "How Kutlwano Tutoring became WanoTuts: a naming, identity and tutoring website case study by AiForm Studio.",
+  alternates: { canonical: "/work/wanotuts" },
   openGraph: {
-    title: "WanoTuts — The name came before the mark",
-    description:
-      "A naming, identity and digital experience case study by AiForm Studio.",
+    type: "article",
+    locale: "en_ZA",
     url: canonicalUrl,
     siteName: "AiForm Studio",
-    type: "article",
+    title: "WanoTuts — The name came before the mark",
+    description: "A naming, identity and digital experience case study by AiForm Studio for Kutlwano Tutoring.",
+    images: [{ url: "https://aiformstudio.co.za/images/aiform-story.png", width: 1254, height: 1254, alt: "AiForm Studio logo and its moth-inspired design origins" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "WanoTuts case study | AiForm Studio",
+    description: "A naming, identity and digital experience case study by AiForm Studio.",
+    images: ["https://aiformstudio.co.za/images/aiform-story.png"],
   },
 };
 

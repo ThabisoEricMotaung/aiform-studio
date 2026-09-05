@@ -319,11 +319,15 @@ export default function ProjectShowcase() {
             </div>
 
             <div className="project-stage-content" ref={contentRef}>
-              <p className="project-stage-kicker">{targetProject.category} / {targetProject.status}</p>
-              <h3>{targetProject.name}</h3>
-              <p className="project-stage-context">{targetProject.context}</p>
-              <p className="project-stage-summary">{targetProject.summary}</p>
-              <ProjectLink project={targetProject} />
+              {projects.map((project) => (
+                <div key={project.id} hidden={project.id !== targetProject.id}>
+                  <p className="project-stage-kicker">{project.category} / {project.status}</p>
+                  <h3>{project.name}</h3>
+                  <p className="project-stage-context">{project.context}</p>
+                  <p className="project-stage-summary">{project.summary}</p>
+                  <ProjectLink project={project} />
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -3,8 +3,24 @@ import Link from "next/link";
 import { MothGeometryStudy } from "@/components/BrandLineArt";
 
 export const metadata: Metadata = {
-  title: "Journal | AiForm Studio",
+  title: "Journal",
   description: "Research, observations and ideas from AiForm Studio on technology, procurement, verification and building useful systems.",
+  alternates: { canonical: "/journal" },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: "https://aiformstudio.co.za/journal",
+    siteName: "AiForm Studio",
+    title: "Journal | AiForm Studio",
+    description: "Research, observations and ideas from AiForm Studio on technology, procurement, verification and building useful systems.",
+    images: [{ url: "https://aiformstudio.co.za/images/aiform-story.png", width: 1254, height: 1254, alt: "AiForm Studio logo and its moth-inspired design origins" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "Journal | AiForm Studio",
+    description: "Research, observations and ideas from AiForm Studio on technology, procurement, verification and building useful systems.",
+    images: ["https://aiformstudio.co.za/images/aiform-story.png"],
+  },
 };
 
 export default function JournalPage() {

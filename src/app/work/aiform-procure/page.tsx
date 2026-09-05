@@ -3,11 +3,28 @@ import Link from "next/link";
 import ProcureFlow from "@/components/ProcureFlow";
 
 const liveProduct = "https://www.aiformprocure.co.za/";
+const canonicalUrl = "https://aiformstudio.co.za/work/aiform-procure";
 
 export const metadata: Metadata = {
-  title: "AiForm Procure case study | AiForm Studio",
+  title: "AiForm Procure case study",
   description:
-    "How AiForm Studio is building a clearer way to discover procurement opportunities and inspect supplier readiness.",
+    "How AiForm Studio is building a clearer way to discover procurement opportunities and inspect supplier readiness. A live South African procurement product.",
+  alternates: { canonical: "/work/aiform-procure" },
+  openGraph: {
+    type: "article",
+    locale: "en_ZA",
+    url: canonicalUrl,
+    siteName: "AiForm Studio",
+    title: "AiForm Procure — Public procurement made easier",
+    description: "How AiForm Studio is building a clearer way to discover procurement opportunities and inspect supplier readiness.",
+    images: [{ url: "https://aiformstudio.co.za/images/aiform-story.png", width: 1254, height: 1254, alt: "AiForm Studio logo and its moth-inspired design origins" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "AiForm Procure case study | AiForm Studio",
+    description: "How AiForm Studio built a clearer way to discover procurement opportunities and inspect supplier readiness.",
+    images: ["https://aiformstudio.co.za/images/aiform-story.png"],
+  },
 };
 
 const technicalLayers = [

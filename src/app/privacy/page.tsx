@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Notice | AiForm Studio",
+  title: "Privacy Notice",
   description: "How AiForm Studio collects, uses and protects information submitted through this website.",
   alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: "https://aiformstudio.co.za/privacy",
+    siteName: "AiForm Studio",
+    title: "Privacy Notice | AiForm Studio",
+    description: "How AiForm Studio collects, uses and protects information submitted through this website.",
+    images: [{ url: "https://aiformstudio.co.za/images/aiform-story.png", width: 1254, height: 1254, alt: "AiForm Studio logo and its moth-inspired design origins" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Notice | AiForm Studio",
+    description: "How AiForm Studio collects, uses and protects information submitted through this website.",
+    images: ["https://aiformstudio.co.za/images/aiform-story.png"],
+  },
 };
 
 const sections = [

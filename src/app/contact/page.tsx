@@ -3,7 +3,26 @@ import IntakeForm from "@/components/intake/IntakeForm";
 import AlternativeContact from "@/components/contact/AlternativeContact";
 import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
 
-export const metadata: Metadata = { title: "Start a project | AiForm Studio", description: "Tell AiForm Studio what you are trying to solve. No technical brief required.", alternates: { canonical: "/contact" } };
+export const metadata: Metadata = {
+  title: "Start a project",
+  description: "Tell AiForm Studio what you are trying to solve. No technical brief required. Start with a few quick answers about your project.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    type: "website",
+    locale: "en_ZA",
+    url: "https://aiformstudio.co.za/contact",
+    siteName: "AiForm Studio",
+    title: "Start a project | AiForm Studio",
+    description: "Tell AiForm Studio what you are trying to solve. No technical brief required.",
+    images: [{ url: "https://aiformstudio.co.za/images/aiform-story.png", width: 1254, height: 1254, alt: "AiForm Studio logo and its moth-inspired design origins" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "Start a project | AiForm Studio",
+    description: "Tell AiForm Studio what you are trying to solve. No technical brief required.",
+    images: ["https://aiformstudio.co.za/images/aiform-story.png"],
+  },
+};
 
 export default function Contact() {
   return (

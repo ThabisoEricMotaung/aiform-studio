@@ -1,6 +1,4 @@
 import Link from "next/link";
-import CalendlyBooking from "@/components/contact/CalendlyBooking";
-import WhatsAppLink from "@/components/contact/WhatsAppLink";
 import { AiFormMark } from "@/components/AiFormLockup";
 import { IconCalendar, IconMail, IconShield, IconWhatsApp } from "@/components/contact/icons";
 import { buildWhatsAppHref } from "@/lib/contact-links";
@@ -25,11 +23,7 @@ export default function Footer() {
       <div className="col-span-12 mt-10 lg:col-span-5 lg:mt-0 lg:border-l lg:border-line lg:pl-12">
         <h3 className="footer-cta-heading">Have something worth figuring out?</h3>
         <div className="footer-cta-actions">
-          <Link href="/contact" className="button-primary">Get in touch <span aria-hidden="true">→</span></Link>
-          <div className="footer-cta-secondary">
-            <CalendlyBooking triggerLabel="Book a conversation →" triggerSubtitle="" triggerClassName="text-link footer-cta-link" />
-            <WhatsAppLink title="Chat on WhatsApp" subtitle="" className="text-link footer-cta-link footer-cta-link-icon footer-cta-link-secondary" />
-          </div>
+          <Link href="/contact" className="text-link">Get in touch <span aria-hidden="true">→</span></Link>
         </div>
       </div>
     </div>

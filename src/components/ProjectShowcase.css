@@ -1,0 +1,149 @@
+/* Homepage portfolio: one image environment, with the index inside it. */
+.cinematic-intro { padding-block: clamp(2.5rem, 5vw, 4rem); align-items: end; }
+.cinematic-intro > .chapter-label { grid-column: span 3; }
+.cinematic-intro > h2 { grid-column: 4 / -1; }
+/* Selected Work is a deliberately authored dark cinematic environment,
+   independent of the site's light/dark theme — these tokens are fixed, not
+   theme-conditional, so the section looks the same in either theme. */
+.cinematic-stage {
+  --cinema-text: #f6f2e9;
+  --cinema-muted: #d0cfc7;
+  --cinema-gold: #d7aa57;
+  --cinema-tint: 16, 18, 17;
+  --cinema-line: rgba(255, 255, 255, .12);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 25%) minmax(0, 1fr);
+  align-items: end;
+  gap: 7%;
+  min-height: max(760px, 100svh);
+  padding: 3rem clamp(1.5rem, 4vw, 4rem);
+  overflow: hidden;
+  background: #101211;
+  color: var(--cinema-text);
+}
+.cinematic-stage > .project-stage-visual {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  background: #101211;
+  z-index: -3;
+}
+.cinematic-artwork { object-position: 65% center; }
+.cinematic-stage[data-project="procurement-knowledge-base"] .cinematic-artwork { object-position: center 42%; }
+.cinematic-readability {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  /* Gradual, not plateaued — the image must stay visibly continuous even
+     near the left/bottom edges, not read as a solid panel behind the text. */
+  background:
+    linear-gradient(90deg, rgba(var(--cinema-tint), .86) 0%, rgba(var(--cinema-tint), .6) 28%, rgba(var(--cinema-tint), .22) 52%, transparent 76%),
+    linear-gradient(0deg, rgba(var(--cinema-tint), .8) 0%, rgba(var(--cinema-tint), .48) 20%, rgba(var(--cinema-tint), .15) 38%, transparent 58%);
+}
+.cinematic-index { min-width: 0; align-self: center; }
+.cinematic-stage .project-selector { border: 0; }
+.cinematic-stage .project-selector li + li { border-top: 1px solid var(--cinema-line); }
+.cinematic-stage .project-selector-button {
+  grid-template-columns: 1.5rem minmax(0, 1fr) .4rem;
+  gap: .65rem;
+  min-height: 3.85rem;
+  padding: .65rem .4rem .65rem 0;
+  background: transparent;
+  color: var(--cinema-text);
+}
+.cinematic-stage .project-selector-number { color: var(--cinema-gold); padding-top: .2rem; }
+.cinematic-stage .project-selector-copy strong {
+  color: var(--cinema-muted);
+  font-size: clamp(.88rem, 1.15vw, 1.1rem);
+  line-height: 1.15;
+  transform: none;
+}
+.cinematic-stage .project-selector-copy > span {
+  max-height: none;
+  opacity: 1;
+  margin-top: .3rem;
+  color: var(--cinema-muted);
+  font-size: .56rem;
+  line-height: 1.3;
+  letter-spacing: .06em;
+}
+.cinematic-stage .project-selector-mark { background: var(--cinema-gold); opacity: 0; }
+/* The plain /work page's card list gives its hover/active row an opaque
+   background — that rule shares the same button class and would otherwise
+   leak a boxed-card look onto the immersive stage's rows. #work outranks it
+   (an ID beats any number of classes) regardless of theme or source order. */
+#work .project-selector-button:hover,
+#work .project-selector-button[aria-pressed="true"] { background: transparent; }
+.cinematic-stage .project-selector-button[aria-current="true"] { box-shadow: inset 0 -1px var(--cinema-gold); }
+.cinematic-stage .project-selector-button[aria-current="true"] strong { color: var(--cinema-text); transform: translateX(.2rem); }
+.cinematic-stage .project-selector-button[aria-current="true"] .project-selector-mark { opacity: 1; transform: scale(1); }
+.cinematic-stage .project-selector-button:focus-visible { outline: 2px solid var(--cinema-gold); outline-offset: 3px; }
+.cinematic-story { min-width: 0; max-width: 42rem; }
+/* Fixed to a stage corner rather than sitting in the text column, so it
+   holds one deliberate position regardless of the active title's length. */
+.cinematic-signature {
+  position: absolute;
+  right: clamp(1.5rem, 4vw, 4rem);
+  bottom: clamp(1.5rem, 4vw, 4rem);
+  z-index: 1;
+  display: flex;
+  gap: .65rem;
+  align-items: center;
+  font-size: .57rem;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--cinema-muted);
+}
+.cinematic-signature img { opacity: .7; }
+.cinematic-stage .project-stage-content { padding: 0; background: transparent; }
+.cinematic-stage .project-stage-content [hidden] { display: none; }
+.cinematic-stage .project-stage-kicker { color: var(--cinema-gold); font-size: .65rem; letter-spacing: .12em; }
+.cinematic-stage .project-stage-content h3 { color: var(--cinema-text); font-size: clamp(2.5rem, 4.5vw, 4.6rem); line-height: 1; margin-top: .7rem; text-wrap: balance; }
+.cinematic-stage .project-stage-context { display: none; }
+.cinematic-stage .project-stage-summary { color: var(--cinema-muted); max-width: 34rem; font-size: .9rem; line-height: 1.6; margin-top: 1rem; }
+.cinematic-stage .showcase-action { color: var(--cinema-text); border-color: var(--cinema-gold); min-height: 2.75rem; align-items: center; margin-top: .85rem; font-size: .8rem; }
+.cinematic-stage .project-stage-art-identity { padding: 0 3% 5% 30%; background: #1a1512; }
+.cinematic-stage .stage-identity-board { width: 48%; max-width: 27rem; padding: 3rem; border-radius: 0; box-shadow: none; }
+.cinematic-stage .stage-identity-wordmark { font-size: clamp(2rem, 4vw, 4.5rem); }
+.cinematic-stage .project-stage-art-wordmark { padding-left: 40%; }
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .cinematic-stage { grid-template-columns: minmax(0, 28%) minmax(0, 1fr); gap: 5%; padding-inline: 2rem; }
+  .cinematic-stage .project-selector-button { min-height: 3.9rem; }
+  .cinematic-stage .project-stage-content h3 { font-size: 2.9rem; }
+}
+@media (max-width: 900px) {
+  .cinematic-stage { min-height: max(700px, 100svh); display: flex; flex-direction: column; align-items: stretch; justify-content: space-between; gap: 18rem; padding: 1.5rem 2rem 2rem; }
+  .cinematic-index { width: 100%; }
+  .cinematic-stage .project-selector { display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding: .25rem; scrollbar-width: thin; }
+  .cinematic-stage .project-selector li { flex: 0 0 13rem; scroll-snap-align: start; }
+  .cinematic-stage .project-selector li + li { border-top: 0; border-left: 1px solid var(--cinema-line); }
+  .cinematic-stage .project-selector-button { padding: .65rem; min-height: 4.5rem; }
+  .cinematic-readability { background: linear-gradient(180deg, rgba(var(--cinema-tint), .82) 0%, rgba(var(--cinema-tint), .5) 14%, transparent 30%, transparent 46%, rgba(var(--cinema-tint), .55) 72%, rgba(var(--cinema-tint), .88) 100%); }
+  .cinematic-signature { right: 2rem; bottom: 1.5rem; }
+  .cinematic-stage .project-stage-content h3 { font-size: clamp(2.4rem, 6vw, 3.5rem); }
+  .cinematic-stage .project-stage-art-identity { padding: 0 4%; }
+}
+@media (max-width: 540px) {
+  .cinematic-intro { display: block; padding-block: 2.5rem; }
+  .cinematic-intro h2 { margin-top: 1rem; }
+  .cinematic-stage { padding: 0; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: rgb(var(--cinema-tint)); }
+  .cinematic-index { grid-row: 1; grid-column: 1; padding: 1rem .75rem; }
+  .cinematic-stage > .project-stage-visual { position: relative; inset: auto; grid-row: 4; grid-column: 1; height: 24rem; width: 100%; z-index: 0; }
+  .cinematic-readability { display: none; }
+  .cinematic-story, .cinematic-stage .project-stage-content, .cinematic-stage .project-stage-content > div:not([hidden]) { display: contents; }
+  .cinematic-signature { display: none; }
+  .cinematic-stage .project-stage-kicker { grid-row: 2; grid-column: 1; padding: .5rem 1.25rem 0; }
+  .cinematic-stage .project-stage-content h3 { grid-row: 3; grid-column: 1; margin: 0 0 1.5rem; padding-inline: 1.25rem; font-size: 2.35rem; }
+  .cinematic-stage .project-stage-summary { grid-row: 5; grid-column: 1; padding: 0 1.25rem; margin-top: 1.25rem; }
+  .cinematic-stage .showcase-action { grid-row: 6; grid-column: 1; justify-self: start; margin: .75rem 1.25rem 1.5rem; }
+  .cinematic-stage .project-stage-summary:last-child { margin-bottom: 1.5rem; }
+  .cinematic-artwork { object-position: center; }
+  .cinematic-stage .stage-identity-board { padding: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-stage .project-stage-content, .cinematic-stage .project-stage-visual { animation: none !important; }
+}

@@ -47,7 +47,7 @@ const delivered = [
 export default function WanoTutsCaseStudy() {
   return (
     <article>
-      <header className="editorial-grid py-16 md:py-24 lg:py-32">
+      <header className="editorial-grid py-14 md:py-20 lg:py-24">
         <p className="col-span-12 chapter-label md:col-span-2">
           Selected work / 01
         </p>
@@ -124,7 +124,7 @@ export default function WanoTutsCaseStudy() {
         </div>
       </section>
 
-      <section className="case-study-section editorial-grid bg-green text-white">
+      <section className="case-study-section editorial-grid deep-green-panel">
         <p className="col-span-12 chapter-label chapter-label-light md:col-span-2">
           03 / The naming moment
         </p>

@@ -45,7 +45,7 @@ const learnings = [
 export default function AiFormProcureCaseStudy() {
   return (
     <article>
-      <header className="editorial-grid py-16 md:py-24 lg:py-32">
+      <header className="editorial-grid py-14 md:py-20 lg:py-24">
         <p className="col-span-12 chapter-label md:col-span-2">Case study 01 / AiForm Procure</p>
         <div className="col-span-12 mt-10 md:col-start-3 md:col-span-9 md:mt-0">
           <h1 className="case-study-lead">Public procurement,<br /><span className="text-green">made easier to inspect.</span></h1>
@@ -81,7 +81,7 @@ export default function AiFormProcureCaseStudy() {
         </div>
       </section>
 
-      <section className="case-study-section editorial-grid bg-green text-white">
+      <section className="case-study-section editorial-grid deep-green-panel">
         <p className="col-span-12 chapter-label chapter-label-light md:col-span-2">03 / Under the hood</p>
         <div className="col-span-12 mt-9 md:col-start-4 md:col-span-8 md:mt-0">
           <h2 className="secondary-title text-[#e0c98f]">The machinery follows the product problem.</h2>

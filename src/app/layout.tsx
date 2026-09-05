@@ -3,6 +3,7 @@ import { Geist, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { fetchAllCitiesWeather } from "@/lib/weather";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -78,7 +79,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const weather = await fetchAllCitiesWeather();
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -122,13 +124,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-bg text-text">
         <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();",
+          }}
+        />
+        <script
           id="aiform-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
-        <Header />
+        <Header weather={weather} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

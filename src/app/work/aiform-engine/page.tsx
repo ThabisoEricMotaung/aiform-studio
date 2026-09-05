@@ -94,7 +94,7 @@ const proofImages: Record<(typeof proofIds)[number], { src: string; alt: string 
 export default function AiFormEnginePage() {
   return (
     <article>
-      <header className="editorial-grid py-16 md:py-24 lg:py-32">
+      <header className="editorial-grid py-14 md:py-20 lg:py-24">
         <p className="col-span-12 chapter-label md:col-span-2">AIFORM ENGINE // INTERNAL OPERATING SYSTEM</p>
         <div className="col-span-12 mt-10 md:col-start-3 md:col-span-9 md:mt-0">
           <h1 className="case-study-lead">
@@ -205,7 +205,7 @@ export default function AiFormEnginePage() {
         </div>
       </section>
 
-      <section className="case-study-section editorial-grid bg-green text-white" aria-labelledby="engine-boundary-title">
+      <section className="case-study-section editorial-grid deep-green-panel" aria-labelledby="engine-boundary-title">
         <p className="col-span-12 chapter-label chapter-label-light md:col-span-2">Engine / Proprietary boundary</p>
         <div className="col-span-12 mt-9 md:col-start-3 md:col-span-8 md:mt-0">
           <h2 id="engine-boundary-title" className="principle-title text-[#e0c98f]">
@@ -303,7 +303,7 @@ export default function AiFormEnginePage() {
         </div>
       </section>
 
-      <section className="editorial-grid py-16 md:py-24 lg:py-32" aria-labelledby="engine-closing-title">
+      <section className="editorial-grid py-14 md:py-20 lg:py-24" aria-labelledby="engine-closing-title">
         <p className="col-span-12 chapter-label md:col-span-2">AiForm Engine / Active</p>
         <div className="col-span-12 mt-9 md:col-start-3 md:col-span-9 md:mt-0">
           <h2 id="engine-closing-title" className="case-study-statement max-w-4xl">

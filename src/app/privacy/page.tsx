@@ -250,7 +250,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <>
-      <section className="editorial-grid relative overflow-hidden py-24 md:py-32">
+      <section className="editorial-grid relative overflow-hidden py-14 md:py-20">
         <div className="col-span-12 md:col-span-2">
           <p className="chapter-label">AiForm / Privacy</p>
         </div>
@@ -268,10 +268,10 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <section className="editorial-grid border-t border-line bg-bg-alt py-20 md:py-28">
+      <section className="editorial-grid border-t border-line bg-bg-alt py-14 md:py-20">
         <div className="col-span-12 md:col-start-4 md:col-span-6">
           {sections.map((section) => (
-            <div key={section.label} id={section.heading.toLowerCase().replace(/[^a-z]+/g, "-")} className="mt-16 scroll-mt-24 border-t border-line pt-10 first:mt-0 first:border-t-0 first:pt-0">
+            <div key={section.label} id={section.heading.toLowerCase().replace(/[^a-z]+/g, "-")} className="mt-12 scroll-mt-24 border-t border-line pt-10 first:mt-0 first:border-t-0 first:pt-0">
               <p className="chapter-label">{section.label}</p>
               <h2 className="mt-4 font-display text-2xl md:text-3xl">{section.heading}</h2>
               {section.body}

@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 import { projects, type Project } from "@/content/projects";
+import { AiFormMark } from "@/components/AiFormLockup";
+import "./ProjectShowcase.css";
 
 /**
  * Most projects now use a single complete, art-directed showcase image —
@@ -93,8 +95,12 @@ function ProjectLink({ project }: { project: Project }) {
   );
 }
 
-function StageArt({ project }: { project: Project }) {
+function StageArt({ project, immersive = false }: { project: Project; immersive?: boolean }) {
   const visual = visualFor(project);
+
+  if (immersive && (visual.kind === "showcase" || visual.kind === "publication")) {
+    return <Image src={visual.src} alt={visual.alt} fill sizes="100vw" className="cinematic-artwork" style={{ objectFit: "cover" }} />;
+  }
 
   if (visual.kind === "wordmark") {
     return (
@@ -236,7 +242,7 @@ function useProjectVisualTransition(targetId: string) {
   return { imageId, visualRef };
 }
 
-export default function ProjectShowcase() {
+export default function ProjectShowcase({ immersive = false }: { immersive?: boolean }) {
   const [selectedId, setSelectedId] = useState(projects[0].id);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
@@ -256,49 +262,88 @@ export default function ProjectShowcase() {
   const contentRef = useReplayAnimation<HTMLDivElement>(targetId);
   const washRef = useReplayAnimation<HTMLSpanElement>(imageId);
 
+
+
+  const projectSelector = (
+    <ol className="project-selector" aria-label="Projects" onMouseLeave={clearHover}>
+      {projects.map((project, index) => {
+        const isSelected = project.id === selectedId;
+        const isDisplayed = project.id === targetProject.id;
+        return (
+          <li key={project.id}>
+            <button
+              type="button"
+              className="project-selector-button"
+              aria-pressed={isSelected}
+              aria-current={isDisplayed ? "true" : undefined}
+              aria-controls="active-project-stage"
+              onMouseEnter={() => setHoveredId(project.id)}
+              onFocus={() => setHoveredId(project.id)}
+              onBlur={clearHover}
+              onClick={() => {
+                setSelectedId(project.id);
+                setHoveredId(null);
+              }}
+            >
+              <span className="project-selector-number">{String(index + 1).padStart(2, "0")}</span>
+              <span className="project-selector-copy">
+                <strong>{project.name}</strong>
+                <span>{project.category} · {project.status}</span>
+              </span>
+              <span className="project-selector-mark" aria-hidden="true" />
+            </button>
+          </li>
+        );
+      })}
+    </ol>
+  );
+
+  if (immersive) {
+    return (
+      <section id="work" className="cinematic-work border-t border-line" aria-labelledby="cinematic-work-title">
+        <div className="editorial-grid cinematic-intro">
+          <p className="chapter-label">Work</p>
+          <h2 id="cinematic-work-title" className="section-title">Selected work.</h2>
+        </div>
+        <div className="cinematic-stage" data-project={imageProject.id} style={stageStyle}>
+          <div className="project-stage-visual" ref={visualRef}>
+            <StageArt project={imageProject} immersive />
+          </div>
+          <div className="cinematic-readability" aria-hidden="true" />
+          <div className="cinematic-index">
+            {projectSelector}
+          </div>
+          <div id="active-project-stage" className="cinematic-story" aria-live="polite" aria-atomic="true">
+            <div className="cinematic-signature" aria-hidden="true"><AiFormMark variant="gold" className="h-5" /><span>AiForm Studio</span></div>
+            <div className="project-stage-content" ref={contentRef}>
+              {projects.map((project) => (
+                <div key={project.id} hidden={project.id !== targetProject.id}>
+                  <p className="project-stage-kicker">{project.category} / {project.status}</p>
+                  <h3>{project.name}</h3>
+                  <p className="project-stage-context">{project.context}</p>
+                  <p className="project-stage-summary">{project.summary}</p>
+                  <ProjectLink project={project} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="project-showcase border-t border-line" aria-labelledby="project-showcase-title">
       <div className="editorial-grid">
         <div className="project-showcase-heading">
-          <p className="chapter-label">01 / Project index</p>
+          <p className="chapter-label">Work</p>
           <div>
-            <h2 id="project-showcase-title" className="section-title">Move through the work.</h2>
-            <p>Hover, focus or tap a project to bring its system into view.</p>
+            <h2 id="project-showcase-title" className="section-title">Selected work.</h2>
           </div>
         </div>
 
         <div className="project-showcase-layout">
-          <ol className="project-selector" aria-label="Projects" onMouseLeave={clearHover}>
-            {projects.map((project, index) => {
-              const isSelected = project.id === selectedId;
-              const isDisplayed = project.id === targetProject.id;
-              return (
-                <li key={project.id}>
-                  <button
-                    type="button"
-                    className="project-selector-button"
-                    aria-pressed={isSelected}
-                    aria-current={isDisplayed ? "true" : undefined}
-                    aria-controls="active-project-stage"
-                    onMouseEnter={() => setHoveredId(project.id)}
-                    onFocus={() => setHoveredId(project.id)}
-                    onBlur={clearHover}
-                    onClick={() => {
-                      setSelectedId(project.id);
-                      setHoveredId(null);
-                    }}
-                  >
-                    <span className="project-selector-number">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="project-selector-copy">
-                      <strong>{project.name}</strong>
-                      <span>{project.category} · {project.status}</span>
-                    </span>
-                    <span className="project-selector-mark" aria-hidden="true" />
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
+          {projectSelector}
 
           <div
             id="active-project-stage"
@@ -311,7 +356,7 @@ export default function ProjectShowcase() {
             <div className="project-stage-visual" ref={visualRef}>
               <div className="project-stage-topline" aria-hidden="true">
                 <span>AIFORM / {String(imageIndex + 1).padStart(2, "0")}</span>
-                <Image src="/images/aiform-mark.png" alt="" width={42} height={42} priority={imageProject.id === projects[0].id} />
+                <AiFormMark variant="studio" className="project-stage-mark" />
               </div>
               <StageArt project={imageProject} />
               <span className="project-stage-wash" aria-hidden="true" ref={washRef} />

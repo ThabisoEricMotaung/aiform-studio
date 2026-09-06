@@ -29,6 +29,11 @@ export default function HomeIntro({ children }: { children: ReactNode }) {
       exitTimerRef.current = null;
     }
     document.body.style.overflow = "";
+    // The pre-hydration attribute is what keeps the overlay visible (and the
+    // homepage hidden) from first paint through the whole "intro" phase —
+    // see the CSS. Clearing it here, right as the exit animation starts,
+    // hands off cleanly to the phase-driven classes below with no gap.
+    document.documentElement.removeAttribute("data-intro");
     setPhase((current) => (current === "intro" ? "exiting" : current));
   };
 
@@ -55,8 +60,11 @@ export default function HomeIntro({ children }: { children: ReactNode }) {
     // first pass's timer cancelled by its own cleanup and no replacement
     // scheduled.
     if (decidedRef.current === null) {
+      // Deliberately NOT cleared here (only beginExit clears it) — the
+      // attribute itself is what CSS uses to keep the overlay visible
+      // pre-hydration, and it needs to stay in place for the CSS rule to
+      // keep matching through the rest of the "intro" phase too.
       let shouldShow = document.documentElement.getAttribute("data-intro") === "show";
-      document.documentElement.removeAttribute("data-intro");
       if (!shouldShow) {
         try {
           if (!sessionStorage.getItem("aiform-intro-seen")) {
@@ -106,31 +114,46 @@ export default function HomeIntro({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [phase]);
 
-  const showOverlay = phase === "intro" || phase === "exiting";
+  // The overlay is now always rendered (identical on server and first
+  // client render, so there's no hydration mismatch on its own presence) —
+  // visibility before hydration is handled entirely by CSS keyed off the
+  // data-intro="show" attribute (see HomeIntro.css); "home-intro-live"
+  // below only matters for the client-side-navigation fallback path, where
+  // that attribute was never set because no fresh document load occurred.
+  const introClassName = [
+    "home-intro",
+    phase === "intro" ? "home-intro-live" : "",
+    phase === "exiting" ? "home-intro-exiting" : "",
+    reducedMotion ? "home-intro-reduced" : "",
+  ].filter(Boolean).join(" ");
+
+  // Same principle for the homepage wrapper: "home-reveal-hidden" is what
+  // the pre-hydration CSS rule also targets, so hydration can hand off to
+  // it without changing the rendered opacity. Only the exit transition
+  // needs an inline style, for its reduced-motion-dependent duration.
+  const revealClassName = [
+    "home-reveal",
+    phase === "intro" ? "home-reveal-hidden" : "",
+    phase === "exiting" ? "home-reveal-entering" : "",
+  ].filter(Boolean).join(" ");
   const revealStyle: React.CSSProperties | undefined =
     phase === "exiting"
-      ? { opacity: 1, transition: `opacity ${reducedMotion ? REDUCED_EXIT_DURATION_MS : EXIT_DURATION_MS}ms ease` }
-      : phase === "intro"
-        ? { opacity: 0.96 }
-        : undefined;
+      ? { transition: `opacity ${reducedMotion ? REDUCED_EXIT_DURATION_MS : EXIT_DURATION_MS}ms ease` }
+      : undefined;
 
   return (
     <>
-      {showOverlay ? (
-        <div
-          className={[
-            "home-intro",
-            phase === "exiting" ? "home-intro-exiting" : "",
-            reducedMotion ? "home-intro-reduced" : "",
-          ].filter(Boolean).join(" ")}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Welcome to AiForm Studio"
-        >
-          <div className="home-intro-stage">
+      <div
+        className={introClassName}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Welcome to AiForm Studio"
+      >
+        <div className="home-intro-stage">
+          <div className="home-intro-emblem">
             <div className="home-intro-orbit" aria-hidden="true">
-              <svg viewBox="0 0 400 400">
-                <ellipse cx="200" cy="200" rx="180" ry="148" />
+              <svg viewBox="0 0 320 400">
+                <ellipse cx="160" cy="200" rx="132" ry="172" />
               </svg>
               <span className="home-intro-orbit-node" />
             </div>
@@ -149,21 +172,21 @@ export default function HomeIntro({ children }: { children: ReactNode }) {
                 <span className="home-intro-reflection-mark" />
               </div>
             </div>
-            <p className="home-intro-eyebrow">Ideas / Systems / Impact</p>
-            <p className="home-intro-title">
-              <span className="home-intro-title-lead">Welcome to</span>
-              <span className="home-intro-title-strong">AiForm Studio</span>
-            </p>
-            <p className="home-intro-supporting">Designed for expensive assumptions.</p>
-            <p className="home-intro-locale">Pretoria, ZA</p>
-            <div className="home-intro-progress" aria-hidden="true"><span /></div>
           </div>
-          <button type="button" ref={skipRef} className="home-intro-skip" onClick={beginExit}>
-            Skip <span aria-hidden="true">→</span>
-          </button>
+          <p className="home-intro-eyebrow">Ideas / Systems / Impact</p>
+          <p className="home-intro-title">
+            <span className="home-intro-title-lead">Welcome to</span>
+            <span className="home-intro-title-strong">AiForm Studio</span>
+          </p>
+          <p className="home-intro-supporting">Designed for expensive assumptions.</p>
+          <p className="home-intro-locale">Pretoria, ZA</p>
+          <div className="home-intro-progress" aria-hidden="true"><span /></div>
         </div>
-      ) : null}
-      <div className="home-reveal" style={revealStyle}>
+        <button type="button" ref={skipRef} className="home-intro-skip" onClick={beginExit}>
+          Skip <span aria-hidden="true">→</span>
+        </button>
+      </div>
+      <div className={revealClassName} style={revealStyle}>
         {children}
       </div>
     </>

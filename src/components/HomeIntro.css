@@ -21,9 +21,28 @@
     repeating-linear-gradient(0deg, var(--intro-line) 0 1px, transparent 1px 64px),
     repeating-linear-gradient(90deg, var(--intro-line) 0 1px, transparent 1px 64px);
   color: var(--intro-text);
+  /* Hidden by default. Made visible either before hydration — by the
+     data-intro="show" attribute the blocking script in layout.tsx sets on
+     <html> synchronously, pre-paint, for a fresh homepage session — or
+     after it, by .home-intro-live (React-driven, for the client-side
+     navigation case where that script never ran). Both resolve to the
+     same entrance animation, so control handing from one to the other
+     never restarts or visibly changes anything. */
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+html[data-intro="show"] .home-intro,
+.home-intro.home-intro-live {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
   animation: home-intro-bg-fade 600ms ease both;
 }
 .home-intro-exiting {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: none;
   animation: home-intro-exit 650ms ease both;
 }
 @keyframes home-intro-bg-fade {
@@ -35,6 +54,35 @@
   to { opacity: 0; transform: scale(1.015); }
 }
 
+/* The homepage wrapper: hidden by the same pre-hydration attribute (so
+   there is zero visible homepage frame before the intro), then by
+   .home-reveal-hidden once React is driving (again, both the same value —
+   no restart). opacity, not visibility/display, so the content stays in
+   the DOM, in the accessibility tree, and indexable throughout. */
+html[data-intro="show"] .home-reveal,
+.home-reveal-hidden {
+  opacity: 0;
+}
+.home-reveal-entering {
+  opacity: 1;
+}
+
+/* Header and Footer are rendered by the shared root layout, not inside
+   HomeIntro's own children, so they can't receive the phase-driven
+   .home-reveal-* classes above — this keeps them revealing in sync with
+   the rest of the homepage anyway (one coherent reveal, not independent
+   timing per section), using the same attribute and the same 650ms
+   crossfade duration as .home-reveal-entering. */
+.site-header,
+.site-footer {
+  transition: opacity 650ms ease;
+}
+html[data-intro="show"] .site-header,
+html[data-intro="show"] .site-footer {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .home-intro-stage {
   position: relative;
   display: flex;
@@ -44,13 +92,24 @@
   padding: 2rem;
 }
 
+/* Mark + orbit as one composed unit — the orbit is sized and centred
+   relative to THIS box (not the whole stage, which also includes the
+   typography below), so it frames the mark specifically rather than
+   floating around empty space beneath it. Roughly 42-48vh tall at 1440
+   desktop, per spec, with a portrait aspect ratio close to the mark's own
+   so both the orbit's negative space and the mark's size-within-it stay
+   proportionate at any viewport height. */
+.home-intro-emblem {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(15rem, 45vh, 24rem);
+  aspect-ratio: 320 / 400;
+  margin: 0 auto clamp(1.5rem, 3.5vh, 2.25rem);
+}
+
 .home-intro-orbit {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 24rem;
-  height: 24rem;
-  transform: translate(-50%, -50%);
+  inset: 0;
   pointer-events: none;
 }
 .home-intro-orbit svg { width: 100%; height: 100%; overflow: visible; }
@@ -70,7 +129,7 @@
   border-radius: 999px;
   background: var(--intro-gold);
   box-shadow: 0 0 10px 1px rgba(209, 168, 105, 0.55);
-  offset-path: path("M20,200 A180,148 0 1,1 380,200 A180,148 0 1,1 20,200");
+  offset-path: path("M28,200 A132,172 0 1,1 292,200 A132,172 0 1,1 28,200");
   offset-rotate: 0deg;
   animation: home-intro-orbit-move 16s linear infinite;
 }
@@ -78,12 +137,22 @@
   to { offset-distance: 100%; }
 }
 
+/* Sized and centred to sit fully inside the orbit ellipse (~53% of the
+   emblem's width, ~51% of its height — comfortably within the 50-56%/
+   48-55% target with clear negative space on every side), rather than as
+   a separate stacked element above it. */
 .home-intro-mark {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 1;
-  width: clamp(8.5rem, 14vw, 12rem);
+  width: 53%;
   opacity: 0;
-  animation: home-intro-fade 600ms ease 150ms forwards;
+  animation: home-intro-mark-fade 600ms ease 150ms forwards;
+}
+@keyframes home-intro-mark-fade {
+  from { opacity: 0; transform: translate(-50%, -50%) translateY(6px); }
+  to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
 }
 .home-intro-mark-rotor {
   position: relative;
@@ -286,8 +355,7 @@
 }
 
 @media (max-width: 480px) {
-  .home-intro-orbit { width: 15rem; height: 15rem; }
-  .home-intro-mark { width: clamp(6.5rem, 32vw, 8rem); }
+  .home-intro-emblem { height: clamp(11.5rem, 36vh, 15rem); margin-bottom: 1.25rem; }
   .home-intro-eyebrow,
   .home-intro-locale { display: none; }
   .home-intro-title { margin-top: 1.5rem; }
@@ -307,6 +375,10 @@
   }
   .home-intro-exiting {
     animation-duration: 450ms !important;
+  }
+  .site-header,
+  .site-footer {
+    transition-duration: 450ms !important;
   }
   .home-intro-mark-rotor,
   .home-intro-mark-sheen,

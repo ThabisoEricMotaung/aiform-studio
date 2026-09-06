@@ -137,16 +137,19 @@ html[data-intro="show"] .site-footer {
   to { offset-distance: 100%; }
 }
 
-/* Sized and centred to sit fully inside the orbit ellipse (~53% of the
-   emblem's width, ~51% of its height — comfortably within the 50-56%/
-   48-55% target with clear negative space on every side), rather than as
-   a separate stacked element above it. */
+/* Sized (~57-59% of the emblem's width/height) and centred to sit fully
+   inside the orbit ellipse, with clear margin on every side even at the
+   rotation animation's extremes. Optically (not mathematically) centred:
+   the mark's long upper horns and heavier lower diamond mean its true
+   visual weight sits below its bounding-box middle, so the anchor point
+   is nudged well down from 50% to balance the negative space above and
+   below it within the ellipse. */
 .home-intro-mark {
   position: absolute;
-  top: 50%;
+  top: 65%;
   left: 50%;
   z-index: 1;
-  width: 53%;
+  width: 59%;
   opacity: 0;
   animation: home-intro-mark-fade 600ms ease 150ms forwards;
 }

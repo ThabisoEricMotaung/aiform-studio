@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export type LockupVariant = "gold" | "studio" | "green" | "white" | "dark";
 
-const variantColors: Record<Exclude<LockupVariant, "gold">, string> = {
+export const variantColors: Record<Exclude<LockupVariant, "gold">, string> = {
   studio: "#7A5A83",
   green: "#173B2C",
   white: "#FFFFFF",

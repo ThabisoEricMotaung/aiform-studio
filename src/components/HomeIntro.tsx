@@ -1,14 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import { variantColors } from "@/components/AiFormLockup";
 import "./HomeIntro.css";
 
 type Phase = "idle" | "intro" | "exiting" | "done";
 
-const AUTO_EXIT_MS = 3000;
+// ~6.5-6.7s total: gives the composition time to settle and the welcome
+// text time to actually be read before exit. The Skip control means this
+// is safe to let breathe — nobody who wants out has to wait for it.
+const AUTO_EXIT_MS = 6000;
 const EXIT_DURATION_MS = 650;
+// Reduced motion stays short regardless of the normal-path duration above.
 const REDUCED_AUTO_EXIT_MS = 1300;
 const REDUCED_EXIT_DURATION_MS = 450;
 
@@ -130,14 +134,19 @@ export default function HomeIntro({ children }: { children: ReactNode }) {
               </svg>
               <span className="home-intro-orbit-node" />
             </div>
-            <div className="home-intro-mark">
+            {/* Studio identity, not Procure: the mark is the same masked-shape
+                technique AiFormMark uses for its "studio" variant, filled
+                with that exact plum (variantColors.studio) rather than the
+                raw gold artwork — gold stays reserved for the orbit node and
+                progress line below. */}
+            <div className="home-intro-mark" style={{ "--intro-mark-color": variantColors.studio } as React.CSSProperties}>
               <div className="home-intro-mark-rotor">
-                <Image src="/images/aiform-mark.png" alt="" aria-hidden="true" width={472} height={588} className="home-intro-mark-shadow" priority />
-                <Image src="/images/aiform-mark.png" alt="" aria-hidden="true" width={472} height={588} className="home-intro-mark-main" priority />
+                <span className="home-intro-mark-shadow" aria-hidden="true" />
+                <span className="home-intro-mark-main" aria-hidden="true" />
                 <span className="home-intro-mark-sheen" aria-hidden="true" />
               </div>
               <div className="home-intro-reflection" aria-hidden="true">
-                <Image src="/images/aiform-mark.png" alt="" width={472} height={588} />
+                <span className="home-intro-reflection-mark" />
               </div>
             </div>
             <p className="home-intro-eyebrow">Ideas / Systems / Impact</p>

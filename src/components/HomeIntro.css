@@ -92,21 +92,38 @@ html[data-intro="show"] .site-footer {
   padding: 2rem;
 }
 
-/* Mark + orbit as one composed unit — the orbit is sized and centred
-   relative to THIS box (not the whole stage, which also includes the
-   typography below), so it frames the mark specifically rather than
-   floating around empty space beneath it. Roughly 50-55vh tall at 1440
-   desktop, per spec, with a portrait aspect ratio close to the mark's own
-   so both the orbit's negative space and the mark's size-within-it stay
-   proportionate at any viewport height. Since the orbit and mark are both
-   sized as percentages of this box (below), enlarging it scales the whole
-   composition together rather than the logo alone. */
+/* The orbit is now the compositional frame for the whole Studio message —
+   mark, eyebrow, welcome line and supporting line all live inside it as one
+   optically-centred group (.home-intro-emblem-content below); only the
+   locale line and progress mark sit outside, after it. ~76vh tall at 1440
+   desktop (~38vw wide, following from the portrait aspect ratio below —
+   narrower than an independent width target would suggest, since a wide
+   AND very tall ellipse doesn't fit a 1440x900 viewport at once), while
+   keeping the same portrait aspect ratio as the mark itself. */
 .home-intro-emblem {
   position: relative;
   flex: 0 0 auto;
-  height: clamp(17rem, 52vh, 29rem);
+  height: clamp(22rem, 78vh, 43rem);
   aspect-ratio: 320 / 400;
   margin: 0 auto clamp(1rem, 2.5vh, 1.75rem);
+}
+
+/* One optically-centred group: mark first (dominant), then the eyebrow as
+   a small bridge, then the welcome line, then the supporting line — all
+   considerably narrower than the orbit itself so none of it reaches the
+   ellipse's curve as it narrows away from centre (the text sits well
+   below the ellipse's widest point, where a wide box would poke through
+   the curve well before it would touch the outer bounding box). */
+.home-intro-emblem-content {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home-intro-orbit {
@@ -139,25 +156,21 @@ html[data-intro="show"] .site-footer {
   to { offset-distance: 100%; }
 }
 
-/* Sized (~57-59% of the emblem's width/height) and centred to sit fully
-   inside the orbit ellipse, with clear margin on every side even at the
-   rotation animation's extremes. Optically (not mathematically) centred:
-   the mark's long upper horns and heavier lower diamond mean its true
-   visual weight sits below its bounding-box middle, so the anchor point
-   is nudged well down from 50% to balance the negative space above and
-   below it within the ellipse. */
+/* Sized relative to the orbit itself (not the narrower text group it now
+   sits above), with clear margin to the ellipse on every side even at the
+   rotation animation's extremes. The optical-centring logic carries over
+   as a downward nudge on the whole content group above, rather than on
+   the mark alone — it no longer needs its own position/transform, just
+   its size and entrance fade. */
 .home-intro-mark {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  z-index: 1;
-  width: 59%;
+  position: relative;
+  width: 92%;
   opacity: 0;
   animation: home-intro-mark-fade 600ms ease 150ms forwards;
 }
 @keyframes home-intro-mark-fade {
-  from { opacity: 0; transform: translate(-50%, -50%) translateY(6px); }
-  to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .home-intro-mark-rotor {
   position: relative;
@@ -231,9 +244,15 @@ html[data-intro="show"] .site-footer {
   100% { background-position: 130% 0%; }
 }
 .home-intro-reflection {
+  /* Out of normal flow — purely a faint visual bleed beneath the mark, not
+     something the eyebrow/title/supporting stack below should have to make
+     room for in the content group's height. */
+  position: absolute;
+  top: 100%;
+  left: 50%;
   width: 60%;
-  margin: 0.25rem auto 0;
-  transform: scaleY(-1);
+  margin-top: 0.25rem;
+  transform: translateX(-50%) scaleY(-1);
   opacity: 0.14;
   filter: blur(2px);
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 70%);
@@ -255,7 +274,7 @@ html[data-intro="show"] .site-footer {
 }
 
 .home-intro-eyebrow {
-  margin-top: 2.25rem;
+  margin-top: 1.35rem;
   font: 500 0.65rem/1 var(--font-geist), sans-serif;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -264,7 +283,7 @@ html[data-intro="show"] .site-footer {
   animation: home-intro-fade 600ms ease 300ms forwards;
 }
 .home-intro-title {
-  margin-top: 0.85rem;
+  margin-top: 0.7rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -283,14 +302,15 @@ html[data-intro="show"] .site-footer {
   color: var(--intro-text);
 }
 .home-intro-supporting {
-  margin-top: 0.9rem;
+  margin-top: 0.75rem;
+  max-width: 22rem;
   font-size: 0.95rem;
   color: var(--intro-muted);
   opacity: 0;
   animation: home-intro-fade 700ms ease 1800ms forwards;
 }
 .home-intro-locale {
-  margin-top: 2rem;
+  margin-top: 0.25rem;
   font: 500 0.62rem/1 var(--font-geist), sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -360,11 +380,21 @@ html[data-intro="show"] .site-footer {
 }
 
 @media (max-width: 480px) {
-  .home-intro-emblem { height: clamp(13rem, 40vh, 18rem); margin-bottom: 1rem; }
-  .home-intro-eyebrow,
-  .home-intro-locale { display: none; }
-  .home-intro-title { margin-top: 1.5rem; }
+  /* The eyebrow and locale used to be dropped here to save space when the
+     mark alone sat in a small orbit; now the orbit is the frame for the
+     whole message on every breakpoint, so both stay — the bigger mobile
+     orbit below has the room. */
+  .home-intro-emblem { height: clamp(16rem, 72vh, 27rem); margin-bottom: 1.75rem; }
+  .home-intro-emblem-content { width: 78%; top: 50%; }
+  /* The mark is scaled back a little here (relative to the orbit) so the
+     text stack below it — unchanged in size — has the room it needs to
+     stay inside the ellipse too; the orbit itself is still much larger
+     than before. */
+  .home-intro-mark { width: 63%; }
+  .home-intro-eyebrow { margin-top: 0.6rem; }
+  .home-intro-title { margin-top: 0.4rem; }
   .home-intro-title-strong { font-size: clamp(1.6rem, 8vw, 2rem); }
+  .home-intro-supporting { margin-top: 0.4rem; max-width: 14rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

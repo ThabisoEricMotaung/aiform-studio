@@ -157,28 +157,34 @@ export default function HomeIntro({ children }: { children: ReactNode }) {
               </svg>
               <span className="home-intro-orbit-node" />
             </div>
-            {/* Studio identity, not Procure: the mark is the same masked-shape
-                technique AiFormMark uses for its "studio" variant, filled
-                with that exact plum (variantColors.studio) rather than the
-                raw gold artwork — gold stays reserved for the orbit node and
-                progress line below. */}
-            <div className="home-intro-mark" style={{ "--intro-mark-color": variantColors.studio } as React.CSSProperties}>
-              <div className="home-intro-mark-rotor">
-                <span className="home-intro-mark-shadow" aria-hidden="true" />
-                <span className="home-intro-mark-main" aria-hidden="true" />
-                <span className="home-intro-mark-sheen" aria-hidden="true" />
+            {/* The orbit now frames the complete Studio message, not just the
+                mark — mark, eyebrow, welcome line and supporting line are one
+                optically-centred group inside it. Only the locale line and
+                progress mark sit outside, below. */}
+            <div className="home-intro-emblem-content">
+              {/* Studio identity, not Procure: the mark is the same masked-shape
+                  technique AiFormMark uses for its "studio" variant, filled
+                  with that exact plum (variantColors.studio) rather than the
+                  raw gold artwork — gold stays reserved for the orbit node and
+                  progress line below. */}
+              <div className="home-intro-mark" style={{ "--intro-mark-color": variantColors.studio } as React.CSSProperties}>
+                <div className="home-intro-mark-rotor">
+                  <span className="home-intro-mark-shadow" aria-hidden="true" />
+                  <span className="home-intro-mark-main" aria-hidden="true" />
+                  <span className="home-intro-mark-sheen" aria-hidden="true" />
+                </div>
+                <div className="home-intro-reflection" aria-hidden="true">
+                  <span className="home-intro-reflection-mark" />
+                </div>
               </div>
-              <div className="home-intro-reflection" aria-hidden="true">
-                <span className="home-intro-reflection-mark" />
-              </div>
+              <p className="home-intro-eyebrow">Ideas / Systems / Impact</p>
+              <p className="home-intro-title">
+                <span className="home-intro-title-lead">Welcome to</span>
+                <span className="home-intro-title-strong">AiForm Studio</span>
+              </p>
+              <p className="home-intro-supporting">Designed for expensive assumptions.</p>
             </div>
           </div>
-          <p className="home-intro-eyebrow">Ideas / Systems / Impact</p>
-          <p className="home-intro-title">
-            <span className="home-intro-title-lead">Welcome to</span>
-            <span className="home-intro-title-strong">AiForm Studio</span>
-          </p>
-          <p className="home-intro-supporting">Designed for expensive assumptions.</p>
           <p className="home-intro-locale">Pretoria, ZA</p>
           <div className="home-intro-progress" aria-hidden="true"><span /></div>
         </div>

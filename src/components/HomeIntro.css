@@ -95,16 +95,18 @@ html[data-intro="show"] .site-footer {
 /* Mark + orbit as one composed unit — the orbit is sized and centred
    relative to THIS box (not the whole stage, which also includes the
    typography below), so it frames the mark specifically rather than
-   floating around empty space beneath it. Roughly 42-48vh tall at 1440
+   floating around empty space beneath it. Roughly 50-55vh tall at 1440
    desktop, per spec, with a portrait aspect ratio close to the mark's own
    so both the orbit's negative space and the mark's size-within-it stay
-   proportionate at any viewport height. */
+   proportionate at any viewport height. Since the orbit and mark are both
+   sized as percentages of this box (below), enlarging it scales the whole
+   composition together rather than the logo alone. */
 .home-intro-emblem {
   position: relative;
   flex: 0 0 auto;
-  height: clamp(15rem, 45vh, 24rem);
+  height: clamp(17rem, 52vh, 29rem);
   aspect-ratio: 320 / 400;
-  margin: 0 auto clamp(1.5rem, 3.5vh, 2.25rem);
+  margin: 0 auto clamp(1rem, 2.5vh, 1.75rem);
 }
 
 .home-intro-orbit {
@@ -358,7 +360,7 @@ html[data-intro="show"] .site-footer {
 }
 
 @media (max-width: 480px) {
-  .home-intro-emblem { height: clamp(11.5rem, 36vh, 15rem); margin-bottom: 1.25rem; }
+  .home-intro-emblem { height: clamp(13rem, 40vh, 18rem); margin-bottom: 1rem; }
   .home-intro-eyebrow,
   .home-intro-locale { display: none; }
   .home-intro-title { margin-top: 1.5rem; }

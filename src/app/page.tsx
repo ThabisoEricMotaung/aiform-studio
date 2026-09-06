@@ -5,6 +5,7 @@ import { AiFormMark } from "@/components/AiFormLockup";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import CalendlyBooking from "@/components/contact/CalendlyBooking";
 import WhatsAppLink from "@/components/contact/WhatsAppLink";
+import HomeIntro from "@/components/HomeIntro";
 
 const capabilities = [
   ["Websites", "Clear digital entry points built around what customers need to do."],
@@ -38,7 +39,7 @@ function SocialIcon({ platform }: { platform: SocialPlatform }) {
 }
 
 export default function Home() {
-  return <>
+  return <HomeIntro>
     <section id="home" className="editorial-grid home-hero" aria-labelledby="home-title">
       <div className="relative z-10 col-span-12 lg:col-span-9 xl:col-span-8">
         <h1 id="home-title" className="home-hero-title">We build what your business actually needs.</h1>
@@ -278,5 +279,5 @@ export default function Home() {
         </div>
       </div>
     </section>
-  </>;
+  </HomeIntro>;
 }

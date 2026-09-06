@@ -118,9 +118,17 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   };
 
   return (
+    // suppressHydrationWarning is scoped to this element only (React does not
+    // propagate it to descendants) and is required here: both the theme-init
+    // and intro-init scripts below set attributes on <html> synchronously
+    // before hydration, using the exact pre-paint pattern next-themes and
+    // similar libraries use — without this, React reports a mismatch on
+    // every render where either script acts (every first-time homepage
+    // visit, for the intro), even though the DOM is correct on purpose.
     <html
       lang="en"
       className={`${interTight.variable} ${geist.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-bg text-text">
         <script
@@ -128,6 +136,19 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{
             __html:
               "(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();",
+          }}
+        />
+        {/* Decides, before anything paints, whether the homepage welcome
+            intro should play — mirrors the theme-init pattern above so
+            there's no flash of the bare homepage for a first-time visitor,
+            and no flash of an intro that's about to be hidden for a
+            returning one. Marking the session as "seen" happens here too,
+            atomically with the decision, rather than later in React. */}
+        <script
+          id="intro-init"
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{if(window.location.pathname!=='/')return;if(sessionStorage.getItem('aiform-intro-seen')){return;}sessionStorage.setItem('aiform-intro-seen','1');document.documentElement.setAttribute('data-intro','show');}catch(e){}})();",
           }}
         />
         <script

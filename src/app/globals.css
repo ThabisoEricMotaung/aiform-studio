@@ -181,18 +181,6 @@
 :root[data-theme="dark"] .procure-flow-node:hover { background: var(--color-surface); }
 :root[data-theme="dark"] .procure-flow-node-active { background: var(--color-surface-strong); }
 :root[data-theme="dark"] .procure-flow-node-active .procure-flow-node-title { color: var(--color-on-surface-strong); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .founder-section {
-    background:
-      radial-gradient(circle at 24% 43%, rgba(70, 78, 72, 0.4) 0, rgba(40, 46, 42, 0.28) 24%, rgba(17, 19, 18, 0) 58%),
-      var(--color-bg);
-  }
-}
-:root[data-theme="dark"] .founder-section {
-  background:
-    radial-gradient(circle at 24% 43%, rgba(70, 78, 72, 0.4) 0, rgba(40, 46, 42, 0.28) 24%, rgba(17, 19, 18, 0) 58%),
-    var(--color-bg);
-}
 
 html {
   scroll-behavior: smooth;
@@ -488,15 +476,30 @@ a:focus-visible {
 .process-step { padding-block: 1.75rem; }
 .process-step h3 { margin-top: 1.25rem; }
 .process-step > p:last-child { margin-top: 0.75rem; }
+/* Founder is a deliberately authored dark editorial section, independent of
+   the site's light/dark theme — like Selected Work, it looks the same in
+   either theme. Local tokens carry the dark palette down to the shared
+   chapter-label/section-title/section-intro classes and the founder-*
+   elements below (all of which read colour from these custom properties),
+   so nothing here depends on the global theme's --color-* values. */
 .founder-section {
+  --color-bg: #111312;
+  --color-text: #f5f1e6;
+  --color-muted: #a9a79b;
+  --color-green: #8bb89c;
+  --color-gold: #d1a869;
+  --color-line: rgba(245, 241, 230, 0.14);
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  color: var(--color-muted);
   background:
-    radial-gradient(circle at 24% 43%, rgba(230, 228, 216, 0.72) 0, rgba(235, 239, 234, 0.46) 24%, rgba(255, 255, 255, 0) 58%),
-    #fff;
+    radial-gradient(circle at 24% 43%, rgba(70, 78, 72, 0.4) 0, rgba(40, 46, 42, 0.28) 24%, rgba(17, 19, 18, 0) 58%),
+    var(--color-bg);
 }
 .founder-section > :not(.founder-system) { position: relative; z-index: 1; }
+.founder-section .section-title,
+.founder-section .founder-name { color: var(--color-text); }
 .founder-system {
   position: absolute;
   z-index: 0;
@@ -524,13 +527,13 @@ a:focus-visible {
   transform-origin: 36.67% 50%;
 }
 .founder-orbit {
-  stroke: rgba(23, 59, 44, 0.11);
+  stroke: rgba(245, 241, 230, 0.16);
   stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
 }
 .founder-orbit-1 { stroke-dasharray: 690 210; }
 .founder-orbit-2 { stroke-dasharray: 920 360; stroke-width: 1; }
-.founder-orbit-3 { stroke-dasharray: 1080 560; stroke: rgba(23, 59, 44, 0.08); }
+.founder-orbit-3 { stroke-dasharray: 1080 560; stroke: rgba(245, 241, 230, 0.1); }
 .founder-node { fill: var(--color-gold); }
 @keyframes founder-orbit-drift {
   from { transform: rotate(-3deg); }
@@ -567,11 +570,14 @@ a:focus-visible {
   font-size: 0.75rem;
 }
 .founder-social-icon { width: 1.5rem; height: 1.5rem; flex: 0 0 auto; fill: currentColor; }
-.founder-social-icon-tiktok { color: #111; }
+/* Founder is always a dark section (see .founder-section above), so icon
+   colours are the recognised platform colour where it reads on dark —
+   TikTok and GitHub's own dark-mode marks are white, not black. */
+.founder-social-icon-tiktok { color: #f5f1e6; }
 .founder-social-icon-facebook { color: #1877f2; }
-.founder-social-icon-linkedin { color: #0a66c2; }
-.founder-social-icon-github { color: #181717; }
-.founder-social-icon-apple-music { color: #fa2d48; }
+.founder-social-icon-linkedin { color: #2e8bee; }
+.founder-social-icon-github { color: #f5f1e6; }
+.founder-social-icon-apple-music { color: #fc3c56; }
 .founder-elsewhere a {
   position: relative;
   gap: 0.35rem;
@@ -2418,24 +2424,38 @@ a.engine-proof-item:hover .engine-proof-figure img { transform: scale(1.03); }
 .home-contact-methods .contact-alt-action-icon { display: none; }
 .home-contact-methods .contact-alt-action-title { font: inherit; }
 .home-contact-methods .contact-alt-action-subtitle { display: none; }
-.manifesto-spread { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(4rem, 7vw, 7rem); row-gap: 2rem; background-image: linear-gradient(90deg, transparent calc(25% - 1px), var(--color-line) 25%, transparent calc(25% + 1px)); }
+.manifesto-spread { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(3.5rem, 6vw, 5.5rem); row-gap: 2rem; background-image: linear-gradient(90deg, transparent calc(25% - 1px), var(--color-line) 25%, transparent calc(25% + 1px)); }
 .manifesto-field { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; pointer-events: none; color: var(--color-text); }
 .manifesto-field path { stroke: currentColor; stroke-width: 1; opacity: .13; }
+.manifesto-field path.manifesto-field-miss { stroke-dasharray: 3 5; opacity: .11; }
 .manifesto-field circle { fill: var(--color-gold); opacity: .8; }
+.manifesto-field-mark {
+  position: absolute;
+  z-index: -1;
+  top: 10%;
+  right: 6%;
+  width: clamp(9rem, 15vw, 16rem);
+  aspect-ratio: 472 / 588;
+  background-color: var(--color-text);
+  opacity: .045;
+  pointer-events: none;
+}
 .manifesto-eyebrow { grid-column: 1 / -1; }
 .manifesto-spread > h2 { grid-column: 1 / span 5; max-width: 8.5em; align-self: start; margin-top: 1rem; font-size: clamp(2.5rem, 4.2vw, 4rem); }
-.manifesto-observations { grid-column: 8 / -1; padding-top: 5rem; }
-.manifesto-spread .manifesto-list { margin-top: 0; border: 0; }
-.manifesto-spread .manifesto-list li { border: 0; padding: .65rem 0; font-size: clamp(1rem, 1.5vw, 1.3rem); }
+.manifesto-observations { grid-column: 8 / -1; padding-top: 3.5rem; }
+.manifesto-spread .manifesto-list { margin-top: 0; border-top: 1px solid var(--color-line); }
+.manifesto-spread .manifesto-list li { display: flex; align-items: baseline; gap: 1.1rem; border: 0; border-bottom: 1px solid var(--color-line); padding: .9rem 0; font-size: clamp(1rem, 1.5vw, 1.3rem); }
 .manifesto-spread .manifesto-list li::before { display: none; }
+.manifesto-index { flex: 0 0 auto; color: var(--color-gold); font: 600 .7rem/1 var(--font-geist), sans-serif; letter-spacing: .08em; }
 .manifesto-spread .manifesto-close { max-width: 18rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--color-line); }
 @media (max-width: 900px) {
   .manifesto-spread > h2 { grid-column: 1 / span 6; }
-  .manifesto-observations { grid-column: 8 / -1; padding-top: 3rem; }
+  .manifesto-observations { grid-column: 8 / -1; padding-top: 2.5rem; }
 }
 @media (max-width: 600px) {
   .manifesto-spread { row-gap: 1.5rem; }
   .manifesto-spread > h2 { grid-column: 1 / -1; margin-top: 0; }
   .manifesto-observations { grid-column: 3 / -1; padding-top: 1rem; }
   .manifesto-field { width: 180%; left: -40%; }
+  .manifesto-field-mark { display: none; }
 }

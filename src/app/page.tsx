@@ -90,20 +90,35 @@ export default function Home() {
 
     <section id="manifesto" className="manifesto-spread editorial-grid border-t border-line" aria-labelledby="manifesto-title">
       <svg className="manifesto-field" viewBox="0 0 1440 680" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
-        <path d="M-100 165H260C420 165 380 445 545 445H890" />
+        <path d="M-100 165H260C420 165 380 340 545 340H890" />
         <path d="M180 760V510C180 390 405 365 405 500C405 630 250 615 250 500V-80" />
-        <path d="M1550 60H1170C1030 60 1100 445 920 445" />
-        <path d="M1530 610H1150C995 610 1040 445 920 445" />
-        <circle cx="912" cy="445" r="5" />
+        <path d="M1550 60H1170C1030 60 1100 340 920 340" />
+        <path d="M1530 610H1150C995 610 1040 340 920 340" />
+        {/* One loop: a route that curls back on itself before continuing. */}
+        <path d="M1060 175C1120 175 1120 110 1060 110C1000 110 1000 185 1075 185C1130 185 1150 155 1150 210" />
+        {/* One missed connection: two dashed ends that approach but never touch. */}
+        <path className="manifesto-field-miss" d="M120 330L245 400" />
+        <path className="manifesto-field-miss" d="M300 445L390 500" />
+        <circle cx="912" cy="340" r="5" />
       </svg>
+      <span className="manifesto-field-mark" aria-hidden="true" style={{
+        WebkitMaskImage: "url(/images/aiform-mark.png)",
+        maskImage: "url(/images/aiform-mark.png)",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+      }} />
       <p className="chapter-label manifesto-eyebrow">Principle</p>
       <h2 id="manifesto-title" className="secondary-title">A studio for expensive assumptions.</h2>
       <div className="manifesto-observations">
         <ul className="manifesto-list">
-          <li>The spreadsheet everyone works around.</li>
-          <li>The process nobody questions.</li>
-          <li>The system that almost works.</li>
-          <li>The manual task that somehow became permanent.</li>
+          <li><span className="manifesto-index">01</span><span>The spreadsheet everyone works around.</span></li>
+          <li><span className="manifesto-index">02</span><span>The process nobody questions.</span></li>
+          <li><span className="manifesto-index">03</span><span>The system that almost works.</span></li>
+          <li><span className="manifesto-index">04</span><span>The manual task that somehow became permanent.</span></li>
         </ul>
         <p className="manifesto-close">We look closely before we build.</p>
       </div>
@@ -168,7 +183,7 @@ export default function Home() {
 
     <section id="about" className="founder-section editorial-grid home-section border-t border-line" aria-labelledby="founder-title">
       <div className="founder-system" aria-hidden="true">
-        <AiFormMark variant="green" className="founder-system-mark" />
+        <AiFormMark variant="white" className="founder-system-mark" />
         <svg className="founder-system-orbits" viewBox="0 0 900 620" fill="none">
           <ellipse className="founder-orbit founder-orbit-1" cx="330" cy="310" rx="235" ry="190" />
           <ellipse className="founder-orbit founder-orbit-2" cx="330" cy="310" rx="330" ry="255" />

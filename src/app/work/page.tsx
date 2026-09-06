@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ProjectShowcase from "@/components/ProjectShowcase";
 export const metadata: Metadata = {
   title: "Work",
@@ -20,4 +21,4 @@ export const metadata: Metadata = {
     images: ["https://aiformstudio.co.za/images/aiform-story.png"],
   },
 };
-export default function WorkPage() { return <><section className="editorial-grid py-16 md:py-24"><p className="col-span-12 chapter-label md:col-span-2">Work</p><div className="col-span-12 mt-9 md:col-start-3 md:col-span-8 md:mt-0"><h1 className="hero-title font-display">Built around<br /><span className="text-green">real work.</span></h1><p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">Systems commissioned by clients, products developed by AiForm, and experiments that test what might be useful next.</p></div></section><ProjectShowcase /></>; }
+export default function WorkPage() { return <><section className="editorial-grid py-16 md:py-24"><p className="col-span-12 chapter-label md:col-span-2">Work / Full index</p><div className="col-span-12 mt-9 md:col-start-3 md:col-span-8 md:mt-0"><h1 className="hero-title font-display">Built around<br /><span className="text-green">real work.</span></h1><p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted">The complete list — systems commissioned by clients, products developed by AiForm, and experiments that test what might be useful next.</p><Link href="/#work" className="text-link mt-6">See the Selected Work showcase <span aria-hidden="true">→</span></Link></div></section><ProjectShowcase /></>; }

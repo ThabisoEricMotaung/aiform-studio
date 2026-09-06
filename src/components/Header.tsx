@@ -24,14 +24,7 @@ const cities = [
 ];
 const CITY_ROTATION_MS = 5_000;
 
-const links = [
-  { href: "/", label: "Home", section: "home" },
-  { href: "/#services", label: "Services", section: "services" },
-  { href: "/work", label: "Work", section: "work" },
-  { href: "/journal", label: "Journal", section: "journal" },
-  { href: "/#about", label: "About", section: "about" },
-  { href: "/contact", label: "Contact", section: "contact" },
-];
+const NAV_SECTIONS = ["home", "services", "work", "journal", "about", "contact"];
 
 // A server-provided, cached observation populates this optional slot (see
 // RootLayout). If a city's fetch failed, it's absent from the record and
@@ -82,6 +75,20 @@ export default function Header({ weather }: { weather?: CityWeather }) {
   const pathname = usePathname();
   const [observedSection, setObservedSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // The immersive Selected Work experience now lives on the homepage under
+  // #work; the primary nav should land there instead of the quieter /work
+  // archive. A bare hash keeps homepage clicks a same-page anchor jump,
+  // while other routes need the leading "/" to navigate home first.
+  const links = [
+    { href: "/", label: "Home", section: "home" },
+    { href: "/#services", label: "Services", section: "services" },
+    { href: pathname === "/" ? "#work" : "/#work", label: "Work", section: "work" },
+    { href: "/journal", label: "Journal", section: "journal" },
+    { href: "/#about", label: "About", section: "about" },
+    { href: "/contact", label: "Contact", section: "contact" },
+  ];
+
   const activeSection =
     pathname === "/"
       ? observedSection
@@ -98,8 +105,8 @@ export default function Header({ weather }: { weather?: CityWeather }) {
       return;
     }
 
-    const sections = links
-      .map(({ section }) => document.getElementById(section))
+    const sections = NAV_SECTIONS
+      .map((section) => document.getElementById(section))
       .filter((section): section is HTMLElement => Boolean(section));
     const visible = new Map<string, IntersectionObserverEntry>();
     const observer = new IntersectionObserver(

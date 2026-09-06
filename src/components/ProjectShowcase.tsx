@@ -98,7 +98,41 @@ function ProjectLink({ project }: { project: Project }) {
 function StageArt({ project, immersive = false }: { project: Project; immersive?: boolean }) {
   const visual = visualFor(project);
 
-  if (immersive && (visual.kind === "showcase" || visual.kind === "publication")) {
+  if (immersive && visual.kind === "publication") {
+    // Portrait publication artwork can't take the full-bleed `cover` crop the
+    // other (landscape, already-composed) showcase art uses without zooming
+    // past the point the book is recognisable. Instead: the same artwork
+    // fills the stage as a softened backdrop, and a second, uncropped copy
+    // sits centred on top at a readable size. Both layers request the same
+    // `sizes` so Next/Image resolves them to the same optimised URL and the
+    // browser fetches the artwork once rather than twice.
+    return (
+      <div className="cinematic-publication">
+        <Image
+          src={visual.src}
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className="cinematic-publication-backdrop"
+          style={{ objectFit: "cover" }}
+        />
+        <div className="cinematic-publication-scrim" aria-hidden="true" />
+        <div className="cinematic-publication-frame">
+          <Image
+            src={visual.src}
+            alt={visual.alt}
+            fill
+            sizes="100vw"
+            className="cinematic-publication-book"
+            style={{ objectFit: "contain" }}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (immersive && visual.kind === "showcase") {
     return <Image src={visual.src} alt={visual.alt} fill sizes="100vw" className="cinematic-artwork" style={{ objectFit: "cover" }} />;
   }
 

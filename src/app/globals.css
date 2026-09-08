@@ -813,9 +813,6 @@ a:focus-visible {
   .pretoria-caption-name { font-size: 0.62rem; }
   .pretoria-caption-coords { font-size: 0.56rem; }
   .founder-row { grid-template-columns: 1fr; gap: 1.5rem; }
-  .founder-section {
-    background: radial-gradient(circle at 12% 38%, rgba(230, 228, 216, 0.68) 0, rgba(239, 241, 237, 0.38) 32%, rgba(255,255,255,0) 65%), #fff;
-  }
   .founder-system { top: 7rem; left: -8rem; width: 34rem; height: 28rem; }
   .founder-system-mark { left: 0; width: 26rem; opacity: 0.06; }
   .founder-orbit-3,

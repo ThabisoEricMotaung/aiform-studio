@@ -752,6 +752,129 @@ a:focus-visible {
     animation: none !important;
   }
 }
+
+/* The System section: an editorial system map (notice -> understand ->
+   structure -> build -> evolve). Unlike the other decorative diagrams above,
+   this one carries real narrative weight, so its lines/nodes read colour
+   from the global theme tokens (currentColor + var(--color-*)) instead of
+   fixed light-mode rgba values, keeping it legible in dark mode too. */
+.system-note {
+  max-width: 18rem;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+.system-note-close {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-green);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.system-diagram-band {
+  position: relative;
+  height: clamp(72px, 7.5vw, 104px);
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  color: var(--color-green);
+}
+.system-diagram {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+.system-diagram .system-raw,
+.system-diagram .system-converge,
+.system-diagram .system-spine,
+.system-diagram .system-branch { stroke: currentColor; fill: none; }
+.system-diagram .system-node { stroke: currentColor; }
+.system-diagram .system-guide { stroke: var(--color-line); fill: none; }
+.system-diagram .system-guide-ring { stroke: currentColor; fill: none; }
+.system-signal-static { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .system-signal { display: none; }
+  .system-signal-static { display: block; }
+}
+@media (max-width: 1023px) {
+  .system-diagram-band { display: none; }
+}
+
+.system-stages {
+  position: relative;
+  margin-top: 1rem;
+  margin-left: 0.05rem;
+  border-left: 1px solid var(--color-line);
+}
+.system-stage {
+  position: relative;
+  border-top: 1px solid var(--color-line);
+  padding: 1.6rem 0 1.6rem 1.75rem;
+}
+.system-stage:first-child { border-top: 0; }
+.system-stage::before {
+  content: "";
+  position: absolute;
+  top: 1.95rem;
+  left: 0.05rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-green);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-green) 10%, transparent);
+}
+.system-stage:nth-child(4)::before {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-gold) 14%, transparent);
+}
+.system-stage:nth-child(3)::before {
+  border-color: var(--color-purple);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-purple) 12%, transparent);
+}
+.system-stage:last-child::after {
+  content: "";
+  position: absolute;
+  top: 2.55rem;
+  left: 0.4rem;
+  width: 13px;
+  height: 13px;
+  border-right: 1.5px solid var(--color-line);
+  border-bottom: 1.5px solid var(--color-line);
+  opacity: 0.8;
+  transform: rotate(-45deg);
+}
+.system-stage h3 { margin-top: 0.7rem; font: 650 1.25rem/1.2 var(--font-inter-tight); letter-spacing: -0.02em; }
+.system-stage-copy { margin-top: 0.55rem; color: var(--color-muted); font-size: 0.9rem; line-height: 1.55; }
+.system-stage-rule { margin-top: 0.85rem; display: block; }
+.system-stage-micro { margin-top: 0.4rem; color: var(--color-muted); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; white-space: nowrap; }
+@media (min-width: 1024px) {
+  .system-note { margin-left: auto; }
+  .system-stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-left: 0;
+    border-top: 1px solid var(--color-line);
+    border-left: 0;
+  }
+  /* Stage copy length varies a lot (Notice wraps far more than Structure), so
+     without this the gold rule/micro-label would land at a different height
+     in every column. Flex + margin-top:auto on the rule pins them to a
+     shared baseline at the bottom of the row regardless of copy length. */
+  .system-stage { display: flex; flex-direction: column; border-top: 0; padding: 1.75rem 1.5rem 1.75rem 0; }
+  .system-stage:not(:first-child) { border-left: 1px solid var(--color-line); padding-left: 1.5rem; }
+  .system-stage::before,
+  .system-stage:last-child::after { content: none; }
+  .system-stage-rule { margin-top: auto; padding-top: 0.85rem; }
+}
+
 .site-footer {
   background-color: #fff;
   background-image:

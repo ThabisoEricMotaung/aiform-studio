@@ -3,6 +3,7 @@ import Link from "next/link";
 import PretoriaPhoto from "@/components/PretoriaPhoto";
 import { AiFormMark } from "@/components/AiFormLockup";
 import ProjectShowcase from "@/components/ProjectShowcase";
+import CommunityBuilds from "@/components/CommunityBuilds";
 import CalendlyBooking from "@/components/contact/CalendlyBooking";
 import WhatsAppLink from "@/components/contact/WhatsAppLink";
 import HomeIntro from "@/components/HomeIntro";
@@ -95,6 +96,8 @@ export default function Home() {
     </section>
 
     <ProjectShowcase immersive />
+
+    <CommunityBuilds />
 
     <section id="manifesto" className="manifesto-spread editorial-grid border-t border-line" aria-labelledby="manifesto-title">
       <svg className="manifesto-field" viewBox="0 0 1440 680" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
@@ -227,8 +230,9 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div className="col-span-12 mt-10 border-t border-line pt-6 md:col-start-4 md:col-span-8">
+      <div className="col-span-12 mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 md:col-start-4 md:col-span-8">
         <Link href="/work/aiform-engine" className="text-link">See the Engine in depth <span aria-hidden="true">→</span></Link>
+        <Link href="/ai" className="text-link">How we use AI <span aria-hidden="true">→</span></Link>
       </div>
     </section>
 

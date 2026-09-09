@@ -167,12 +167,14 @@
   :root:not([data-theme="light"]) .build-status-delivered,
   :root:not([data-theme="light"]) .build-status-design-complete,
   :root:not([data-theme="light"]) .build-status-publication { border-color: var(--color-text); color: var(--color-text); }
-  :root:not([data-theme="light"]) .build-status-in-development { border-color: var(--color-gold); color: var(--color-gold); }
+  :root:not([data-theme="light"]) .build-status-in-development,
+  :root:not([data-theme="light"]) .build-status-in-progress { border-color: var(--color-gold); color: var(--color-gold); }
 }
 :root[data-theme="dark"] .build-status-delivered,
 :root[data-theme="dark"] .build-status-design-complete,
 :root[data-theme="dark"] .build-status-publication { border-color: var(--color-text); color: var(--color-text); }
-:root[data-theme="dark"] .build-status-in-development { border-color: var(--color-gold); color: var(--color-gold); }
+:root[data-theme="dark"] .build-status-in-development,
+:root[data-theme="dark"] .build-status-in-progress { border-color: var(--color-gold); color: var(--color-gold); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .procure-flow-node:hover { background: var(--color-surface); }
   :root:not([data-theme="light"]) .procure-flow-node-active { background: var(--color-surface-strong); }
@@ -875,6 +877,264 @@ a:focus-visible {
   .system-stage-rule { margin-top: auto; padding-top: 0.85rem; }
 }
 
+/* /ai — "AI at AiForm" position page. Reuses case-study-* and system-* /
+   engine-architecture-* primitives from above wherever the shape matches;
+   the classes below are only what's genuinely new to this page: the hero
+   headline size, the hero's judgment-boundary diagram, the three-tier
+   framework grid, and the bridge diagram (selective AI involvement across
+   Notice/Understand/Structure/Build/Evolve). All diagram colour comes from
+   currentColor + theme tokens so it adapts in dark mode. */
+.ai-hero-title {
+  font: 700 clamp(2.5rem, 4.6vw, 4.25rem) / 1.05 var(--font-inter-tight);
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.ai-hero-statement {
+  max-width: 22rem;
+  border-top: 1px solid var(--color-text);
+  padding-top: 1.1rem;
+}
+.ai-hero-statement p:first-child {
+  font: 650 clamp(1.2rem, 1.7vw, 1.5rem) / 1.4 var(--font-inter-tight);
+  letter-spacing: -0.01em;
+}
+.ai-hero-statement p:last-child {
+  margin-top: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.ai-hero-diagram-band {
+  position: relative;
+  height: clamp(90px, 10vw, 140px);
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--color-green);
+}
+.ai-hero-diagram {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+.ai-hero-diagram .ai-hero-path { stroke: currentColor; fill: none; }
+.ai-hero-diagram .ai-hero-gate { stroke: currentColor; }
+@media (max-width: 1023px) {
+  .ai-hero-diagram-band { display: none; }
+}
+
+.ai-framework-grid {
+  display: grid;
+  margin-top: 1.75rem;
+}
+.ai-framework-category {
+  position: relative;
+  border-top: 1px solid var(--color-line);
+  padding: 1.6rem 0 0;
+}
+.ai-framework-category:first-child { border-top: 0; padding-top: 0.5rem; }
+.ai-framework-node {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--color-green);
+}
+.ai-framework-category[data-tier="assisted"] .ai-framework-node { border-color: var(--color-purple); background: color-mix(in srgb, var(--color-purple) 18%, transparent); }
+.ai-framework-category[data-tier="automated"] .ai-framework-node { border-color: var(--color-gold); background: var(--color-gold); }
+.ai-framework-category[data-tier="judgment"] .ai-framework-node { background: var(--color-green); }
+.ai-framework-category h3 { margin-top: 0.85rem; font: 650 1.35rem/1.2 var(--font-inter-tight); letter-spacing: -0.02em; }
+.ai-framework-list { margin-top: 1.4rem; color: var(--color-muted); font-size: 0.92rem; line-height: 2; }
+.ai-framework-outcome {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-line);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.ai-framework-category[data-tier="judgment"] .ai-framework-outcome { color: var(--color-green); }
+.ai-framework-category[data-tier="assisted"] .ai-framework-outcome { color: var(--color-purple); }
+/* var(--color-gold) alone is only ~3.1:1 against a light background at this
+   weight/size — short of WCAG AA for text this small. This darker shade
+   keeps the same gold family while passing contrast; dark mode's gold token
+   already contrasts fine against its dark background, so it's used as-is. */
+.ai-framework-category[data-tier="automated"] .ai-framework-outcome { color: #826023; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ai-framework-category[data-tier="automated"] .ai-framework-outcome { color: var(--color-gold); }
+}
+:root[data-theme="dark"] .ai-framework-category[data-tier="automated"] .ai-framework-outcome { color: var(--color-gold); }
+@media (min-width: 900px) {
+  .ai-framework-grid { grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--color-line); }
+  .ai-framework-category { border-top: 0; padding: 1.85rem 1.75rem 0 0; }
+  .ai-framework-category:not(:first-child) { border-left: 1px solid var(--color-line); padding-left: 1.75rem; }
+  .ai-framework-category:first-child { padding-top: 1.85rem; }
+}
+
+.ai-bridge-diagram-band {
+  position: relative;
+  height: clamp(72px, 7.5vw, 104px);
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  color: var(--color-green);
+}
+.ai-bridge-diagram {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+.ai-bridge-diagram .ai-bridge-spine { stroke: currentColor; fill: none; }
+.ai-bridge-diagram .ai-bridge-assist { stroke: var(--color-purple); fill: none; }
+.ai-bridge-diagram .ai-bridge-node { stroke: currentColor; }
+.ai-bridge-signal-static { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ai-bridge-signal { display: none; }
+  .ai-bridge-signal-static { display: block; }
+}
+@media (max-width: 1023px) {
+  .ai-bridge-diagram-band { display: none; }
+}
+/* Mobile/tablet fallback for the bridge stages: a compact legend explaining
+   what the dot colours mean, since the diagram itself is hidden below. */
+.ai-bridge-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+.ai-bridge-legend span { display: inline-flex; align-items: center; gap: 0.5rem; }
+.ai-bridge-legend em { display: inline-block; width: 8px; height: 8px; border-radius: 50%; font-style: normal; }
+@media (min-width: 1024px) {
+  .ai-bridge-legend { display: none; }
+}
+
+/* Community Builds — a deliberately quieter, warmer studio-initiative
+   section, distinct from the paid-work sections either side of it (the
+   cinematic Selected Work stage above, the manifesto below). Stays on the
+   normal theme tokens throughout — only the build feature's surface picks
+   up a touch of --color-clay via color-mix, echoing the warm cream wash
+   ProjectShowcase already uses for its own project stages (#f4f1ea), so it
+   reads as related to the portfolio without copying its dark cinematic
+   treatment. */
+.community-builds-note {
+  max-width: 34rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--color-line);
+  padding-top: 1.1rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.community-build-feature {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid var(--color-line);
+  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+.community-build-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.community-build-name {
+  margin-top: 1rem;
+  font: 700 clamp(2rem, 3.4vw, 2.75rem) / 1.05 var(--font-inter-tight);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.community-build-location {
+  margin-top: 0.6rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+.community-build-description {
+  margin-top: 1.5rem;
+  max-width: 32rem;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.community-build-focus-label {
+  margin-top: 2rem;
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.community-build-focus-list {
+  display: grid;
+  gap: 0.65rem;
+  list-style: none;
+  margin-top: 1rem;
+  max-width: 28rem;
+  color: var(--color-text);
+  font-size: 0.92rem;
+}
+.community-build-focus-list li { display: grid; grid-template-columns: 1.75rem 1fr; gap: 0.6rem; }
+.community-build-focus-list li span {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  align-self: baseline;
+}
+.community-build-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 0.15rem;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-clay) 10%, var(--color-surface) 90%);
+}
+.community-build-image img { border-radius: inherit; }
+.community-build-documentary-image { object-fit: contain; opacity: 0; transition: opacity 1.4s ease-in-out; }
+.community-build-documentary-image[data-active="true"] { opacity: 1; }
+.community-build-motion-control { display: block; margin-top: 0.5rem; padding-block: 0.5rem; color: var(--color-muted); font-size: 0.72rem; cursor: pointer; }
+.community-build-motion-control:focus-visible { outline: 2px solid var(--color-green); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .community-build-documentary-image { transition: none; }
+}
+.community-build-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+}
+.community-build-placeholder-mark { width: 3rem; height: auto; opacity: 0.5; }
+.community-build-placeholder p {
+  max-width: 16rem;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+@media (min-width: 900px) {
+  .community-build-feature { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: start; }
+}
+
+.guardian-media-image { display: block; width: 100%; height: auto; border-radius: 0.15rem; }
+.guardian-media-caption { margin-top: 1rem; max-width: 38rem; color: var(--color-muted); font-size: 0.85rem; line-height: 1.65; }
+.guardian-process-video { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 0.15rem; background: var(--color-text); }
+.guardian-standfirst { margin-top: 2rem; max-width: 36rem; font: 500 clamp(1.5rem, 2.8vw, 2.25rem)/1.35 var(--font-inter-tight); letter-spacing: -0.02em; }
+.guardian-story-lead { margin-top: 1.5rem; max-width: 42rem; font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.55; }
+.guardian-story-copy { max-width: 42rem; color: var(--color-muted); font-size: 1rem; line-height: 1.8; }
+.guardian-story-copy p + p { margin-top: 1.25rem; }
+
 .site-footer {
   background-color: #fff;
   background-image:
@@ -1336,7 +1596,8 @@ a:focus-visible {
   background: #e7ebec;
   color: #4e5c61;
 }
-.build-status-in-development {
+.build-status-in-development,
+.build-status-in-progress {
   border-color: #c1943a;
   color: #70551f;
 }

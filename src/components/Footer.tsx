@@ -5,7 +5,7 @@ import { buildWhatsAppHref } from "@/lib/contact-links";
 import { STUDIO_ADDRESS_MAPS_URL } from "@/lib/studio-address";
 
 const buildLinks = [["/#services", "Websites"], ["/#services", "Business Systems"], ["/#services", "Automation & AI"], ["/#how-we-work", "How We Work"]];
-const exploreLinks = [["/work", "Work"], ["/journal", "Journal"], ["/#about", "About"], ["/contact", "Contact"], ["/privacy", "Privacy"]];
+const exploreLinks = [["/work", "Work"], ["/journal", "Journal"], ["/ai", "AI at AiForm"], ["/#about", "About"], ["/contact", "Contact"], ["/privacy", "Privacy"]];
 
 export default function Footer() {
   const whatsappNumber = process.env.NEXT_PUBLIC_STUDIO_WHATSAPP;

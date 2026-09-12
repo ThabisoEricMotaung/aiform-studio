@@ -3,6 +3,7 @@ import { Geist, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MarketingChrome from "@/components/MarketingChrome";
 import { fetchAllCitiesWeather } from "@/lib/weather";
 
 const geist = Geist({
@@ -158,9 +159,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
-        <Header weather={weather} />
+        <MarketingChrome><Header weather={weather} /></MarketingChrome>
         <main className="flex-1">{children}</main>
-        <Footer />
+        <MarketingChrome><Footer /></MarketingChrome>
       </body>
     </html>
   );

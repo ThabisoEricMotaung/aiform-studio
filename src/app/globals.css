@@ -1024,14 +1024,91 @@ a:focus-visible {
    ProjectShowcase already uses for its own project stages (#f4f1ea), so it
    reads as related to the portfolio without copying its dark cinematic
    treatment. */
+.community-builds-overview {
+  display: grid;
+  gap: 3rem;
+}
+.community-builds-intro .section-title {
+  margin-top: 1.25rem;
+  font-size: clamp(2rem, 2.6vw, 2.75rem);
+  line-height: 1.08;
+  text-wrap: initial;
+}
+.community-builds-intro .section-intro {
+  max-width: 38rem;
+  font-size: 1rem;
+  line-height: 1.65;
+}
 .community-builds-note {
-  max-width: 34rem;
-  margin-top: 2rem;
-  border-top: 1px solid var(--color-line);
-  padding-top: 1.1rem;
+  margin-top: 0.85rem;
   color: var(--color-muted);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   line-height: 1.6;
+}
+.community-builds-process {
+  display: grid;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.community-builds-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  column-gap: 1.25rem;
+  align-content: start;
+}
+.community-builds-step-number {
+  grid-column: 1;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+.community-builds-step-icon {
+  grid-column: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: 0.75rem;
+  color: var(--color-green);
+}
+.community-builds-step-copy { grid-column: 2; grid-row: 1 / span 2; }
+.community-builds-step h3 {
+  font-family: var(--font-inter-tight), sans-serif;
+  font-size: 1.125rem;
+  font-weight: 650;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+}
+.community-builds-step p {
+  max-width: 32rem;
+  margin-top: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+@media (max-width: 639px) {
+  .community-builds-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 5rem;
+    bottom: -1.25rem;
+    left: 1.125rem;
+    width: 1px;
+    background: var(--color-line);
+  }
+}
+@media (min-width: 640px) {
+  .community-builds-process { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+  .community-builds-step { display: block; border-top: 1px solid var(--color-line); padding-top: 1rem; }
+  .community-builds-step-icon { margin-block: 2rem 1.5rem; width: 3rem; height: 3rem; }
+}
+@media (min-width: 1024px) {
+  .community-builds-overview { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(2rem, 4vw, 4.5rem); align-items: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .community-builds-intro .button-primary { transition: none; transform: none; }
 }
 .community-build-feature {
   display: grid;

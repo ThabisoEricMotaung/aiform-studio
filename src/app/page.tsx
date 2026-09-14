@@ -4,15 +4,19 @@ import PretoriaPhoto from "@/components/PretoriaPhoto";
 import { AiFormMark } from "@/components/AiFormLockup";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import CommunityBuilds from "@/components/CommunityBuilds";
+import StudioSystem from "@/components/StudioSystem";
 import CalendlyBooking from "@/components/contact/CalendlyBooking";
 import WhatsAppLink from "@/components/contact/WhatsAppLink";
 import HomeIntro from "@/components/HomeIntro";
 
-const capabilities = [
-  ["Websites", "Clear digital entry points built around what customers need to do."],
-  ["Business Systems", "Replace fragmented spreadsheets, manual admin and disconnected workflows with purpose-built systems."],
-  ["Automation & AI", "Use automation or AI where it removes real friction — not because it is fashionable."],
-  ["How We Work", "Understand the problem first, then design around the actual workflow."],
+type ServiceId = "websites" | "business-systems" | "automation-ai" | "seo-analysis" | "how-we-work";
+
+const capabilities: { id: ServiceId; tag: string; title: string; copy: string }[] = [
+  { id: "websites", tag: "ENTRY POINT", title: "Websites", copy: "Clear digital entry points built around what customers need to do." },
+  { id: "business-systems", tag: "CORE ENGINE", title: "Business Systems", copy: "Replace fragmented spreadsheets, manual admin and disconnected workflows with purpose-built systems." },
+  { id: "automation-ai", tag: "EFFICIENCY LAYER", title: "Automation & AI", copy: "Use automation or AI where it removes real friction — not because it is fashionable." },
+  { id: "seo-analysis", tag: "DISCOVERY LAYER", title: "SEO Analysis", copy: "Understand what is helping — or preventing — your website from being found. Technical SEO audits, search visibility analysis, content structure, metadata, indexing, internal linking and practical recommendations built around the site and the business behind it." },
+  { id: "how-we-work", tag: "METHOD", title: "How We Work", copy: "Understand the problem first, then design around the actual workflow." },
 ];
 const outcomes = [
   ["Less manual work", "Reduce repetitive admin and fragmented workflows."],
@@ -24,13 +28,6 @@ const process = [
   ["01", "Understand", "We start with your problem, not our solution."],
   ["02", "Build", "We design and develop what fits how you work."],
   ["03", "Support", "We stay with you to ensure it delivers results."],
-];
-const systemStages = [
-  ["01", "Notice", "Find the friction people have already learned to work around.", "Raw input"],
-  ["02", "Understand", "Study the real workflow, research and requirements underneath it.", "People & process"],
-  ["03", "Structure", "Turn what we learn into knowledge, rules, data and patterns.", "Clear foundation"],
-  ["04", "Build", "Build the interfaces, systems and automation the work actually needs.", "A working system"],
-  ["05", "Evolve", "Deploy it, watch how it's used, and improve it from there.", "Learn from use"],
 ];
 
 type SocialPlatform = "tiktok" | "facebook" | "linkedin" | "github" | "apple-music";
@@ -44,6 +41,52 @@ function SocialIcon({ platform }: { platform: SocialPlatform }) {
     "apple-music": <><path d="M16.9 4.5v9.63a2.76 2.76 0 1 1-1.35-2.37V7.35L9.5 8.6v6.92a2.76 2.76 0 1 1-1.35-2.37V6.42l8.75-1.92Z" /></>,
   };
   return <svg className={`founder-social-icon founder-social-icon-${platform}`} viewBox="0 0 24 24" aria-hidden="true">{paths[platform]}</svg>;
+}
+
+function ServiceIcon({ id }: { id: ServiceId }) {
+  const marks: Record<ServiceId, React.ReactNode> = {
+    websites: <>
+      <rect x="4" y="5" width="20" height="16" rx="1.5" />
+      <line x1="4" y1="9.5" x2="24" y2="9.5" />
+      <path d="M8 17 12 13.2 15 15.6 20 10.5" />
+      <circle cx="20" cy="10.5" r="1.1" fill="var(--color-gold)" stroke="none" />
+    </>,
+    "business-systems": <>
+      <circle cx="14" cy="8" r="1.6" />
+      <circle cx="7" cy="19" r="1.6" />
+      <circle cx="21" cy="19" r="1.6" />
+      <path d="M14 9.6 7 17.4M14 9.6 21 17.4M8.6 19 19.4 19" />
+      <circle cx="14" cy="14.5" r="1.3" fill="var(--color-gold)" stroke="none" />
+    </>,
+    "automation-ai": <>
+      <line x1="5" y1="9" x2="23" y2="9" />
+      <line x1="5" y1="14" x2="19" y2="14" />
+      <line x1="5" y1="19" x2="15" y2="19" />
+      <path d="M20 5.5c2 0 3.2 1.6 2.6 3.4" />
+      <path d="M21.6 7.6 22.6 8.9 21 9.3" />
+      <circle cx="5" cy="9" r="1.1" fill="var(--color-gold)" stroke="none" />
+    </>,
+    "seo-analysis": <>
+      <rect x="5" y="4" width="13" height="17" rx="1.2" />
+      <line x1="7.5" y1="8.5" x2="15.5" y2="8.5" />
+      <line x1="7.5" y1="12" x2="15.5" y2="12" />
+      <line x1="7.5" y1="15.5" x2="12.5" y2="15.5" />
+      <path d="M18 13.5 22.5 10" />
+      <circle cx="23.5" cy="9.2" r="1.6" />
+      <circle cx="23.5" cy="9.2" r="0.7" fill="var(--color-gold)" stroke="none" />
+    </>,
+    "how-we-work": <>
+      <line x1="5" y1="14" x2="23" y2="14" />
+      <circle cx="6.5" cy="14" r="1.6" fill="var(--color-gold)" stroke="none" />
+      <circle cx="14" cy="14" r="1.6" />
+      <circle cx="21.5" cy="14" r="1.6" />
+    </>,
+  };
+  return (
+    <svg className="service-icon" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {marks[id]}
+    </svg>
+  );
 }
 
 export default function Home() {
@@ -62,7 +105,16 @@ export default function Home() {
       <p className="col-span-12 chapter-label md:col-span-2">SYS // Capabilities</p>
       <div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="services-title" className="section-title">Digital tools built around real work.</h2><p className="section-intro">From the first useful website to a purpose-built business system, we create the right level of technology for the problem.</p></div>
       <div className="col-span-12 mt-10 border-t border-line md:col-start-4 md:col-span-9">
-        {capabilities.map(([title, copy]) => <article key={title} className="service-row"><h3>{title}</h3><p>{copy}</p></article>)}
+        {capabilities.map(({ id, tag, title, copy }) => (
+          <article key={id} className="service-row">
+            <div className="service-meta">
+              <ServiceIcon id={id} />
+              <span className="service-tag">[{tag}]</span>
+            </div>
+            <h3>{title}</h3>
+            <p>{copy}</p>
+          </article>
+        ))}
         <Link href="#how-we-work" className="text-link mt-8">See how we work <span aria-hidden="true">→</span></Link>
       </div>
     </section>
@@ -135,106 +187,7 @@ export default function Home() {
       </div>
     </section>
 
-    <section id="system" className="system-section editorial-grid home-section border-t border-line" aria-labelledby="system-title">
-      <p className="col-span-12 chapter-label md:col-span-2">System // Operating logic</p>
-      <div className="col-span-12 mt-8 md:col-start-4 md:col-span-6 md:mt-0">
-        <h2 id="system-title" className="section-title">The system behind the work.</h2>
-        <p className="section-intro">Every project starts differently. The way we make sense of it doesn&apos;t.</p>
-      </div>
-      <div className="system-note col-span-12 mt-8 md:col-start-10 md:col-span-3 md:mt-0">
-        <p>A clear process for turning complex real-world problems into practical, working systems.</p>
-        <p className="system-note-close">The products change.<br />The system learns.</p>
-      </div>
-      <div className="system-diagram-band col-span-12 md:col-start-4 md:col-span-9" aria-hidden="true">
-        <svg className="system-diagram" viewBox="0 0 1200 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <circle className="system-halo" cx="100" cy="70" r="30" fill="var(--color-purple)" opacity="0.05"/>
-          <circle className="system-halo" cx="118" cy="62" r="20" fill="currentColor" opacity="0.06"/>
-          <g className="system-raw" opacity="0.5">
-            <path d="M6 8 Q 60 26 106 64" strokeWidth="0.9"/>
-            <path d="M2 30 Q 55 38 105 62" strokeWidth="0.75" strokeDasharray="2 4" opacity="0.7"/>
-            <path d="M0 50 Q 50 54 104 66" stroke="var(--color-purple)" strokeWidth="0.75" opacity="0.4"/>
-            <path d="M4 92 Q 52 86 104 74" strokeWidth="0.85"/>
-            <path d="M8 112 Q 56 100 105 78" strokeWidth="0.7" strokeDasharray="2 4" opacity="0.6"/>
-            <path d="M16 130 Q 62 112 106 80" strokeWidth="0.9"/>
-            <path d="M22 58 Q 60 62 100 68" stroke="var(--color-gold)" strokeWidth="0.7" opacity="0.35"/>
-          </g>
-          <circle cx="6" cy="8" r="1.6" fill="currentColor" opacity="0.5"/>
-          <circle cx="0" cy="50" r="1.6" fill="var(--color-purple)" opacity="0.55"/>
-          <circle cx="16" cy="130" r="1.6" fill="currentColor" opacity="0.5"/>
-          <circle className="system-node" cx="110" cy="70" r="5" fill="none" strokeWidth="1.5"/>
-
-          <circle className="system-halo" cx="360" cy="64" r="30" fill="currentColor" opacity="0.045"/>
-          <circle className="system-guide-ring" cx="360" cy="64" r="20" fill="none" strokeWidth="0.75" opacity="0.3"/>
-          <line className="system-guide" x1="360" y1="10" x2="360" y2="130" strokeDasharray="1.5 5" opacity="0.35"/>
-          <g className="system-converge" opacity="0.5">
-            <path d="M114 68 C 180 52 240 60 300 62" strokeWidth="1"/>
-            <path d="M114 72 C 190 84 250 74 300 65" strokeWidth="0.8" strokeDasharray="2 4" opacity="0.7"/>
-            <path d="M114 75 C 195 92 255 80 300 68" strokeWidth="0.65" opacity="0.45"/>
-          </g>
-          <circle className="system-node" cx="360" cy="64" r="5.5" fill="none" strokeWidth="1.5"/>
-          <circle cx="360" cy="64" r="1.8" fill="currentColor"/>
-
-          <g className="system-spine" opacity="0.6">
-            <line x1="367" y1="63" x2="600" y2="55" strokeWidth="1.4"/>
-            <line x1="418" y1="55" x2="418" y2="65" strokeWidth="0.75" opacity="0.5"/>
-            <line x1="470" y1="53" x2="470" y2="63" strokeWidth="0.75" opacity="0.5"/>
-            <line x1="522" y1="51" x2="522" y2="61" strokeWidth="0.75" opacity="0.5"/>
-            <line x1="574" y1="49" x2="574" y2="59" strokeWidth="0.75" opacity="0.5"/>
-          </g>
-          <circle className="system-halo" cx="610" cy="55" r="30" fill="var(--color-purple)" opacity="0.04"/>
-          <line className="system-guide" x1="610" y1="12" x2="610" y2="98" stroke="var(--color-purple)" strokeDasharray="1.5 5" opacity="0.3"/>
-          <rect x="592" y="37" width="36" height="36" transform="rotate(45 610 55)" fill="none" stroke="var(--color-purple)" strokeWidth="0.75" opacity="0.12"/>
-          <rect x="599" y="44" width="22" height="22" transform="rotate(45 610 55)" fill="none" stroke="var(--color-purple)" strokeWidth="1" opacity="0.28"/>
-          <rect x="604" y="49" width="12" height="12" transform="rotate(45 610 55)" fill="none" stroke="var(--color-purple)" strokeWidth="1.5" opacity="0.95"/>
-          <circle cx="610" cy="55" r="1.6" fill="var(--color-purple)"/>
-
-          <line className="system-spine" x1="620" y1="55" x2="850" y2="62" strokeWidth="1.4" opacity="0.6"/>
-          <circle className="system-halo" cx="860" cy="62" r="34" fill="var(--color-gold)" opacity="0.05"/>
-          <line className="system-guide" x1="860" y1="15" x2="860" y2="118" strokeDasharray="1.5 5" opacity="0.3"/>
-          <circle cx="860" cy="62" r="24" fill="none" stroke="currentColor" strokeWidth="0.75" opacity="0.2"/>
-          <circle cx="860" cy="62" r="17" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.35"/>
-          <circle cx="860" cy="62" r="10" fill="none" stroke="currentColor" strokeWidth="1.25" opacity="0.65"/>
-          <circle cx="860" cy="62" r="4" fill="var(--color-gold)"/>
-
-          <g className="system-branch" opacity="0.55">
-            <path d="M882 58 C 960 34 1050 16 1140 8" strokeWidth="1"/>
-            <path d="M884 60 C 970 46 1040 38 1108 34" strokeWidth="0.85" strokeDasharray="2 4" opacity="0.75"/>
-            <path d="M886 63 C 980 63 1040 66 1128 68" strokeWidth="1.3"/>
-            <path d="M884 66 C 970 82 1040 92 1108 100" strokeWidth="0.85" strokeDasharray="2 4" opacity="0.75"/>
-            <path d="M882 69 C 960 96 1050 116 1140 128" strokeWidth="1"/>
-          </g>
-          <circle className="system-halo" cx="1128" cy="68" r="26" fill="currentColor" opacity="0.05"/>
-          <circle cx="1140" cy="8" r="2.5" fill="var(--color-gold)" opacity="0.85"/>
-          <circle className="system-node" cx="1108" cy="34" r="3.5" fill="none" strokeWidth="1.25"/>
-          <circle className="system-node" cx="1128" cy="68" r="5.5" fill="none" strokeWidth="1.5"/>
-          <circle cx="1108" cy="100" r="2.5" fill="var(--color-purple)" opacity="0.75"/>
-          <circle className="system-node" cx="1140" cy="128" r="3" fill="none" strokeWidth="1.25"/>
-
-          <g className="system-signal-group">
-            <circle className="system-signal" r="4" fill="var(--color-gold)">
-              <animateMotion dur="17s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.05;0.95;1" keyPoints="0;0;1;1" path="M110 70 L360 64 L610 55 L860 62 L1128 68"/>
-              <animate attributeName="opacity" dur="17s" repeatCount="indefinite" keyTimes="0;0.05;0.95;1" values="0;1;1;0"/>
-            </circle>
-            <circle className="system-signal-static" cx="860" cy="62" r="4" fill="var(--color-gold)"/>
-          </g>
-        </svg>
-      </div>
-      <div className="system-stages col-span-12 md:col-start-4 md:col-span-9">
-        {systemStages.map(([number, title, copy, microLabel]) => (
-          <div key={number} className="system-stage">
-            <p className="chapter-label">{number}</p>
-            <h3>{title}</h3>
-            <p className="system-stage-copy">{copy}</p>
-            <span className="rule-gold system-stage-rule" aria-hidden="true" />
-            <p className="system-stage-micro">{microLabel}</p>
-          </div>
-        ))}
-      </div>
-      <div className="col-span-12 mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 md:col-start-4 md:col-span-8">
-        <Link href="/work/aiform-engine" className="text-link">See the Engine in depth <span aria-hidden="true">→</span></Link>
-        <Link href="/ai" className="text-link">How we use AI <span aria-hidden="true">→</span></Link>
-      </div>
-    </section>
+    <StudioSystem />
 
     <section id="approach" className="approach-section infrastructure-section border-t border-line relative" aria-labelledby="infrastructure-title">
       <svg className="approach-system-diagram" viewBox="0 0 1200 600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">

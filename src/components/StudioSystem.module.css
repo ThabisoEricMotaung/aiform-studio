@@ -1,0 +1,104 @@
+.section {
+  overflow: clip;
+}
+
+.header { margin-top: 2rem; }
+.header h2 { font-size: clamp(2.75rem, 5vw, 4.5rem); }
+.header > p { max-width: 33rem; }
+
+.journey {
+  position: relative;
+  margin-top: clamp(3rem, 5vw, 5rem);
+}
+
+.signal { display: none; }
+.mobileSignal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 84px;
+  height: 100%;
+  overflow: visible;
+  color: var(--color-green);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.stages {
+  position: relative;
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 2rem;
+}
+
+.stage {
+  --node-accent: var(--color-green);
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 1.25rem;
+  padding-bottom: 2.75rem;
+  min-width: 0;
+}
+.stage:first-child { --node-accent: var(--color-muted); }
+.stage:last-child { --node-accent: var(--color-gold); }
+.node {
+  position: relative;
+  z-index: 1;
+  width: 84px;
+  height: 100px;
+  display: grid;
+  align-items: center;
+  color: var(--node-accent);
+}
+.node svg { display: block; width: 90%; justify-self: center; overflow: visible; }
+.nodeOutline { fill: var(--color-bg); stroke-width: 1.2; }
+.nodeInset { stroke-width: 0.6; opacity: 0.14; }
+.details { display: flex; flex-direction: column; padding-top: 0.75rem; }
+.number { color: var(--color-muted); font-size: 0.75rem; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.details h3 { margin-top: 0.65rem; font-family: var(--font-geist), sans-serif; font-size: 1.25rem; font-weight: 650; letter-spacing: -0.035em; }
+.copy { max-width: 26rem; margin-top: 0.75rem; color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; }
+.taxonomy { padding-top: 1.25rem; color: var(--color-muted); font-size: 0.625rem; line-height: 1.6; font-weight: 550; letter-spacing: 0.1em; text-transform: uppercase; }
+.taxonomy::before { content: ""; display: block; width: 1.5rem; height: 2px; margin-bottom: 0.65rem; background: var(--node-accent); opacity: 0.75; }
+.links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1.5rem; border-top: 1px solid var(--color-line); padding-top: 1.5rem; }
+
+@media (min-width: 768px) {
+  .header { margin-top: 0; }
+  .mobileSignal { display: none; }
+  .signal {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    overflow: visible;
+    color: var(--color-green);
+    pointer-events: none;
+  }
+  .construction { opacity: 0.035; stroke-width: 0.6; }
+  .flow { opacity: 0.38; stroke-width: 0.75; }
+  .stages { grid-template-columns: repeat(5, minmax(0, 1fr)); padding-bottom: 0; }
+  .stage { display: flex; flex-direction: column; gap: 0; padding-bottom: 0; }
+  .node { width: 96px; height: 160px; margin-inline: auto; flex-shrink: 0; }
+  .details { flex: 1; margin-top: 1.5rem; padding: 0 1rem 0.5rem; }
+  .stage + .stage .details { border-left: 1px solid var(--color-line); }
+  .details h3 { font-size: clamp(1rem, 1.6vw, 1.35rem); }
+  .copy { font-size: 0.8125rem; }
+  .taxonomy { margin-top: auto; padding-top: 1.75rem; font-size: 0.5625rem; }
+  .links { margin-top: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .signal { height: 200px; }
+  .node { width: clamp(112px, 10vw, 144px); height: 200px; }
+  .details { padding-inline: clamp(1.25rem, 2.25vw, 2.5rem); }
+  .copy { font-size: 0.9rem; }
+  .taxonomy { font-size: 0.625rem; }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .nodeOutline { transition: stroke-width 220ms ease; }
+  .stage:hover .nodeOutline { stroke-width: 1.7; }
+  .stage:hover .copy { color: var(--color-text); }
+}

@@ -434,12 +434,14 @@ a:focus-visible {
 }
 .capability-row h3, .process-step h3 { font: 650 1.3rem/1.2 var(--font-inter-tight); letter-spacing: -0.02em; }
 .capability-row > p:last-child, .process-step > p:last-child { color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; }
-/* Services list — same row rhythm as capability-row, minus the bracketed
-   classification column (removed; titles/descriptions now align in two
-   columns instead of leaving that column empty). */
-.service-row { display: grid; grid-template-columns: minmax(11rem, 0.75fr) 1.25fr; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--color-line); padding-block: 1.6rem; }
+/* Services list — same row rhythm as capability-row, with an icon + bracketed
+   classification tag in place of capability-row's numeric [NN] column. */
+.service-row { display: grid; grid-template-columns: 8.5rem minmax(11rem, 0.75fr) 1.25fr; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--color-line); padding-block: 1.6rem; }
 .service-row h3 { font: 650 1.3rem/1.2 var(--font-inter-tight); letter-spacing: -0.02em; }
 .service-row > p:last-child { color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; }
+.service-meta { display: flex; align-items: center; gap: 0.55rem; padding-top: 0.15rem; }
+.service-icon { width: 1.15rem; height: 1.15rem; flex-shrink: 0; color: var(--color-green); }
+.service-tag { color: var(--color-muted); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em; line-height: 1.35; text-transform: uppercase; }
 .text-link { display: inline-flex; gap: 0.5rem; border-bottom: 1px solid var(--color-gold); padding-bottom: 0.15rem; color: var(--color-green); font-size: 0.8rem; font-weight: 650; transition: color 180ms ease; }
 .text-link span, .link-arrow span { display: inline-block; transition: transform 180ms ease; }
 .text-link:hover, .text-link:focus-visible, .link-arrow:hover, .link-arrow:focus-visible { color: #0f2d21; }

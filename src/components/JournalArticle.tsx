@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { JournalBlock, JournalEntry } from "@/content/journal";
+import styles from "@/app/journal/journal.module.css";
 
 function Block({ block }: { block: JournalBlock }) {
   switch (block.type) {
@@ -23,5 +25,19 @@ function Block({ block }: { block: JournalBlock }) {
 
 export default function JournalArticle({ entry }: { entry: JournalEntry }) {
   const structuredData = { "@context": "https://schema.org", "@type": "Article", headline: entry.title, description: entry.excerpt, datePublished: entry.publishedAt, dateModified: entry.updatedAt ?? entry.publishedAt, author: { "@type": "Person", name: entry.author }, image: entry.heroImage?.src };
-  return <article className="editorial-grid py-20 md:py-28"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} /><header className="col-span-12 md:col-start-3 md:col-span-8"><p className="chapter-label">{entry.category} / {entry.publishedAt}</p><h1 className="mt-8 font-display text-5xl leading-[.98] md:text-7xl">{entry.title}</h1><p className="mt-8 max-w-2xl text-xl leading-relaxed text-muted">{entry.excerpt}</p><p className="mt-7 text-xs text-muted">{entry.author} · {entry.readingTime}{entry.updatedAt ? ` · Updated ${entry.updatedAt}` : ""}</p></header>{entry.heroImage ? <figure className="col-span-12 mt-14 md:col-start-2 md:col-span-10"><Image src={entry.heroImage.src} alt={entry.heroImage.alt} width={1600} height={1000} sizes="100vw" className="h-auto w-full" />{entry.heroImage.attribution ? <figcaption className="mt-3 text-xs text-muted">{entry.heroImage.attribution}</figcaption> : null}</figure> : null}<div className="col-span-12 mt-16 md:col-start-4 md:col-span-6">{entry.body.map((block, index) => <Block key={`${block.type}-${index}`} block={block} />)}</div></article>;
+  return <article className={`${styles.articlePage} editorial-grid`}>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+    <div className={`${styles.folio} ${styles.articleFolio}`}><Link href="/journal" className={styles.articleBack}>← The Journal</Link><span>AiForm Studio / {entry.category}</span></div>
+    <header className={`col-span-12 md:col-start-3 md:col-span-8 ${styles.articleHeader}`}>
+      <p className={styles.storyMeta}>{entry.category} / {entry.publishedAt}</p>
+      <h1 className={styles.articleTitle}>{entry.title}</h1>
+      <p className={styles.articleDek}>{entry.excerpt}</p>
+      <p className={styles.articleByline}>By {entry.author} · {entry.readingTime}{entry.updatedAt ? ` · Updated ${entry.updatedAt}` : ""}</p>
+    </header>
+    {entry.heroImage ? <figure className="col-span-12 mt-14 md:col-start-2 md:col-span-10"><Image src={entry.heroImage.src} alt={entry.heroImage.alt} width={1600} height={1000} sizes="100vw" className="h-auto w-full" />{entry.heroImage.attribution ? <figcaption className="mt-3 text-xs text-muted">{entry.heroImage.attribution}</figcaption> : null}</figure> : null}
+    <div className={`col-span-12 md:col-start-4 md:col-span-6 ${styles.articleBody}`}>
+      {entry.body.map((block, index) => <Block key={`${block.type}-${index}`} block={block} />)}
+      <div className="mt-16 border-t border-line pt-6"><Link href="/journal" className={styles.articleBack}>← All Journal stories</Link></div>
+    </div>
+  </article>;
 }

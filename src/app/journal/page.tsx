@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getPublishedEntries } from "@/content/journal";
 
 export const metadata: Metadata = {
   title: "Journal",
@@ -23,15 +24,24 @@ export const metadata: Metadata = {
 };
 
 export default function JournalPage() {
+  const entries = getPublishedEntries();
   return <>
     <section className="editorial-grid py-14 md:py-16">
       <div className="col-span-12 md:col-span-2"><p className="chapter-label">AiForm / Journal</p></div>
       <div className="col-span-12 mt-10 md:col-start-3 md:col-span-7 md:mt-0"><h1 className="section-title">Notes from the work.</h1><p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">Research, observations and ideas from the problems we&apos;re studying, the systems we&apos;re building, and the things we&apos;re learning along the way.</p></div>
     </section>
-    <section className="editorial-grid border-t border-line bg-bg-alt py-14 md:py-16">
-      <div className="col-span-12 md:col-span-2"><p className="chapter-label">Issue 00</p><p className="mt-3 text-[10px] uppercase tracking-[.12em] text-muted">Ref. AFS/J/000</p></div>
-      <div className="col-span-12 mt-10 border-t border-text pt-7 md:col-start-4 md:col-span-7 md:mt-0"><h2 className="secondary-title">Content coming soon.</h2><p className="mt-7 text-lg text-muted">We&apos;re working on the first pieces now.</p><p className="mt-4 max-w-xl leading-relaxed text-muted">Procurement, technology, verification, product building and the questions that emerge between them.</p><div className="mt-10 grid grid-cols-[auto_1fr_auto] items-center gap-4 text-[10px] uppercase tracking-[.12em] text-muted"><span>Observation</span><span className="h-px bg-line"/><span>Construction</span></div></div>
-      <div className="col-span-12 mt-12 md:col-start-4 md:col-span-7"><Link href="/" className="link-arrow">Return to the studio →</Link></div>
+    <section className="editorial-grid border-t border-line bg-bg-alt py-14 md:py-16" aria-label="Journal articles">
+      <div className="col-span-12 md:col-span-2"><p className="chapter-label">Field notes</p><p className="mt-3 text-[10px] uppercase tracking-[.12em] text-muted">AiForm / Journal</p></div>
+      <div className="col-span-12 mt-10 md:col-start-4 md:col-span-7 md:mt-0">
+        {entries.length ? entries.map((entry) => (
+          <article key={entry.slug} className="border-t border-text py-7 first:pt-7">
+            <p className="chapter-label">{entry.category} / {entry.publishedAt} / {entry.readingTime}</p>
+            <h2 className="secondary-title mt-6"><Link href={`/journal/${entry.slug}`} className="transition-colors hover:text-green focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">{entry.title}</Link></h2>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{entry.excerpt}</p>
+            <Link href={`/journal/${entry.slug}`} className="link-arrow mt-7" aria-label={`Read ${entry.title}`}>Read field note →</Link>
+          </article>
+        )) : <p className="border-t border-text pt-7 text-lg text-muted">New field notes are in progress.</p>}
+      </div>
     </section>
   </>;
 }

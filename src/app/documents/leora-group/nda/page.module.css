@@ -1,0 +1,36 @@
+/* Keep the issued document on the site's light palette, including when a
+   visitor has previously selected the marketing site's dark theme. */
+.page {
+  color-scheme: light;
+  --color-bg: #ffffff;
+  --color-text: #181a18;
+  --color-muted: #565b57;
+  --color-green: #173b2c;
+  --color-gold: #b68a3a;
+  --color-line: #dde1de;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.relationship { color: var(--color-green); font-weight: 500; }
+.page .description { max-width: 40rem; }
+.unbroken { white-space: nowrap; }
+.metadata { display: grid; grid-template-columns: 0.8fr 1.5fr 1.1fr 1fr; gap: 1.5rem; }
+.metadata dt { text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.metadata dd { line-height: 1.6; }
+.actions a { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
+.actions .primary { background: var(--color-green); color: #ffffff; border-color: var(--color-green); }
+.actions .primary:hover { background: var(--color-text); border-color: var(--color-text); }
+.actions .secondary { background: transparent; color: var(--color-text); border-color: var(--color-line); }
+.actions .secondary:hover { background: #f3f2ef; border-color: var(--color-muted); }
+.page a:focus-visible { outline: 2px solid var(--color-green); outline-offset: 5px; }
+
+@media (max-width: 767px) {
+  .metadata { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 380px) {
+  .header { flex-wrap: wrap; padding-block: 1.25rem; }
+  .metadata { grid-template-columns: 1fr; }
+}

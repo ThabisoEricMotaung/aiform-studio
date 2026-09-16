@@ -6,5 +6,7 @@ import type { ReactNode } from "react";
 /** Keep the marketing shell out of focused client document routes. */
 export default function MarketingChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  return pathname === "/share" || pathname.startsWith("/share/") ? null : children;
+  const isDocument = pathname === "/share" || pathname.startsWith("/share/")
+    || pathname === "/documents" || pathname.startsWith("/documents/");
+  return isDocument ? null : children;
 }

@@ -1,0 +1,48 @@
+.flow { max-width: 760px; }
+.back { display: inline-block; margin-bottom: 2.5rem; font-size: .8rem; color: var(--color-muted); }
+.section { margin-top: 2.5rem; padding-top: 2rem; border: 0; border-top: 1px solid var(--color-line); }
+.section h2 { font: 600 clamp(1.4rem, 3vw, 1.8rem)/1.2 var(--font-inter-tight), sans-serif; letter-spacing: -.02em; }
+.section p { margin-top: 1rem; max-width: 40rem; line-height: 1.75; }
+.section h2:focus { outline: none; }
+.step { color: var(--color-green); font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1rem; }
+.form { display: grid; gap: 1.5rem; margin-top: 1.5rem; }
+.form > .section { margin-top: 0; min-width: 0; }
+.form label { display: grid; gap: .6rem; margin-top: 1.4rem; font-size: .875rem; line-height: 1.6; }
+.form input:not([type="checkbox"]):not([type="radio"]), .form textarea {
+  width: 100%; min-width: 0; min-height: 48px; padding: .75rem; border: 1px solid var(--color-line); border-radius: 4px;
+  background: var(--color-bg); color: var(--color-text); font: inherit;
+}
+.form textarea { resize: vertical; }
+.form input:focus-visible, .form textarea:focus-visible, .flow button:focus-visible { outline: 2px solid var(--color-green); outline-offset: 3px; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.choice { margin-top: 2rem; border: 0; padding: 0; }
+.choice legend { font-size: .875rem; font-weight: 600; }
+.flow .checkbox { display: flex; align-items: flex-start; gap: .8rem; margin-block: 1.5rem; font-size: .875rem; line-height: 1.7; cursor: pointer; }
+.checkbox input { flex-shrink: 0; width: 18px; height: 18px; margin-top: .2rem; accent-color: var(--color-green); }
+.signatureHeading { margin-top: 2.5rem; }
+.canvas { display: block; width: 100%; aspect-ratio: 3 / 1; margin-top: 1rem; border: 1px solid var(--color-muted); border-radius: 4px; background: #fff; touch-action: none; cursor: crosshair; }
+.signatureTools { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.textButton { flex-shrink: 0; min-height: 44px; font-size: .8rem; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.primary, .secondary { display: inline-flex; width: fit-content; align-items: center; justify-content: center; min-height: 48px; padding: .8rem 1.15rem; gap: .5rem; border: 1px solid var(--color-green); border-radius: 6px; font-size: .9rem; font-weight: 600; cursor: pointer; transition: background-color 150ms ease; }
+.primary { background: var(--color-green); color: #fff; }
+.primary:hover { background: var(--color-text); }
+.section > .primary, .section > .secondary { margin-top: 1.5rem; }
+.secondary { background: transparent; color: var(--color-green); }
+.secondary:hover { background: #f3f2ef; }
+.flow button:disabled { opacity: .5; cursor: not-allowed; }
+.flow fieldset:disabled .canvas { pointer-events: none; opacity: .6; }
+.link { display: inline-block; margin-top: 1.25rem; color: var(--color-green); font-size: .875rem; text-decoration: underline; text-underline-offset: 4px; }
+.help { color: var(--color-muted); font-size: .8rem; line-height: 1.75; }
+.error { border-left: 2px solid #8c352a; padding-left: 1rem; color: #8c352a; font-size: .875rem; line-height: 1.6; }
+.status { color: var(--color-green); font-weight: 600; }
+.receipt { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-block: 2rem; padding-block: 1.5rem; border-block: 1px solid var(--color-line); }
+.receipt dt { color: var(--color-muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; }
+.receipt dd { margin-top: .5rem; font-size: .875rem; overflow-wrap: anywhere; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (max-width: 600px) {
+  .fields, .receipt { grid-template-columns: 1fr; gap: .25rem; }
+  .receipt { gap: 1.25rem; }
+  .primary, .secondary { width: 100%; }
+  .signatureTools { flex-wrap: wrap; gap: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .primary, .secondary { transition: none; } }

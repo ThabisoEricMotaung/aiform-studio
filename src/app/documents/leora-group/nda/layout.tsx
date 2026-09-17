@@ -17,7 +17,7 @@ export default function LeOraDocumentLayout({ children }: { children: React.Reac
     <div className={styles.page}>
       <div className={documentStyles.shell}>
         <header className={`${documentStyles.header} ${styles.header}`}>
-          <Link href="/" aria-label="AiForm Studio home"><AiFormLockup product="Studio" markClassName="h-8" /></Link>
+          <Link href="/" aria-label="AiForm Studio home"><AiFormLockup product="Studio" variant="studio" markClassName="h-8" /></Link>
           <span className={documentStyles.label}>Documents</span>
         </header>
         <div className={documentStyles.content}>{children}</div>

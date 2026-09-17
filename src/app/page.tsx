@@ -8,6 +8,11 @@ import StudioSystem from "@/components/StudioSystem";
 import CalendlyBooking from "@/components/contact/CalendlyBooking";
 import WhatsAppLink from "@/components/contact/WhatsAppLink";
 import HomeIntro from "@/components/HomeIntro";
+import { getFeaturedEntry, getPublishedEntries } from "@/content/journal";
+
+function journalTeaserDate(value: string) {
+  return new Intl.DateTimeFormat("en-ZA", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+}
 
 type ServiceId = "websites" | "business-systems" | "automation-ai" | "seo-analysis" | "how-we-work";
 
@@ -90,6 +95,11 @@ function ServiceIcon({ id }: { id: ServiceId }) {
 }
 
 export default function Home() {
+  const journalLead = getFeaturedEntry();
+  const journalSecondary = [...getPublishedEntries()]
+    .filter((entry) => entry.slug !== journalLead?.slug)
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))[0];
+
   return <HomeIntro>
     <section id="home" className="editorial-grid home-hero" aria-labelledby="home-title">
       <div className="relative z-10 col-span-12 lg:col-span-9 xl:col-span-8">
@@ -186,6 +196,35 @@ export default function Home() {
         <p className="manifesto-close">We look closely before we build.</p>
       </div>
     </section>
+
+    {journalLead ? (
+      <section id="journal" className="editorial-grid home-section border-t border-line" aria-labelledby="journal-teaser-title">
+        <p className="col-span-12 chapter-label md:col-span-2">Journal</p>
+        <div className="col-span-12 mt-8 md:col-start-3 md:col-span-9 md:mt-0">
+          <h2 id="journal-teaser-title" className="secondary-title">Latest thinking from the Studio.</h2>
+          <div className="journal-teaser-row">
+            <Link href={`/journal/${journalLead.slug}`} className="journal-teaser-link">
+              <p className="journal-teaser-meta">
+                {journalLead.series ? `${journalLead.series.name} / ${String(journalLead.series.number).padStart(2, "0")}` : journalLead.category}
+                <span aria-hidden="true">·</span>
+                {journalTeaserDate(journalLead.publishedAt)}
+              </p>
+              <h3>{journalLead.title}</h3>
+            </Link>
+            <Link href={`/journal/${journalLead.slug}`} className="text-link" aria-label={`Read ${journalLead.title}`}>Read article <span aria-hidden="true">→</span></Link>
+          </div>
+          {journalSecondary ? (
+            <div className="journal-teaser-row journal-teaser-row-secondary">
+              <Link href={`/journal/${journalSecondary.slug}`} className="journal-teaser-link">
+                <p className="journal-teaser-meta">{journalSecondary.category}<span aria-hidden="true">·</span>{journalTeaserDate(journalSecondary.publishedAt)}</p>
+                <h3>{journalSecondary.title}</h3>
+              </Link>
+            </div>
+          ) : null}
+          <Link href="/journal" className="text-link mt-10" aria-label="Visit the Journal">Visit the Journal <span aria-hidden="true">→</span></Link>
+        </div>
+      </section>
+    ) : null}
 
     <StudioSystem />
 

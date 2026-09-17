@@ -1,7 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { JournalBlock, JournalEntry } from "@/content/journal";
+import { getAdjacentSeriesEntries, getRelatedEntries } from "@/content/journal";
 import styles from "@/app/journal/journal.module.css";
+
+function formatArticleDate(value: string) {
+  return new Intl.DateTimeFormat("en-ZA", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+}
+
+// The upper eyebrow: series identity (e.g. "Procurement Notes / 03 / Building
+// AiForm Procure") for series entries, or just the category otherwise. Date
+// and reading time live only in the byline below, never here, so neither
+// value is ever shown twice in the header.
+function eyebrowLabel(entry: JournalEntry) {
+  if (entry.series) {
+    return [entry.series.name, String(entry.series.number).padStart(2, "0"), entry.series.context].filter(Boolean).join(" / ");
+  }
+  return entry.category;
+}
 
 function Block({ block }: { block: JournalBlock }) {
   switch (block.type) {
@@ -24,19 +40,73 @@ function Block({ block }: { block: JournalBlock }) {
 }
 
 export default function JournalArticle({ entry }: { entry: JournalEntry }) {
-  const structuredData = { "@context": "https://schema.org", "@type": "Article", headline: entry.title, description: entry.excerpt, datePublished: entry.publishedAt, dateModified: entry.updatedAt ?? entry.publishedAt, author: { "@type": "Person", name: entry.author }, image: entry.heroImage?.src };
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: entry.title,
+    description: entry.excerpt,
+    datePublished: entry.publishedAt,
+    dateModified: entry.updatedAt ?? entry.publishedAt,
+    author: { "@type": "Person", name: entry.author },
+    image: entry.heroImage?.src,
+    ...(entry.series ? { isPartOf: { "@type": "CreativeWorkSeries", name: entry.series.name }, position: entry.series.number } : {}),
+  };
+  const { previous, next } = getAdjacentSeriesEntries(entry);
+  const related = getRelatedEntries(entry);
+
   return <article className={`${styles.articlePage} editorial-grid`}>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
     <div className={`${styles.folio} ${styles.articleFolio}`}><Link href="/journal" className={styles.articleBack}>← The Journal</Link><span>AiForm Studio / {entry.category}</span></div>
     <header className={`col-span-12 md:col-start-3 md:col-span-8 ${styles.articleHeader}`}>
-      <p className={styles.storyMeta}>{entry.category} / {entry.publishedAt}</p>
+      <p className={styles.articleSeriesLine}>{eyebrowLabel(entry)}</p>
       <h1 className={styles.articleTitle}>{entry.title}</h1>
-      <p className={styles.articleDek}>{entry.excerpt}</p>
-      <p className={styles.articleByline}>By {entry.author} · {entry.readingTime}{entry.updatedAt ? ` · Updated ${entry.updatedAt}` : ""}</p>
+      <p className={styles.articleDek}>{entry.subtitle ?? entry.excerpt}</p>
+      <p className={styles.articleByline}>By {entry.author} · {formatArticleDate(entry.publishedAt)} · {entry.readingTime}{entry.updatedAt ? ` · Updated ${formatArticleDate(entry.updatedAt)}` : ""}</p>
     </header>
-    {entry.heroImage ? <figure className="col-span-12 mt-14 md:col-start-2 md:col-span-10"><Image src={entry.heroImage.src} alt={entry.heroImage.alt} width={1600} height={1000} sizes="100vw" className="h-auto w-full" />{entry.heroImage.attribution ? <figcaption className="mt-3 text-xs text-muted">{entry.heroImage.attribution}</figcaption> : null}</figure> : null}
+    {entry.heroImage ? <figure className="col-span-12 mt-14 md:col-start-2 md:col-span-10"><Image src={entry.heroImage.src} alt={entry.heroImage.alt} width={entry.heroImage.width ?? 1600} height={entry.heroImage.height ?? 1000} sizes="100vw" className="h-auto w-full" />{entry.heroImage.attribution ? <figcaption className="mt-3 text-xs text-muted">{entry.heroImage.attribution}</figcaption> : null}</figure> : null}
     <div className={`col-span-12 md:col-start-4 md:col-span-6 ${styles.articleBody}`}>
       {entry.body.map((block, index) => <Block key={`${block.type}-${index}`} block={block} />)}
+
+      {entry.relatedProject ? (
+        <section className={styles.builtFrom} aria-labelledby="built-from-title">
+          <p id="built-from-title">Built from this thinking</p>
+          <p className={styles.builtFromName}>{entry.relatedProject.name}</p>
+          <p className={styles.builtFromCopy}>{entry.relatedProject.description}</p>
+          <Link href={entry.relatedProject.href} className={styles.builtFromLink}>View the {entry.relatedProject.name} case study <span aria-hidden="true">→</span></Link>
+        </section>
+      ) : null}
+
+      {related.length ? (
+        <section className={styles.relatedThinking} aria-labelledby="related-thinking-title">
+          <p id="related-thinking-title">Related thinking</p>
+          {related.map((piece) => (
+            <Link key={piece.slug} href={`/journal/${piece.slug}`} className={styles.relatedRow}>
+              <span className={styles.relatedRowMeta}>{piece.series ? `${piece.series.name} / ${String(piece.series.number).padStart(2, "0")}` : piece.category}</span>
+              <h4>{piece.title}</h4>
+            </Link>
+          ))}
+        </section>
+      ) : null}
+
+      {entry.series && (previous || next) ? (
+        <nav className={styles.seriesNav} aria-label="Procurement Notes series navigation">
+          {previous ? (
+            <Link href={`/journal/${previous.slug}`} className={styles.seriesNavItem}>
+              <span className={styles.seriesNavDirection}>← Previous</span>
+              <p className={styles.seriesNavTitle}>{previous.title}</p>
+            </Link>
+          ) : <span />}
+          {next ? (
+            <Link href={`/journal/${next.slug}`} className={styles.seriesNavItem}>
+              <span className={styles.seriesNavDirection}>Next →</span>
+              <p className={styles.seriesNavTitle}>{next.title}</p>
+            </Link>
+          ) : <span />}
+        </nav>
+      ) : null}
+
+      {entry.series ? <Link href="/journal#procurement-notes" className={styles.seriesViewAll}>View all {entry.series.name} <span aria-hidden="true">→</span></Link> : null}
+
       <div className="mt-16 border-t border-line pt-6"><Link href="/journal" className={styles.articleBack}>← All Journal stories</Link></div>
     </div>
   </article>;

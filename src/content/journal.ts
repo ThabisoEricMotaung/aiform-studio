@@ -11,16 +11,31 @@ export type JournalBlock =
   | { type: "references"; items: { label: string; href: string }[] }
   | { type: "footnotes"; items: string[] };
 
+// A connected run of entries (e.g. "Procurement Notes"). `context` is the
+// optional secondary line shown under the series name (e.g. "Building AiForm
+// Procure"); `number` is this entry's position within the series.
+export type JournalSeries = { name: string; context?: string; number: number };
+
+// The editorial bridge from an essay back to the Studio work it came from —
+// renders as the restrained "Built from this thinking" module, never a sales CTA.
+export type JournalRelatedProject = { name: string; description: string; href: string };
+
 export type JournalEntry = {
   title: string;
   slug: string;
+  subtitle?: string;
   excerpt: string;
   publishedAt: string;
   updatedAt?: string;
   author: string;
   category: JournalCategory;
   tags: string[];
-  heroImage?: { src: string; alt: string; attribution?: string };
+  series?: JournalSeries;
+  relatedProject?: JournalRelatedProject;
+  // Marks the entry the Journal landing page should lead with, regardless of
+  // publish date. Falls back to the most recently published entry when unset.
+  featured?: boolean;
+  heroImage?: { src: string; alt: string; attribution?: string; width?: number; height?: number };
   readingTime: string;
   seoTitle: string;
   seoDescription: string;
@@ -76,6 +91,178 @@ export const journalEntries: JournalEntry[] = [
       ] },
     ],
   },
+
+  // Procurement Notes — a connected series on lessons from building AiForm
+  // Procure. 01 and 02 below are scaffolding only: metadata, series position
+  // and the related-project bridge are final, but the body is a placeholder.
+  // Replace the single "callout" block with the final compact/wrapped essay
+  // text, then flip status to "published" — that alone brings the entry into
+  // the sitemap, the Journal index and the Procurement Notes series rail.
+  // 03 is the first fully published entry in the series.
+  {
+    title: "South Africa Doesn't Have a Tender Shortage. It Has a Tender Discovery Problem.",
+    slug: "south-africas-tender-discovery-problem",
+    excerpt: "Core question: can suppliers find the opportunity?",
+    publishedAt: "2026-09-15",
+    author: "TE Motaung",
+    category: "Procurement",
+    tags: ["South African procurement", "tender discovery", "AiForm Procure"],
+    series: { name: "Procurement Notes", context: "Building AiForm Procure", number: 1 },
+    relatedProject: {
+      name: "AiForm Procure",
+      description: "A South African procurement platform exploring how discovery, supplier verification and opportunity intelligence can support better procurement decisions.",
+      href: "/work/aiform-procure",
+    },
+    readingTime: "— min read",
+    seoTitle: "South Africa Doesn't Have a Tender Shortage. It Has a Tender Discovery Problem.",
+    seoDescription: "Core question: can suppliers find the opportunity? Procurement Notes 01, on building AiForm Procure.",
+    status: "draft",
+    body: [
+      { type: "callout", title: "Final copy pending", text: "Insert the final compact/wrapped article text here, as full paragraphs (short standalone lines reserved for genuine emphasis). Do not publish until this placeholder is replaced with the final essay." },
+    ],
+  },
+  {
+    title: "Supplier Compliance Is Reusable. Tender Compliance Is Contextual.",
+    slug: "supplier-compliance-is-reusable-tender-compliance-is-contextual",
+    excerpt: "Core question: does what we know about the supplier align with what this tender requires?",
+    publishedAt: "2026-09-15",
+    author: "TE Motaung",
+    category: "Procurement",
+    tags: ["South African procurement", "supplier compliance", "AiForm Procure"],
+    series: { name: "Procurement Notes", context: "Building AiForm Procure", number: 2 },
+    relatedProject: {
+      name: "AiForm Procure",
+      description: "A South African procurement platform exploring how discovery, supplier verification and opportunity intelligence can support better procurement decisions.",
+      href: "/work/aiform-procure",
+    },
+    readingTime: "— min read",
+    seoTitle: "Supplier Compliance Is Reusable. Tender Compliance Is Contextual.",
+    seoDescription: "Core question: does what we know about the supplier align with what this tender requires? Procurement Notes 02, on building AiForm Procure.",
+    status: "draft",
+    body: [
+      { type: "callout", title: "Final copy pending", text: "Insert the final compact/wrapped article text here, as full paragraphs (short standalone lines reserved for genuine emphasis). Do not publish until this placeholder is replaced with the final essay." },
+    ],
+  },
+  {
+    title: "The Goal Isn't More Bids. It's Better Bid Decisions.",
+    slug: "the-goal-isnt-more-bids",
+    subtitle: "Why finding more tenders is only useful if suppliers can decide which opportunities are actually worth pursuing",
+    excerpt: "Why finding more tenders is only useful if suppliers can decide which opportunities are actually worth pursuing.",
+    publishedAt: "2026-09-14",
+    author: "TE Motaung",
+    category: "Procurement",
+    tags: ["South African procurement", "bid decisions", "AiForm Procure"],
+    series: { name: "Procurement Notes", context: "Building AiForm Procure", number: 3 },
+    relatedProject: {
+      name: "AiForm Procure",
+      description: "A South African procurement platform exploring how discovery, supplier verification and opportunity intelligence can support better procurement decisions.",
+      href: "/work/aiform-procure",
+    },
+    featured: true,
+    heroImage: {
+      src: "/images/the-goal-isnt-more-bids-cover.png",
+      alt: "A business professional walks through a minimalist architectural space toward diverging paths, representing the judgement and choices involved in deciding which procurement opportunities to pursue.",
+      width: 1536,
+      height: 1024,
+    },
+    readingTime: "6 min read",
+    seoTitle: "The Goal Isn't More Bids. It's Better Bid Decisions.",
+    seoDescription: "Why finding more tenders is only useful if suppliers can decide which opportunities are actually worth pursuing. Procurement Notes 03, on building AiForm Procure.",
+    status: "published",
+    body: [
+      { type: "paragraph", text: "One of the easiest ways to describe a tender platform is by volume." },
+      { type: "paragraph", text: "How many opportunities are available? How many sources are being monitored? How many new tenders were added today? To me, those numbers matter; hence, I pay attention to them while building AiForm Procure too. But I'm becoming increasingly convinced that they are not the most important measure of whether procurement technology is actually useful to a supplier. This is because a supplier doesn't need to bid on more tenders; it needs to make better decisions about which tenders deserve a bid in the first place. And those are two very different objectives." },
+
+      { type: "heading", level: 2, text: "Discovery solves only the first problem" },
+      { type: "paragraph", text: "Public procurement can be difficult to navigate because different institutions publish opportunities across different sources, at different times, and in different formats. That creates an obvious technology problem: make those opportunities easier to discover." },
+      { type: "paragraph", text: "Aggregation helps. Search helps. Filters help. Alerts help. And matching helps. However, these things can dramatically reduce the amount of time a supplier spends looking for opportunities. There is, however, a point at which better discovery creates another problem." },
+      { type: "paragraph", text: "You find more." },
+      { type: "paragraph", text: "Now what?" },
+      { type: "paragraph", text: "If a business moves from seeing 20 opportunities to seeing 2,000, we haven't necessarily made procurement easier. We may simply have replaced scarcity of information with abundance of information. The next problem becomes judgement." },
+
+      { type: "heading", level: 2, text: "Relevant doesn't necessarily mean suitable" },
+      { type: "paragraph", text: "Imagine a cleaning company receives a tender match. The category is correct while the location is within its operating area. Further, the closing date gives the business enough time to respond. On the surface, that's a good match. Then the supplier opens the documents. Perhaps the contract requires experience at a scale the company cannot demonstrate. Perhaps there is a compulsory briefing it has already missed. Perhaps the required equipment would demand substantial upfront capital. Perhaps the payment structure would put too much pressure on cash flow. Or perhaps the tender requires certifications, personnel, or previous projects the supplier cannot prove." },
+      { type: "paragraph", text: "The matching system wasn't necessarily wrong." },
+      { type: "paragraph", text: "The opportunity is relevant." },
+      { type: "paragraph", text: "It just isn't necessarily pursuable." },
+      { type: "paragraph", text: "That's an important distinction." },
+
+      { type: "heading", level: 2, text: "A match should start a decision, not finish one" },
+      { type: "paragraph", text: "This is something I've been thinking about quite a lot while building AiForm Procure. Procurement technology naturally wants to become smarter. We want better recommendations, better matching, better alerts, and better supplier profiles." },
+      { type: "paragraph", text: "Eventually, it becomes tempting for the technology to say:" },
+      { type: "paragraph", text: "“This tender is for you.”" },
+      { type: "paragraph", text: "I think we need to be careful with that since a platform can know quite a lot about a supplier, its industry, location, CSD information, B-BBEE information, where applicable, company information, verified records, and its previous areas of work. And increasingly, technology can extract and understand quite a lot about the tender too. But the final bid decision involves something much more contextual." },
+      { type: "paragraph", text: "Can this particular business deliver this particular contract, under these particular conditions, at this particular moment?" },
+      { type: "paragraph", text: "That's not simply a matching problem, but a business decision." },
+
+      { type: "heading", level: 2, text: "Five questions before a bid" },
+      { type: "paragraph", text: "I think a useful procurement platform should increasingly help suppliers answer five questions quickly." },
+
+      { type: "heading", level: 3, text: "1. Do we qualify?" },
+      { type: "paragraph", text: "Start with the non-negotiables. Mandatory documents. Registrations. Briefings. Certifications. Grading requirements where applicable. Functionality thresholds. Whatever the tender specifies." },
+      { type: "paragraph", text: "If there is a requirement the supplier cannot satisfy, discovering that early is valuable. There is little benefit in spending hours preparing the rest of a submission that cannot progress beyond the compliance stage." },
+
+      { type: "heading", level: 3, text: "2. Can we actually deliver?" },
+      { type: "paragraph", text: "This is different from asking whether the tender falls within your industry. A company may provide a particular service but not have the capacity for a contract of that size." },
+      { type: "paragraph", text: "Think about people, equipment, suppliers, geography, operational capacity, working capital, and existing commitments. Winning a contract creates an obligation to perform it." },
+
+      { type: "heading", level: 3, text: "3. Can we prove it?" },
+      { type: "paragraph", text: "This is one of the subtler procurement problems." },
+      { type: "paragraph", text: "Capability and demonstrable capability are not always the same thing." },
+      { type: "paragraph", text: "A business may genuinely be able to perform the work. But if the tender requires three reference letters, evidence of previous projects of a certain value, particular qualifications, or specific technical documentation, the evaluation will depend on what the supplier can demonstrate. Knowing this before preparing the bid matters. A lot!" },
+
+      { type: "heading", level: 3, text: "4. Do we have enough time?" },
+      { type: "paragraph", text: "This week's AiForm Procure data gave us a useful illustration. On Friday, the platform was tracking 2,085 open RFQs, of which 785 were live and accepting bids. By Monday, the total had barely changed at 2,087. But only 682 were still live and accepting bids." },
+      { type: "paragraph", text: "The headline volume barely moved." },
+      { type: "paragraph", text: "The opportunity window did." },
+      { type: "paragraph", text: "Tender discovery therefore has a time dimension. A perfect opportunity discovered after a compulsory briefing—or hours before closing—isn't particularly useful." },
+
+      { type: "heading", level: 3, text: "5. Does it make business sense?" },
+      { type: "paragraph", text: "This may be the most important question of all. Procurement discussions naturally focus on winning. But winning isn't automatically good business." },
+      { type: "paragraph", text: "Can you price the work sustainably? Can you fund delivery before payment arrives? What happens if costs increase? What resources will the contract consume? What other work might you have to turn away? What is the risk relative to the potential return?" },
+      { type: "paragraph", text: "Sometimes the commercially intelligent decision is to bid. And sometimes it is to walk away." },
+
+      { type: "heading", level: 2, text: "Passing is also a procurement decision" },
+      { type: "paragraph", text: "This is perhaps the part we don't celebrate enough. A business spends four hours assessing a tender and decides not to bid. Was that time wasted? Not necessarily." },
+      { type: "paragraph", text: "If that assessment prevented the business from spending several days preparing a submission it was unlikely to win—or from winning a contract that would have created serious operational problems—then the assessment created value." },
+      { type: "paragraph", text: "A good no-bid decision can be as important as a good bid decision!" },
+      { type: "paragraph", text: "That changes how I think about the role of procurement technology. Success shouldn't only be measured by how many opportunities we show you or even how many opportunities you bid on. A better question might eventually be how much unnecessary bidding did we help you avoid?" },
+
+      { type: "heading", level: 2, text: "This matters particularly for smaller businesses" },
+      { type: "paragraph", text: "Large organisations can have dedicated bid teams. Someone can monitor opportunities. Someone else can interpret specifications. Finance can model the numbers. Technical staff can assess delivery requirements. Management can make the final decision." },
+      { type: "paragraph", text: "Many SMEs don't have that structure." },
+      { type: "paragraph", text: "The person discovering the tender may also be the person running the business, preparing quotations, managing staff, speaking to customers, and worrying about cash flow." },
+      { type: "paragraph", text: "For that supplier, every unnecessary bid has a real cost. Not only money." },
+      { type: "paragraph", text: "Time!" },
+      { type: "paragraph", text: "That makes precision more valuable than volume. Ten genuinely relevant opportunities may be considerably more useful than 1,000 loosely related ones. And one opportunity that the business is well positioned to pursue may be worth more than all of them." },
+
+      { type: "heading", level: 2, text: "Where I think procurement technology should go next" },
+      { type: "paragraph", text: "The first generation of procurement discovery asks:" },
+      { type: "paragraph", text: "Where are the opportunities?" },
+      { type: "paragraph", text: "The next asks:" },
+      { type: "paragraph", text: "Which opportunities are relevant to me?" },
+      { type: "paragraph", text: "I think the more interesting question now is:" },
+      { type: "paragraph", text: "Which of those opportunities am I actually positioned to pursue?" },
+      { type: "paragraph", text: "That requires several layers to begin working together. Opportunity discovery. Supplier information. Verification. Tender requirements. Matching. Timing. And ultimately, human judgement. This is also where the distinction I wrote about previously becomes important:" },
+      { type: "paragraph", text: "Supplier compliance is reusable. Tender compliance is contextual." },
+      { type: "paragraph", text: "If a platform already knows verified information about a supplier, the supplier shouldn't have to mentally start from zero every time it opens another opportunity. The technology should help bring what is already known about the business into conversation with what this particular tender requires." },
+      { type: "paragraph", text: "Not to manufacture certainty. Not to promise qualification. And certainly not to automatically tell the supplier to bid. But to make the decision easier to understand." },
+      { type: "paragraph", text: "Something like:" },
+      { type: "paragraph", text: "Here's what appears to match." },
+      { type: "paragraph", text: "Here's what requires your attention." },
+      { type: "paragraph", text: "Here's what we don't know." },
+      { type: "paragraph", text: "Now decide." },
+
+      { type: "heading", level: 2, text: "Better discovery should lead to better judgement" },
+      { type: "paragraph", text: "I still believe South African procurement has a discovery problem. Making public opportunities easier to find remains important. But discovery cannot be the destination. If technology simply helps suppliers find more tenders and encourages them to submit more bids, we may only be making an inefficient process happen faster." },
+      { type: "paragraph", text: "The more interesting opportunity is to help businesses become more selective. Find the opportunity. Understand it. Assess the fit. Know when to pursue it. And know when to pass." },
+      { type: "paragraph", text: "Because ultimately, the goal isn't more tenders. It isn't even more bids." },
+      { type: "paragraph", text: "It's better bid decisions." },
+
+      { type: "paragraph", text: "TE Motaung, Founder, AiForm Procure" },
+      { type: "paragraph", text: "Find more. Search less." },
+    ],
+  },
 ];
 
 export function getPublishedEntries() {
@@ -84,4 +271,29 @@ export function getPublishedEntries() {
 
 export function getPublishedEntry(slug: string) {
   return getPublishedEntries().find((entry) => entry.slug === slug);
+}
+
+export function getFeaturedEntry() {
+  const published = [...getPublishedEntries()].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  return published.find((entry) => entry.featured) ?? published[0];
+}
+
+export function getSeriesEntries(seriesName: string) {
+  return getPublishedEntries()
+    .filter((entry) => entry.series?.name === seriesName)
+    .sort((a, b) => (a.series?.number ?? 0) - (b.series?.number ?? 0));
+}
+
+export function getAdjacentSeriesEntries(entry: JournalEntry) {
+  if (!entry.series) return { previous: undefined, next: undefined };
+  const siblings = getSeriesEntries(entry.series.name);
+  const index = siblings.findIndex((sibling) => sibling.slug === entry.slug);
+  return { previous: siblings[index - 1], next: siblings[index + 1] };
+}
+
+export function getRelatedEntries(entry: JournalEntry, limit = 2) {
+  if (!entry.series) return [];
+  return getSeriesEntries(entry.series.name)
+    .filter((sibling) => sibling.slug !== entry.slug)
+    .slice(0, limit);
 }

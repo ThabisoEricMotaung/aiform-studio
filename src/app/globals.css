@@ -459,6 +459,18 @@ a:focus-visible {
 .manifesto-list li { position: relative; padding: 1.1rem 0 1.1rem 1.35rem; border-bottom: 1px solid var(--color-line); font: 600 clamp(1.15rem, 1.8vw, 1.5rem)/1.35 var(--font-inter-tight); letter-spacing: -0.01em; }
 .manifesto-list li::before { content: ""; position: absolute; left: 0; top: 1.5rem; width: 0.4rem; height: 0.4rem; border-radius: 999px; background: var(--color-gold); }
 .manifesto-close { margin-top: 2rem; color: var(--color-green); font: 650 1.1rem/1.4 var(--font-inter-tight); }
+/* Homepage Journal teaser — restrained, text-led, no card. */
+.journal-teaser-row { margin-top: clamp(1.75rem, 3.5vw, 2.5rem); padding-top: clamp(1.5rem, 3vw, 2rem); border-top: 1px solid var(--color-line); }
+.journal-teaser-row-secondary { margin-top: 1.5rem; padding-top: 1.5rem; }
+.journal-teaser-link { display: block; text-decoration: none; }
+.journal-teaser-meta { color: var(--color-green); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.journal-teaser-meta span { margin-inline: .5rem; color: var(--color-gold); }
+.journal-teaser-link h3 { margin-top: .75rem; font: 650 clamp(1.5rem, 2.6vw, 2.35rem)/1.15 var(--font-inter-tight); letter-spacing: -.03em; transition: color 200ms ease; }
+.journal-teaser-link:hover h3, .journal-teaser-link:focus-visible h3 { color: var(--color-green); }
+.journal-teaser-row-secondary .journal-teaser-link h3 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
+@media (prefers-reduced-motion: reduce) {
+  .journal-teaser-link h3 { transition: none; }
+}
 .trust-strip { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
 .trust-strip span[aria-hidden] { color: var(--color-gold); }
 .infrastructure-section { position: relative; background: var(--color-bg); }

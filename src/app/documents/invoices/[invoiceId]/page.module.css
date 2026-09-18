@@ -1,0 +1,78 @@
+/* Invoice number: a shorter, calmer treatment than the long document titles
+   (e.g. "Mutual Non-Disclosure Agreement") the shared `.document h1` rule in
+   share.module.css was sized for. The compound selector (article class +
+   h1 + class) outranks that shared rule regardless of stylesheet order. */
+.article h1.number { margin-top: 1.1rem; font: 700 clamp(2rem, 4.5vw, 3rem)/1.15 var(--font-inter-tight), sans-serif; letter-spacing: -0.03em; }
+
+.printButton { margin-top: 0; }
+
+.section { margin-top: clamp(2.5rem, 5vw, 3.5rem); padding-top: clamp(1.5rem, 3vw, 2rem); border-top: 1px solid var(--color-line); }
+.sectionTitle { font: 700 clamp(1.15rem, 2vw, 1.4rem)/1.2 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; }
+
+/* The single billable line item: description on the left, amount aligned
+   right — a restrained invoice row, not a card. */
+.lineItem { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem 1.5rem; padding-block: 1.5rem; border-bottom: 1px solid var(--color-line); }
+.lineItemText { max-width: 34rem; }
+.lineItemLabel { color: var(--color-muted); font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.lineItemName { margin-top: 0.5rem; font: 650 1.05rem/1.35 var(--font-inter-tight), sans-serif; letter-spacing: -0.01em; }
+.lineItemDetail { margin-top: 0.5rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.65; }
+.lineItemAmount { flex-shrink: 0; font: 650 1.2rem/1.3 var(--font-inter-tight), sans-serif; letter-spacing: -0.01em; white-space: nowrap; }
+
+/* Financial summary: three plain receipt-style rows. */
+.summary { margin-top: 0; }
+.summary div { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.85rem; border-bottom: 1px solid var(--color-line); font-size: 0.9rem; }
+.summary dt { color: var(--color-muted); }
+.summary dd { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* Amount due: the strongest moment on the page, but sized to sit inside an
+   invoice, not a marketing hero. */
+.amountDue { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem 1.5rem; margin-top: 1.5rem; padding-block: 1.5rem; border-top: 1px solid var(--color-text); border-bottom: 1px solid var(--color-text); }
+.amountDueLabel { font: 700 0.75rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-green); }
+.amountDueValue { font: 700 clamp(1.85rem, 4vw, 2.5rem)/1 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+
+/* Payment details. */
+.paymentGrid { display: grid; grid-template-columns: 1fr; gap: 1.25rem 2rem; margin-top: 1.75rem; }
+.paymentGrid dt { color: var(--color-muted); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.paymentGrid dd { margin-top: 0.4rem; font-size: 0.92rem; }
+.emphasis { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.referenceRow { grid-column: 1 / -1; margin-top: 0.5rem; padding: 1rem 1.25rem; border: 1px solid var(--color-green); border-radius: 4px; }
+.referenceRow dt { color: var(--color-green); }
+.reference { font: 700 1.15rem/1.3 var(--font-inter-tight), sans-serif; letter-spacing: 0.02em; color: var(--color-green); }
+.paymentNote { margin-top: 1.25rem; border-left: 2px solid var(--color-gold); padding-left: 1.1rem; font-size: 0.9rem; line-height: 1.65; }
+.smallNote { max-width: 40rem; margin-top: 0.75rem; color: var(--color-muted); font-size: 0.78rem; line-height: 1.7; }
+
+@media (min-width: 640px) {
+  .paymentGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media print {
+  /* Margins kept comfortable (well within normal document conventions) but
+     trimmed slightly from the screen-oriented defaults: this also widens
+     the printable line length a little, which shortens the wrapped
+     paragraph text below. The previous 14mm side margin was tuned against
+     a test rendered at a desktop-width viewport, not the true ~186mm A4
+     printable width, so it under-counted real wrapped-line height. */
+  @page { size: A4; margin: 8mm 12mm; }
+  .actionsRow { display: none !important; }
+  .article h1.number { margin-top: 0.35rem; }
+  .recipient { margin-top: 0.4rem; }
+  .statusRow { margin-top: 0.5rem; }
+  .summaryLine { margin-top: 0.5rem; line-height: 1.35; }
+  .metadata { padding-block: 0.2rem; margin-top: 0.35rem; }
+  .section { margin-top: 0.3rem; padding-top: 0.25rem; }
+  .lineItem { padding-block: 0.25rem; }
+  .lineItemDetail { margin-top: 0.2rem; line-height: 1.35; }
+  .summary div { padding-block: 0.2rem; }
+  .amountDue { margin-top: 0.35rem; padding-block: 0.25rem; }
+  .sectionTitle { margin-bottom: 0; }
+  .paymentGrid { gap: 0.25rem 2rem; margin-top: 0.4rem; }
+  .paymentGrid dd { margin-top: 0.1rem; }
+  .referenceRow { padding: 0.3rem 1rem; margin-top: 0.15rem; }
+  .paymentNote { margin-top: 0.35rem; line-height: 1.2; }
+  .smallNote { margin-top: 0.2rem; line-height: 1.3; }
+  .lineItem, .amountDue, .referenceRow { break-inside: avoid; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .printButton { transition: none; }
+}

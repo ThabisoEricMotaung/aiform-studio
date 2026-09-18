@@ -1,0 +1,134 @@
+/* Same private-document identity as the NDA and preliminary-scope routes:
+   lock the light palette regardless of the visitor's site-wide theme choice. */
+.page {
+  color-scheme: light;
+  --color-bg: #ffffff;
+  --color-text: #181a18;
+  --color-muted: #565b57;
+  --color-green: #173b2c;
+  --color-gold: #b68a3a;
+  --color-line: #dde1de;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.page a:focus-visible { outline: 2px solid var(--color-green); outline-offset: 5px; }
+.page .description { max-width: 40rem; }
+
+/* Header: compound two-part title, distinct from the single-line titles
+   used by the NDA and preliminary-scope documents. */
+.title { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1.1rem; }
+.titleSuffix { font: 600 clamp(1.15rem, 2.2vw, 1.5rem)/1.2 var(--font-inter-tight), sans-serif; color: var(--color-green); letter-spacing: -0.01em; }
+.relationship { color: var(--color-muted); margin-top: 1.1rem; }
+.metadata { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
+.metadata dt { text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.metadata dd { margin-top: 0.4rem; line-height: 1.6; }
+
+/* Project snapshot: a compact commercial strip, not a hero number. Kept to
+   moderate type sizes per the brief so figures stay prominent without
+   becoming marketing-scale numbers. */
+.snapshot { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 1.25rem; margin-top: 2.75rem; padding-block: 1.75rem; border-block: 1px solid var(--color-line); }
+.snapshotValue { font: 700 clamp(1.3rem, 2.6vw, 1.7rem)/1.15 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; }
+.snapshotLabel { margin-top: 0.4rem; color: var(--color-muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Editorial section rhythm. */
+.section { margin-top: clamp(2.75rem, 5.5vw, 4.5rem); padding-top: clamp(1.75rem, 3.5vw, 2.5rem); border-top: 1px solid var(--color-line); }
+.sectionLabel { color: var(--color-gold); font: 650 0.72rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+.sectionTitle { margin-top: 0.75rem; font: 700 clamp(1.6rem, 3vw, 2.25rem)/1.18 var(--font-inter-tight), sans-serif; letter-spacing: -0.03em; text-wrap: balance; }
+.sectionIntro { max-width: 40rem; margin-top: 1.1rem; color: var(--color-muted); font-size: 0.95rem; line-height: 1.75; }
+.sectionIntro + .sectionIntro { margin-top: 0.9rem; }
+.smallNote { max-width: 40rem; margin-top: 1.25rem; color: var(--color-muted); font-size: 0.8rem; line-height: 1.7; }
+
+/* Section 02 — the demonstration journey: the visual centrepiece. Mobile
+   stacks the steps vertically with a downward connector; from 768px it
+   becomes a routed, wrapping horizontal chain (never a horizontal-scroll
+   strip: flex-wrap lets it break onto further lines instead of overflowing). */
+.journey { list-style: none; margin-top: 2.25rem; display: flex; flex-direction: column; }
+.journeyStep { display: flex; flex-direction: column; align-items: flex-start; }
+.journeyNode { display: inline-flex; align-items: center; gap: 0.75rem; padding-block: 0.55rem; }
+.journeyIndex { flex-shrink: 0; width: 1.65rem; height: 1.65rem; border-radius: 50%; border: 1px solid var(--color-line); display: inline-flex; align-items: center; justify-content: center; font: 650 0.6rem/1 var(--font-inter-tight), sans-serif; color: var(--color-green); }
+.journeyLabel { font: 650 0.98rem/1.3 var(--font-inter-tight), sans-serif; letter-spacing: -0.01em; }
+.journeyArrow { display: inline-block; padding-left: 0.8rem; color: var(--color-gold); font-size: 0.95rem; transform: rotate(90deg); transform-origin: left center; }
+.journeyNote { margin-top: 1.75rem; border-left: 2px solid var(--color-gold); padding-left: 1.25rem; max-width: 40rem; color: var(--color-text); font-size: 0.92rem; line-height: 1.75; }
+.serviceTags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; padding: 0; list-style: none; }
+.serviceTags li { border: 1px solid var(--color-line); border-radius: 999px; padding: 0.4rem 0.9rem; color: var(--color-muted); font-size: 0.78rem; line-height: 1; }
+
+/* Section 03 — deliverables: restrained two-column list, dot markers. */
+.buildList { margin-top: 1.75rem; display: grid; grid-template-columns: 1fr; gap: 0.5rem 2rem; }
+.buildList li { position: relative; padding-left: 1.1rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.6; }
+.buildList li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 0.3rem; height: 0.3rem; border-radius: 50%; background: var(--color-gold); }
+
+/* Section 04 — simulated-by-design: label/copy pairs, thin top rules. */
+.simGrid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 2rem; }
+.simItem { border-top: 1px solid var(--color-line); padding-top: 1rem; }
+.simLabel { color: var(--color-green); font: 700 0.68rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+.simCopy { margin-top: 0.55rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.65; }
+
+/* Section 05 — exclusions: deliberately plainer marker than the "included"
+   lists above, to read as a boundary rather than a feature list. */
+.exclusionList { margin-top: 1.75rem; display: grid; grid-template-columns: 1fr; gap: 0.5rem 2rem; }
+.exclusionList li { position: relative; padding-left: 1.1rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.6; }
+.exclusionList li::before { content: "\2013"; position: absolute; left: 0; color: var(--color-line); font-weight: 700; }
+
+/* Section 06 — delivery timeline. */
+.timeline { list-style: none; margin-top: 2rem; padding: 0; border-top: 1px solid var(--color-text); }
+.timelineItem { padding-block: 1.5rem; border-bottom: 1px solid var(--color-line); }
+.timelineDay { color: var(--color-gold); font: 650 0.72rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+.timelineName { margin-top: 0.5rem; font: 650 1.15rem/1.3 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; }
+.timelineCopy { margin-top: 0.5rem; max-width: 40rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.65; }
+
+/* Section 07 — commercials: the strongest visual moment, deliberately plain. */
+.commercialBlock { margin-top: 2rem; padding-block: clamp(2rem, 4vw, 3rem); border-top: 1px solid var(--color-text); border-bottom: 1px solid var(--color-text); }
+.feeLabel { color: var(--color-green); font: 700 0.7rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
+.feeValue { margin-top: 0.75rem; font: 700 clamp(2.5rem, 6vw, 4rem)/1 var(--font-inter-tight), sans-serif; letter-spacing: -0.03em; }
+.feeCopy { margin-top: 1rem; max-width: 40rem; color: var(--color-muted); font-size: 0.9rem; line-height: 1.7; }
+.paymentSplit { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid var(--color-line); }
+.paymentValue { font: 700 1.5rem/1.2 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; color: var(--color-green); }
+.paymentLabel { margin-top: 0.35rem; color: var(--color-muted); font-size: 0.82rem; line-height: 1.55; }
+
+/* Section 08 — what comes next: a short, vertical progression. Kept vertical
+   at every width (three steps read cleanly top-to-bottom on any device). */
+.progression { list-style: none; margin-top: 2.25rem; padding: 0; max-width: 32rem; }
+.progressionItem { padding-block: 1.1rem; border-top: 1px solid var(--color-line); }
+.progressionArrow { display: block; margin-bottom: 0.6rem; color: var(--color-gold); font-size: 1rem; }
+.progressionName { font: 650 1.05rem/1.3 var(--font-inter-tight), sans-serif; letter-spacing: -0.01em; }
+.progressionValue { margin-top: 0.4rem; color: var(--color-green); font: 650 0.85rem/1.3 var(--font-inter-tight), sans-serif; }
+.progressionCopy { margin-top: 0.4rem; color: var(--color-muted); font-size: 0.85rem; line-height: 1.6; }
+
+.strategicNote { max-width: 40rem; margin-top: clamp(2.75rem, 5.5vw, 4.5rem); padding-top: 1.75rem; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 0.82rem; line-height: 1.75; font-style: italic; }
+
+/* Final CTA. */
+.finalActions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+.finalActions a { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
+.finalActions .primary { background: var(--color-green); color: #ffffff; border-color: var(--color-green); }
+.finalActions .primary:hover { background: var(--color-text); border-color: var(--color-text); }
+.finalActions .secondary { background: transparent; color: var(--color-text); border-color: var(--color-line); }
+.finalActions .secondary:hover { background: #f3f2ef; border-color: var(--color-muted); }
+.footnote { max-width: 40rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 0.78rem; line-height: 1.7; }
+.footnote p + p { margin-top: 0.75rem; }
+
+@media (min-width: 768px) {
+  .snapshot { grid-template-columns: repeat(4, 1fr); }
+  .journey { flex-direction: row; flex-wrap: wrap; align-items: center; row-gap: 0.75rem; }
+  .journeyStep { flex-direction: row; align-items: center; }
+  .journeyArrow { transform: none; padding-left: 0; margin-inline: 0.6rem; }
+  .buildList { grid-template-columns: repeat(2, 1fr); }
+  .simGrid { grid-template-columns: repeat(2, 1fr); }
+  .simItem:nth-child(odd) { padding-right: 1.5rem; }
+  .exclusionList { grid-template-columns: repeat(2, 1fr); }
+  .paymentSplit { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .metadata { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .metadata { grid-template-columns: 1fr; }
+  .snapshot { grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finalActions a { transition: none; transform: none; }
+}

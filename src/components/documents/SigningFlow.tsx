@@ -110,7 +110,11 @@ export default function SigningFlow({ available }: { available: boolean }) {
         <div><dt>Execution record</dt><dd>{receipt.id}</dd></div>
       </dl>
       <a href={`${api}/record`} className={styles.primary}>Download execution record (JSON) ↓</a>
-      <p className={styles.help}>This private record includes your signature and the unchanged issued agreement. A signed PDF has not been generated.</p>
+      {receipt.status === "fully_executed" ? (
+        <a href={`${api}/executed`} className={styles.link}>Open fully executed agreement (PDF) ↗</a>
+      ) : (
+        <p className={styles.help}>This private record includes your signature and the unchanged issued agreement. A signed PDF has not been generated yet; AiForm Studio still needs to countersign.</p>
+      )}
     </section>
   );
   if (stage === "access") return (

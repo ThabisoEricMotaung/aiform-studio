@@ -48,15 +48,59 @@ begin
   if has_table_privilege('anon','public.studio_document_executions','SELECT')
     or has_table_privilege('authenticated','public.studio_document_executions','SELECT')
     or has_table_privilege('anon','public.studio_document_countersignatures','INSERT')
-    or has_table_privilege('service_role','public.studio_document_countersignatures','INSERT')
+    or has_table_privilege('authenticated','public.studio_document_countersignatures','INSERT')
+    or has_table_privilege('anon','public.studio_document_countersignatures','SELECT')
+    or has_table_privilege('service_role','public.studio_document_countersignatures','UPDATE')
+    or has_table_privilege('service_role','public.studio_document_countersignatures','DELETE')
     or has_table_privilege('service_role','public.studio_document_executions','UPDATE')
     or has_table_privilege('service_role','public.studio_document_executions','DELETE')
     or has_function_privilege('anon','public.studio_signing_rate_limit(text,integer)','EXECUTE') then
     raise exception 'Privilege isolation failed';
   end if;
+  if not has_table_privilege('service_role','public.studio_document_countersignatures','INSERT') then
+    raise exception 'Studio countersigning writer missing';
+  end if;
   if (select count(*) from pg_class where relname in ('studio_document_executions','studio_document_countersignatures','studio_signing_rate_limits') and relrowsecurity) <> 3 then
     raise exception 'RLS missing';
   end if;
+
+  -- Countersignature evidence: insertable by service_role, still append-only and unique per execution.
+  insert into public.studio_document_countersignatures (
+    id, execution_id, signatory_name, capacity, signature, signature_format,
+    signature_hash, consent, consent_text, consent_version, authenticated_actor
+  ) values (
+    gen_random_uuid(), test_id, 'TEST STUDIO ONLY', 'TEST CAPACITY',
+    '[[{"x":0.1,"y":0.2},{"x":0.5,"y":0.6}]]', 'normalized-strokes-v1', repeat('a',64),
+    true, 'TEST CONSENT ONLY', 'test-v1', 'studio-countersign-session'
+  );
+
+  blocked := false;
+  begin
+    update public.studio_document_countersignatures set signatory_name = 'OVERWRITE' where execution_id = test_id;
+  exception when raise_exception then blocked := true;
+  end;
+  if not blocked then raise exception 'Countersignature immutability failed'; end if;
+
+  blocked := false;
+  begin
+    delete from public.studio_document_countersignatures where execution_id = test_id;
+  exception when raise_exception then blocked := true;
+  end;
+  if not blocked then raise exception 'Countersignature delete protection failed'; end if;
+
+  blocked := false;
+  begin
+    insert into public.studio_document_countersignatures (
+      id, execution_id, signatory_name, capacity, signature, signature_format,
+      signature_hash, consent, consent_text, consent_version, authenticated_actor
+    ) values (
+      gen_random_uuid(), test_id, 'TEST STUDIO ONLY DUPLICATE', 'TEST CAPACITY',
+      '[[{"x":0.1,"y":0.2},{"x":0.5,"y":0.6}]]', 'normalized-strokes-v1', repeat('a',64),
+      true, 'TEST CONSENT ONLY', 'test-v1', 'studio-countersign-session'
+    );
+  exception when unique_violation then blocked := true;
+  end;
+  if not blocked then raise exception 'Duplicate countersignature protection failed'; end if;
 end;
 $$;
 
@@ -78,8 +122,25 @@ begin
   begin perform id from public.studio_document_executions;
   exception when insufficient_privilege then blocked := true; end;
   if not blocked then raise exception 'Anonymous access was allowed'; end if;
+
+  blocked := false;
+  begin perform id from public.studio_document_countersignatures;
+  exception when insufficient_privilege then blocked := true; end;
+  if not blocked then raise exception 'Anonymous countersignature read was allowed'; end if;
+
+  blocked := false;
+  begin
+    insert into public.studio_document_countersignatures (
+      id, execution_id, signatory_name, capacity, signature, signature_format,
+      signature_hash, consent, consent_text, consent_version, authenticated_actor
+    ) values (
+      gen_random_uuid(), gen_random_uuid(), 'FORGED', 'FORGED', '[[{"x":0,"y":0},{"x":1,"y":1}]]',
+      'normalized-strokes-v1', repeat('a',64), true, 'FORGED', 'test-v1', 'forged'
+    );
+  exception when insufficient_privilege then blocked := true; end;
+  if not blocked then raise exception 'Anonymous countersignature insert was allowed'; end if;
 end;
 $$;
 reset role;
-select 'PASS: insert, read, hash binding, duplicates, immutability, RLS, grants, shared rate limit' as result;
+select 'PASS: insert, read, hash binding, duplicates, immutability, RLS, grants, shared rate limit, studio countersignature writer isolation' as result;
 rollback;

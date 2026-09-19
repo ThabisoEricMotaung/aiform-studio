@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 export default function MarketingChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isDocument = pathname === "/share" || pathname.startsWith("/share/")
-    || pathname === "/documents" || pathname.startsWith("/documents/");
+    || pathname === "/documents" || pathname.startsWith("/documents/")
+    || pathname === "/studio" || pathname.startsWith("/studio/");
   return isDocument ? null : children;
 }

@@ -68,6 +68,7 @@ const protectedLayout = require('../src/app/studio/(protected)/layout.tsx').defa
 const protectedPage = require('../src/app/studio/(protected)/page.tsx').default;
 const neo = require('../src/lib/leora-signing-server.ts');
 const counter = require('../src/lib/studio-countersign-server.ts');
+const access = require('../src/lib/leora-access.ts');
 const { NextRequest } = require('next/server');
 function req(body, headers = {}) { return new Request(`${origin}/api/studio/auth/test`, { method: 'POST', headers: { origin, 'content-type': 'application/json', ...headers }, body: JSON.stringify(body) }); }
 function login(id = adminId, token = 'valid') { sessions.set(token, { id }); jar.set(cookieName, token); }
@@ -76,7 +77,8 @@ test.beforeEach(() => {
   Object.assign(process.env, { SUPABASE_URL: 'https://test.supabase.co', SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_test',
     SUPABASE_SECRET_KEY: 'test-privileged-key-not-real', STUDIO_ADMIN_USER_ID: adminId, STUDIO_ADMIN_EMAIL: 'admin@example.test', STUDIO_APP_ORIGIN: origin,
     LEORA_SIGNING_ENABLED: 'true', LEORA_SIGNING_CODE_SHA256: 'a'.repeat(64), DOCUMENT_SIGNING_SESSION_SECRET: 'b'.repeat(64), LEORA_SIGNING_EXPIRES_AT: new Date(Date.now() + 3600000).toISOString(),
-    STUDIO_COUNTERSIGN_ENABLED: 'true', STUDIO_COUNTERSIGN_CODE_SHA256: 'c'.repeat(64), STUDIO_COUNTERSIGN_SESSION_SECRET: 'd'.repeat(64) });
+    STUDIO_COUNTERSIGN_ENABLED: 'true', STUDIO_COUNTERSIGN_CODE_SHA256: 'c'.repeat(64), STUDIO_COUNTERSIGN_SESSION_SECRET: 'd'.repeat(64),
+    LEORA_ACCESS_ENABLED: 'true', LEORA_ACCESS_CODE_SHA256: 'e'.repeat(64), LEORA_ACCESS_SESSION_SECRET: 'f'.repeat(64) });
 });
 test('anonymous layout and page independently redirect before protected content', async () => {
   await assert.rejects(protectedLayout({ children: 'private' }), /REDIRECT:\/studio\/login$/);
@@ -155,6 +157,16 @@ test('valid document cookies cannot authorize Studio; Studio cookie cannot autho
   await assert.rejects(neo.requireSession(), error => error.status === 401);
   await assert.rejects(counter.requireStudioSession(), error => error.status === 401);
 });
+test('a Studio session cannot authorize LeOra general access; a LeOra access session cannot authorize Studio', async () => {
+  login();
+  await guard.requireStudioAdmin();
+  await assert.rejects(access.requireLeoraAccessSession(), error => error.status === 401);
+  jar.clear();
+  jar.set(access.ACCESS_COOKIE, access.createAccessSession().value);
+  await access.requireLeoraAccessSession();
+  await assert.rejects(guard.requireStudioAdmin(), error => error.status === 401);
+});
+
 test('SSR refresh forwards updated request cookies and private response cookies', async () => {
   refresh = true;
   const response = await proxy.updateStudioSession(new NextRequest(`${origin}/studio`, { headers: { cookie: `${cookieName}=old; leora-signing-session=ignored` } }));

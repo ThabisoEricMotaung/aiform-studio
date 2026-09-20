@@ -1,0 +1,124 @@
+/* Same private-document identity as the NDA route: lock the light palette
+   regardless of the visitor's site-wide theme choice. */
+.page {
+  color-scheme: light;
+  --color-bg: #ffffff;
+  --color-text: #181a18;
+  --color-muted: #565b57;
+  --color-green: #173b2c;
+  --color-gold: #b68a3a;
+  --color-line: #dde1de;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.relationship { color: var(--color-green); font-weight: 500; margin-top: 1.1rem; }
+.page .description { max-width: 42rem; }
+/* Opening-density refinement: tighten the header-to-first-section span
+   (title/relationship/intro/metadata margins below) without touching the
+   shared share.module.css rules the NDA and /share routes also depend on. */
+.page h1.title { margin-top: 1.1rem; }
+.leadIntro { margin-top: 1.25rem; }
+.secondaryIntro { margin-top: 0.85rem; font-size: 0.9rem; line-height: 1.65; }
+.metadata { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
+.metadata dt { text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.metadata dd { line-height: 1.6; }
+.page a:focus-visible { outline: 2px solid var(--color-green); outline-offset: 5px; }
+
+/* Editorial section rhythm, reused across sections 01-07. */
+.section { margin-top: clamp(3rem, 6vw, 5rem); padding-top: clamp(2rem, 4vw, 3rem); border-top: 1px solid var(--color-line); }
+/* First section only: brings the opening system diagram upward, closer to
+   the header, per the density refinement. Later sections keep full rhythm. */
+.firstSection { margin-top: clamp(2.1rem, 4.2vw, 3.5rem); padding-top: clamp(1.5rem, 3vw, 2.25rem); }
+.sectionLabel { color: var(--color-gold); font: 650 0.75rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.1em; }
+.sectionTitle { margin-top: 0.75rem; font: 700 clamp(1.75rem, 3.2vw, 2.5rem)/1.15 var(--font-inter-tight), sans-serif; letter-spacing: -0.03em; text-wrap: balance; }
+.sectionIntro { max-width: 42rem; margin-top: 1.25rem; color: var(--color-muted); font-size: 0.98rem; line-height: 1.75; }
+
+/* Section 01 — three connected environments. Thin rules, not cards. */
+.systemGrid { display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2.5rem; }
+.systemCol { border-top: 1px solid var(--color-line); padding-top: 1.25rem; }
+.systemTag { color: var(--color-green); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.systemCol h3 { margin-top: 0.65rem; font: 650 1.2rem/1.3 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; }
+.systemCol p:last-child { margin-top: 0.75rem; color: var(--color-muted); font-size: 0.92rem; line-height: 1.65; }
+
+.flowChain { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 0.6rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); font-size: 0.85rem; }
+.flowStep { color: var(--color-text); font-weight: 600; }
+.flowArrow { color: var(--color-gold); }
+
+/* Section 02 — highlighted release workflow + emphasis line. */
+.emphasisLine { margin-top: 2rem; border-left: 2px solid var(--color-gold); padding-left: 1.25rem; font: 650 clamp(1.05rem, 1.6vw, 1.3rem)/1.5 var(--font-inter-tight), sans-serif; letter-spacing: -0.01em; }
+
+/* Section 03 — vertical phase roadmap. */
+.phaseList { margin-top: 2rem; border-top: 1px solid var(--color-text); }
+.phase { padding-block: 2rem; border-bottom: 1px solid var(--color-line); }
+.phaseHead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.75rem 1.5rem; }
+.phaseNumber { color: var(--color-gold); font: 650 0.78rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.08em; }
+.phaseName { margin-top: 0.45rem; font: 650 clamp(1.3rem, 2.4vw, 1.65rem)/1.2 var(--font-inter-tight), sans-serif; letter-spacing: -0.02em; }
+.phaseAllocation { flex-shrink: 0; text-align: right; }
+.phaseAllocation p:first-child { color: var(--color-muted); font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.phaseAllocation p:last-child { margin-top: 0.3rem; font: 650 1.2rem/1.2 var(--font-inter-tight), sans-serif; color: var(--color-green); white-space: nowrap; }
+.phaseScope { margin-top: 1.35rem; display: grid; grid-template-columns: 1fr; gap: 0.5rem 2rem; }
+.phaseScope li { position: relative; padding-left: 1.1rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.6; }
+.phaseScope li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 0.32rem; height: 0.32rem; border-radius: 50%; background: var(--color-gold); }
+.phaseOutcome { margin-top: 1.35rem; }
+.phaseOutcome p:first-child { color: var(--color-green); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.phaseOutcome p:last-child { margin-top: 0.4rem; color: var(--color-text); font-size: 0.92rem; line-height: 1.6; }
+.phaseNote { max-width: 42rem; margin-top: 1.5rem; color: var(--color-muted); font-size: 0.82rem; line-height: 1.7; font-style: italic; }
+
+/* Section 04 — the working budget: the strongest visual moment, deliberately plain. */
+.budgetBlock { margin-top: 2.5rem; padding-block: clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--color-text); border-bottom: 1px solid var(--color-text); }
+.budgetLabel { color: var(--color-green); font: 700 0.72rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.14em; text-transform: uppercase; }
+.budgetApprox { margin-top: 1.5rem; color: var(--color-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.budgetValue { margin-top: 0.4rem; font: 700 clamp(3rem, 8vw, 5.5rem)/1 var(--font-inter-tight), sans-serif; letter-spacing: -0.03em; }
+.budgetCopy { max-width: 42rem; margin-top: 1.75rem; color: var(--color-muted); font-size: 0.95rem; line-height: 1.75; }
+.budgetCopy + .budgetCopy { margin-top: 1.1rem; }
+
+/* Section 05 & 06 — restrained compact lists, never cards. */
+.capabilityList { margin-top: 2rem; columns: 1; column-gap: 2.5rem; }
+.capabilityList li { position: relative; padding: 0.6rem 0 0.6rem 1.1rem; border-bottom: 1px solid var(--color-line); font-size: 0.9rem; line-height: 1.5; break-inside: avoid; }
+.capabilityList li::before { content: ""; position: absolute; left: 0; top: 1.05rem; width: 0.3rem; height: 0.3rem; border-radius: 50%; background: var(--color-gold); }
+.capabilityNote { max-width: 42rem; margin-top: 1.5rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.7; }
+
+.topicList { margin-top: 2rem; columns: 1; column-gap: 2.5rem; }
+.topicList li { position: relative; padding: 0.5rem 0 0.5rem 1.1rem; font-size: 0.86rem; line-height: 1.5; color: var(--color-text); break-inside: avoid; }
+.topicList li::before { content: ""; position: absolute; left: 0; top: 0.95rem; width: 0.28rem; height: 0.28rem; background: var(--color-line); }
+.topicNote { max-width: 42rem; margin-top: 1.5rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.7; }
+.disclaimer { max-width: 42rem; margin-top: 1rem; color: var(--color-muted); font-size: 0.78rem; line-height: 1.7; }
+
+/* Section 07 — four delivery principles. */
+.principleGrid { display: grid; grid-template-columns: 1fr; gap: 1.75rem; margin-top: 2rem; }
+.principle { border-top: 1px solid var(--color-line); padding-top: 1rem; }
+.principle p:first-child { color: var(--color-green); font: 700 0.68rem/1 var(--font-inter-tight), sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
+.principle p:last-child { margin-top: 0.6rem; color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; }
+.principleNote { max-width: 42rem; margin-top: 1.75rem; color: var(--color-muted); font-size: 0.88rem; line-height: 1.7; }
+
+/* Final section. */
+.finalActions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+.finalActions a { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
+.finalActions .primary { background: var(--color-green); color: #ffffff; border-color: var(--color-green); }
+.finalActions .primary:hover { background: var(--color-text); border-color: var(--color-text); }
+.finalActions .secondary { background: transparent; color: var(--color-text); border-color: var(--color-line); }
+.finalActions .secondary:hover { background: #f3f2ef; border-color: var(--color-muted); }
+.footnote { max-width: 42rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 0.78rem; line-height: 1.7; }
+.footnote p + p { margin-top: 0.75rem; }
+
+@media (min-width: 768px) {
+  .systemGrid { grid-template-columns: repeat(3, 1fr); gap: 2.25rem; }
+  .systemCol { border-top: 0; border-left: 1px solid var(--color-line); padding-top: 0; padding-left: 1.5rem; }
+  .systemCol:first-child { border-left: 0; padding-left: 0; }
+  .phaseScope { grid-template-columns: repeat(2, 1fr); }
+  .capabilityList { columns: 2; }
+  .topicList { columns: 2; }
+  .principleGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .metadata { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 380px) {
+  .metadata { grid-template-columns: 1fr; }
+  .phaseAllocation { text-align: left; }
+  .phaseHead { flex-direction: column; }
+}

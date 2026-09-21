@@ -5,6 +5,7 @@ import { AiFormMark } from "@/components/AiFormLockup";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import CommunityBuilds from "@/components/CommunityBuilds";
 import StudioSystem from "@/components/StudioSystem";
+import ServiceRow from "@/components/ServiceRow";
 import CalendlyBooking from "@/components/contact/CalendlyBooking";
 import WhatsAppLink from "@/components/contact/WhatsAppLink";
 import HomeIntro from "@/components/HomeIntro";
@@ -14,13 +15,14 @@ function journalTeaserDate(value: string) {
   return new Intl.DateTimeFormat("en-ZA", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
 }
 
-type ServiceId = "websites" | "business-systems" | "automation-ai" | "seo-analysis" | "how-we-work";
+type ServiceId = "websites" | "business-systems" | "automation-ai" | "seo-analysis" | "product-review" | "how-we-work";
 
-const capabilities: { id: ServiceId; tag: string; title: string; copy: string }[] = [
+const capabilities: { id: ServiceId; tag: string; title: string; copy: string; href?: string }[] = [
   { id: "websites", tag: "ENTRY POINT", title: "Websites", copy: "Clear digital entry points built around what customers need to do." },
   { id: "business-systems", tag: "CORE ENGINE", title: "Business Systems", copy: "Replace fragmented spreadsheets, manual admin and disconnected workflows with purpose-built systems." },
   { id: "automation-ai", tag: "EFFICIENCY LAYER", title: "Automation & AI", copy: "Use automation or AI where it removes real friction — not because it is fashionable." },
   { id: "seo-analysis", tag: "DISCOVERY LAYER", title: "SEO Analysis", copy: "Understand what is helping — or preventing — your website from being found. Technical SEO audits, search visibility analysis, content structure, metadata, indexing, internal linking and practical recommendations built around the site and the business behind it." },
+  { id: "product-review", tag: "OUTSIDE PERSPECTIVE", title: "Product Testing & Review", copy: "See your product from the outside. An independent assessment of the experience, behaviour and assumptions behind it.", href: "/services/product-review" },
   { id: "how-we-work", tag: "METHOD", title: "How We Work", copy: "Understand the problem first, then design around the actual workflow." },
 ];
 const outcomes = [
@@ -80,6 +82,10 @@ function ServiceIcon({ id }: { id: ServiceId }) {
       <circle cx="23.5" cy="9.2" r="1.6" />
       <circle cx="23.5" cy="9.2" r="0.7" fill="var(--color-gold)" stroke="none" />
     </>,
+    "product-review": <>
+      <rect x="5" y="4" width="15" height="20" rx="1.2" />
+      <path d="M9 9h7M9 13h5M9 17h4M18 18l2 2 4-5" />
+    </>,
     "how-we-work": <>
       <line x1="5" y1="14" x2="23" y2="14" />
       <circle cx="6.5" cy="14" r="1.6" fill="var(--color-gold)" stroke="none" />
@@ -115,15 +121,8 @@ export default function Home() {
       <p className="col-span-12 chapter-label md:col-span-2">SYS // Capabilities</p>
       <div className="col-span-12 mt-8 md:col-start-4 md:col-span-8 md:mt-0"><h2 id="services-title" className="section-title">Digital tools built around real work.</h2><p className="section-intro">From the first useful website to a purpose-built business system, we create the right level of technology for the problem.</p></div>
       <div className="col-span-12 mt-10 border-t border-line md:col-start-4 md:col-span-9">
-        {capabilities.map(({ id, tag, title, copy }) => (
-          <article key={id} className="service-row">
-            <div className="service-meta">
-              <ServiceIcon id={id} />
-              <span className="service-tag">[{tag}]</span>
-            </div>
-            <h3>{title}</h3>
-            <p>{copy}</p>
-          </article>
+        {capabilities.map(({ id, ...service }) => (
+          <ServiceRow key={id} {...service} icon={<ServiceIcon id={id} />} />
         ))}
         <Link href="#how-we-work" className="text-link mt-8">See how we work <span aria-hidden="true">→</span></Link>
       </div>

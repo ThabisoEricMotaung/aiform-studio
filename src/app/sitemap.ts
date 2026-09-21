@@ -6,6 +6,11 @@ const base = "https://aiformstudio.co.za";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
+      url: `${base}/services/product-review`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: base,
       changeFrequency: "monthly" as const,
       priority: 1.0,

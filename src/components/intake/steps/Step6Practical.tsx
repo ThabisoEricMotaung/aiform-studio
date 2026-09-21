@@ -5,14 +5,18 @@ import type { StepProps } from "../types";
 const IMPLIES_EXISTING = new Set(["existing_system", "already_built", "needs_fixing"]);
 
 export default function Step6Practical({ draft, errors, update }: StepProps) {
-  // Budget framing assumes a commissioned, paid engagement — skip it for
-  // people exploring a collaboration rather than asking us to build for them.
-  const showBudget = draft.enquiryType !== "collaborate";
+  // Collaborations omit budgets; product reviews receive an individual scope.
+  const isProductReview = draft.enquiryType === "product_review";
+  const showBudget = draft.enquiryType !== "collaborate" && !isProductReview;
   const referencesExisting = IMPLIES_EXISTING.has(draft.projectStage ?? "");
-  const contextLabel = referencesExisting
+  const contextLabel = isProductReview
+    ? "What product would you like us to review?"
+    : referencesExisting
     ? "What's not working with it right now?"
     : "Anything else you'd like us to know?";
-  const contextPlaceholder = referencesExisting
+  const contextPlaceholder = isProductReview
+    ? "Share a product link, who it serves and the decision you need help making. No access credentials needed."
+    : referencesExisting
     ? "A sentence or two on what's not working is enough."
     : "A sentence or two is enough.";
 
@@ -43,6 +47,8 @@ export default function Step6Practical({ draft, errors, update }: StepProps) {
           </p>
         ) : null}
       </div>
+
+      {isProductReview ? <p className="field-help">Scoped per product. We&apos;ll agree the review boundaries and fee with you before work begins.</p> : null}
 
       {showBudget ? (
         <div>

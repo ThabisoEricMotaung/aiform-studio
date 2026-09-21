@@ -92,7 +92,9 @@ export default function Header({ weather }: { weather?: CityWeather }) {
   const activeSection =
     pathname === "/"
       ? observedSection
-      : pathname.startsWith("/work")
+      : pathname.startsWith("/services/")
+        ? "services"
+        : pathname.startsWith("/work")
         ? "work"
         : pathname.startsWith("/journal")
           ? "journal"

@@ -67,6 +67,12 @@ export default function IntakeForm() {
     } catch {
       // Storage may be unavailable (private mode, quota) — start fresh.
     }
+    // An explicit service link takes precedence over the saved service only.
+    // Keep other answers and show the selection before the visitor continues.
+    if (new URLSearchParams(window.location.search).get("service") === "product-review") {
+      restored = { ...restored, enquiryType: "product_review" };
+      restoredStep = 0;
+    }
     // One-time sync from sessionStorage on mount, gated behind `hydrated` so
     // the server-rendered markup never has to guess at browser-only state
     // (the same pattern libraries like next-themes use to avoid a hydration
@@ -253,7 +259,7 @@ export default function IntakeForm() {
           >
             {submitting ? "Sending…" : "Send project brief →"}
           </button>
-        ) : isAutoAdvanceStep ? null : (
+        ) : isAutoAdvanceStep && !(step === 0 && draft.enquiryType === "product_review") ? null : (
           <button
             type="button"
             onClick={goNext}

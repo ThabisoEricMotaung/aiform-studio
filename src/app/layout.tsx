@@ -111,7 +111,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Services",
-      itemListElement: ["Websites", "Business Systems", "Automation & AI", "Digital Tools"].map((name) => ({
+      itemListElement: ["Websites", "Business Systems", "Automation & AI", "Digital Tools", "Product Testing & Review"].map((name) => ({
         "@type": "Offer",
         itemOffered: { "@type": "Service", name },
       })),

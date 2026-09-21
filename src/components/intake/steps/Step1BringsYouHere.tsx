@@ -17,6 +17,7 @@ const ICONS: Record<string, React.ReactNode> = {
   system: <IconGrid />,
   process_problem: <IconFlow />,
   automation: <IconAutomate />,
+  product_review: <IconImprove />,
   improve_existing: <IconImprove />,
   idea: <IconIdea />,
   collaborate: <IconCollaborate />,

@@ -5,6 +5,7 @@ export const enquiryTypeOptions = [
   { value: "system", label: "I need a system or tool" },
   { value: "process_problem", label: "I have a process problem" },
   { value: "automation", label: "I want to automate something" },
+  { value: "product_review", label: "Product Testing & Review" },
   { value: "improve_existing", label: "I want to improve something existing" },
   { value: "idea", label: "I have an idea I'm exploring" },
   { value: "collaborate", label: "I want to collaborate" },
@@ -299,6 +300,10 @@ export function buildLiveInterpretation(data: InterpretationInput): string | nul
   const wantsAutomation = outcomes.includes("automate_repetitive") || type === "automation";
   const wantsOrganise = outcomes.includes("organise_info") || outcomes.includes("findable_info");
   const wantsCustomerExp = outcomes.includes("customer_experience") || outcomes.includes("sales_leads");
+
+  if (type === "product_review") {
+    return "You're looking for an independent product assessment: what works, what needs attention and what to leave alone.";
+  }
 
   if (type === "website" || wantsCustomerExp || hasCustomerFriction) {
     return "This sounds like a customer-facing project where easier access to information and a clearer digital experience matter most.";

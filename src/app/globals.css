@@ -438,7 +438,13 @@ a:focus-visible {
    classification tag in place of capability-row's numeric [NN] column. */
 .service-row { display: grid; grid-template-columns: 8.5rem minmax(11rem, 0.75fr) 1.25fr; gap: 1.5rem; align-items: start; border-bottom: 1px solid var(--color-line); padding-block: 1.6rem; }
 .service-row h3 { font: 650 1.3rem/1.2 var(--font-inter-tight); letter-spacing: -0.02em; }
-.service-row > p:last-child { color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; }
+.service-description > p { color: var(--color-muted); font-size: 0.9rem; line-height: 1.65; }
+.service-row-explorable:hover,
+.service-row-explorable:focus-within { background: var(--color-surface); }
+.service-explore { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; margin-top: 0.5rem; color: var(--color-green); font-size: 0.85rem; font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-line); text-underline-offset: 0.3em; }
+.service-explore:hover,
+.service-explore:focus-visible { text-decoration-color: currentColor; }
+.service-explore:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; }
 .service-meta { display: flex; align-items: center; gap: 0.55rem; padding-top: 0.15rem; }
 .service-icon { width: 1.15rem; height: 1.15rem; flex-shrink: 0; color: var(--color-green); }
 .service-tag { color: var(--color-muted); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.07em; line-height: 1.35; text-transform: uppercase; }

@@ -25,7 +25,7 @@ The server checks the bytes when opening a session, serving the review PDF, and 
 
 ## Persistence and privacy
 
-Migration `20260916085706_create_document_executions.sql` was applied to the existing AiForm Studio Supabase project (`cczfkdtayvfzlhekcjtz`). It adds:
+Migration `20260916090350_create_document_executions.sql` was applied to the existing AiForm Studio Supabase project (`cczfkdtayvfzlhekcjtz`). It adds:
 
 - `studio_document_executions`: one immutable client execution per document/version; signatory details, normalized signature strokes, signature hash, consent wording/version, authentication method, database timestamp, and issued PDF snapshot.
 - `studio_document_countersignatures`: separate immutable countersignature evidence referencing the client execution.
@@ -125,7 +125,7 @@ Created (client-signing implementation):
 - `src/app/api/documents/leora-group/nda/session/route.ts`
 - `src/app/api/documents/leora-group/nda/issued/route.ts`
 - `src/app/api/documents/leora-group/nda/record/route.ts`
-- `supabase/migrations/20260916085706_create_document_executions.sql`
+- `supabase/migrations/20260916090350_create_document_executions.sql`
 
 Modified (Studio countersigning): `.env.example`, `next.config.ts`, `package.json`/`package-lock.json` (new `pdf-lib` dependency), `src/lib/leora-document.ts` (added `STUDIO_COUNTERSIGNATORY`/consent constants), `src/components/documents/SigningFlow.tsx` (executed-PDF link once fully executed), `supabase/tests/document_execution_security.sql`.
 

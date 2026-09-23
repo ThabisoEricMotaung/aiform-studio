@@ -110,7 +110,7 @@ All server-only; see `.env.example` for the authoritative list:
 
 No database migration is required — the feature reuses the existing
 `studio_signing_rate_limit` function and table from
-`20260916085706_create_document_executions.sql`.
+`20260916090350_create_document_executions.sql`.
 
 ## Scope of this change
 

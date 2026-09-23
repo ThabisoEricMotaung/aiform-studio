@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireStudioPage } from "@/lib/studio-auth";
 import SignOutButton from "@/components/studio/SignOutButton";
 import styles from "../studio.module.css";
@@ -10,6 +11,9 @@ export default async function StudioPage() {
     <h1 id="console-title">Studio Console</h1>
     <div className={styles.identity}><p>Signed in as</p><h2>{actor.name}</h2></div>
     <p className={styles.intro}>Internal AiForm Studio workspace.</p>
+    <nav className={styles.nav} aria-label="Studio">
+      <Link href="/studio/reviews" className={styles.navLink}>Product Reviews</Link>
+    </nav>
     <SignOutButton />
   </section>;
 }

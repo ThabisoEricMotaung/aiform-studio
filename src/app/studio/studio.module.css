@@ -27,3 +27,109 @@
 .signOut { margin-top: 2rem; }
 .footer { display: flex; justify-content: space-between; gap: 1rem; margin: 0 clamp(1.5rem, 6vw, 6rem); border-top: 1px solid #e4dde7; padding: 1.4rem 0; color: #6c6270; font-size: .7rem; }
 @media (max-width: 480px) { .headerLabel { display: none; } .header { padding-block: 1.5rem; } .footer { flex-wrap: wrap; } }
+
+.nav { display: flex; gap: 1.5rem; margin-top: 2rem; }
+.navLink { color: #684972; font-size: .85rem; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+
+.wide { max-width: 56rem; }
+.backLink { display: inline-block; margin-bottom: 2rem; color: #684972; font-size: .8rem; text-decoration: underline; text-underline-offset: 4px; }
+
+.reviewList { list-style: none; margin-top: 2.5rem; display: flex; flex-direction: column; gap: .9rem; }
+.reviewCard { display: block; border: 1px solid #e4dde7; border-radius: 4px; padding: 1.1rem 1.3rem; background: white; }
+.reviewCard:hover { border-color: #cfc3d4; }
+.reviewCardHead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.reviewReference { font-family: var(--font-inter-tight), sans-serif; font-size: 1.05rem; font-weight: 600; }
+.reviewCardMeta { color: #6c6270; font-size: .82rem; margin-top: .35rem; }
+
+.badge { display: inline-block; border: 1px solid #cfc3d4; border-radius: 999px; padding: .2rem .7rem; font-size: .72rem; font-weight: 600; color: #684972; white-space: nowrap; }
+.badgeRow { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+.tag { display: inline-block; border: 1px solid #e4dde7; border-radius: 4px; padding: .15rem .55rem; font-size: .75rem; color: #6c6270; }
+.tagRow { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+
+.section { margin-top: 3.25rem; }
+.sectionTitle { font-family: var(--font-inter-tight), sans-serif; font-size: 1.3rem; font-weight: 500; border-bottom: 1px solid #e4dde7; padding-bottom: .8rem; }
+
+.metaList { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1.4rem 1.6rem; }
+.metaList dt { color: #6c6270; font-size: .75rem; text-transform: uppercase; letter-spacing: .07em; }
+.metaList dd { margin-top: .3rem; font-size: .95rem; }
+
+.textBlock { margin-top: .5rem; line-height: 1.7; color: #26212a; }
+.textBlock + .textBlock { margin-top: 1.25rem; }
+
+.journeyList { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .9rem; }
+.journeyItem { border: 1px solid #e4dde7; border-radius: 4px; padding: .9rem 1.1rem; background: white; }
+.journeyItem h3 { font-size: .95rem; font-weight: 600; }
+.journeyItem p { color: #6c6270; font-size: .85rem; margin-top: .3rem; }
+
+.findingList { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1.4rem; }
+.findingCard { border: 1px solid #e4dde7; border-radius: 4px; padding: 1.4rem 1.5rem; background: white; }
+.findingHead h3 { font-family: var(--font-inter-tight), sans-serif; font-size: 1.1rem; font-weight: 500; }
+.findingLens { color: #6c6270; font-size: .8rem; margin-top: .25rem; }
+.findingLabel { color: #6c6270; font-size: .75rem; text-transform: uppercase; letter-spacing: .07em; margin-top: 1.1rem; }
+
+.evidenceList { margin-top: .5rem; display: flex; flex-direction: column; gap: .7rem; }
+.evidenceItem { border-left: 2px solid #e4dde7; padding-left: .9rem; }
+.evidenceItem p { font-size: .85rem; }
+.evidenceMeta { color: #6c6270; font-size: .78rem; margin-top: .2rem; }
+.evidenceMeta a { color: #684972; }
+
+.assumptionList { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .9rem; }
+.assumptionItem { border: 1px solid #e4dde7; border-radius: 4px; padding: .9rem 1.1rem; background: white; }
+.assumptionReference { color: #6c6270; font-size: .75rem; text-transform: uppercase; letter-spacing: .07em; font-weight: 600; }
+
+.reportList { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: .7rem; }
+.reportItem { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; border: 1px solid #e4dde7; border-radius: 4px; padding: .8rem 1.1rem; background: white; flex-wrap: wrap; }
+.reportItem p { color: #6c6270; font-size: .8rem; }
+
+.emptyState { color: #6c6270; margin-top: 2rem; }
+
+/* Review detail only: keep the reviews index and shared Studio surfaces unchanged. */
+.reviewDetail { overflow-wrap: anywhere; }
+.reviewDetail .textBlock { white-space: pre-line; }
+.reviewKicker { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem 1rem; }
+.reviewOpening h1 { margin-top: 1.4rem; font-family: var(--font-inter-tight), sans-serif; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.12; letter-spacing: -.035em; font-weight: 500; }
+.reviewClient { margin-top: .65rem; color: #6c6270; font-size: 1.05rem; }
+.reviewQuestion { margin-block: 2.25rem; max-width: 48rem; }
+.reviewQuestion h2, .reviewScope h2, .reviewMetadata dt { font-size: .78rem; font-weight: 600; color: #6c6270; letter-spacing: .06em; text-transform: uppercase; }
+.reviewQuestion p { margin-top: .65rem; font-size: clamp(1.2rem, 3vw, 1.55rem); line-height: 1.55; }
+.reviewMetadata { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 1.25rem 1.5rem; padding-block: 1.25rem; border-block: 1px solid #e4dde7; }
+.reviewMetadata > div { min-width: 0; }
+.reviewMetadata dd { margin-top: .4rem; font-size: .95rem; line-height: 1.6; }
+.commercialNote { display: block; color: #6c6270; font-size: .88rem; white-space: pre-line; }
+.reviewScope { margin-top: 1.25rem; }
+.reviewScope p { margin-top: .4rem; color: #6c6270; line-height: 1.7; white-space: pre-line; }
+.reviewNotes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 2rem; margin-top: 1.5rem; }
+.reviewNotes h3 { font-size: 1rem; font-weight: 600; }
+.recommendedDirection { grid-column: 1 / -1; padding: 1.25rem 1.5rem; background: #f0ecf2; border-left: 3px solid #7a5a83; }
+.recommendedDirection h3 { color: #684972; }
+.contextNote .textBlock { font-size: .95rem; }
+.sectionCount { color: #6c6270; font-family: inherit; font-size: .85rem; font-weight: 400; margin-left: .65rem; }
+.reviewDetail .journeyList { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.75rem; margin-top: .5rem; }
+.reviewDetail .journeyItem { padding: .85rem 0; background: none; border: 0; border-bottom: 1px solid #e4dde7; border-radius: 0; }
+.reviewDetail .journeyItem h3 { line-height: 1.5; font-weight: 500; }
+.reviewDetail .findingList { list-style: none; padding: 0; gap: 2.75rem; }
+.reviewDetail .findingCard { border: 0; border-top: 2px solid #cfc3d4; border-radius: 0; padding: 1.5rem 0 0; background: none; }
+.reviewDetail .findingHead h3 { font-size: clamp(1.25rem, 3vw, 1.55rem); line-height: 1.4; font-weight: 600; }
+.reviewDetail .findingLens { font-size: .9rem; margin-top: .65rem; }
+.linkedJourneys { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; color: #6c6270; font-size: .85rem; margin-top: .35rem; }
+.decisionSignals { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.decisionSignals span { padding: .35rem .7rem; background: #eee7f1; color: #684972; font-weight: 600; font-size: .9rem; border-radius: 2px; }
+.verificationSignals { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.25rem; font-size: .85rem; color: #6c6270; margin-top: .75rem; }
+.reviewDetail .findingLabel { font-size: .8rem; font-weight: 600; margin-top: 1.5rem; }
+.reviewDetail .findingLabel + .textBlock { max-width: 49rem; }
+.reviewDetail .evidenceList { list-style: none; padding: 0; }
+.reviewDetail .evidenceItem p { font-size: .9rem; line-height: 1.65; }
+.duplicateEvidence summary { cursor: pointer; color: #6c6270; font-size: .9rem; line-height: 1.65; }
+.duplicateEvidence summary span { font-size: .85rem; }
+.duplicateEvidence[open] summary { margin-bottom: .75rem; }
+.reviewDetail a:focus-visible, .duplicateEvidence summary:focus-visible { outline: 2px solid #7a5a83; outline-offset: 4px; }
+.reviewDetail .reportItem { background: none; border: 0; border-bottom: 1px solid #e4dde7; border-radius: 0; padding: .85rem 0; gap: .5rem 1.5rem; }
+.reviewDetail .reportItem p { font-size: .9rem; }
+.reviewDetail .reportItem p:last-child:not(:nth-child(2)) { flex-basis: 100%; white-space: pre-line; line-height: 1.6; }
+.reviewDetail .badge { white-space: normal; }
+@media (max-width: 640px) {
+  .reviewNotes, .reviewDetail .journeyList { grid-template-columns: minmax(0, 1fr); }
+  .recommendedDirection { padding: 1rem; }
+  .reviewDetail .section { margin-top: 2.5rem; }
+  .reviewDetail .findingList { gap: 2.25rem; }
+}

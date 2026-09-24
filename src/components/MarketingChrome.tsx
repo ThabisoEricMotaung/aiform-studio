@@ -8,6 +8,7 @@ export default function MarketingChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isDocument = pathname === "/share" || pathname.startsWith("/share/")
     || pathname === "/documents" || pathname.startsWith("/documents/")
-    || pathname === "/studio" || pathname.startsWith("/studio/");
+    || pathname === "/studio" || pathname.startsWith("/studio/")
+    || pathname === "/reviews" || pathname.startsWith("/reviews/");
   return isDocument ? null : children;
 }

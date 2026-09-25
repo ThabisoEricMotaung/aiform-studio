@@ -1,0 +1,21 @@
+/* Mirrors the Product Review report palette ([reference]/report.module.css). */
+.page { color-scheme: light; --color-text: #181a18; --color-muted: #565b57; --color-green: #173b2c; --color-gold: #b68a3a; background: #faf8f2; color: var(--color-text); min-height: 100svh; }
+.sheet { max-width: 72rem; min-height: 100svh; margin-inline: auto; padding: 2rem clamp(1rem, 6vw, 6rem) 0; display: flex; flex-direction: column; }
+.masthead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: 1rem 1.5rem; border-bottom: 1px solid #c9cbbf; color: var(--color-green); }
+.masthead > span:first-child { font-size: 1.2rem; letter-spacing: -.04em; }
+.masthead > span:last-child { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; }
+.panel { flex: 1; max-width: 34rem; padding-block: clamp(3rem, 10vw, 7rem); }
+.kicker { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--color-green); }
+.panel h1 { margin-top: 1.25rem; font-family: var(--font-inter-tight), sans-serif; font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.08; letter-spacing: -.04em; font-weight: 600; color: var(--color-green); text-wrap: balance; }
+.intro { margin-top: 1.25rem; font-size: 1.05rem; line-height: 1.75; color: var(--color-muted); }
+.form { margin-top: 2.5rem; display: flex; flex-direction: column; gap: .6rem; }
+.form label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--color-muted); }
+.form label + input { margin-bottom: .9rem; }
+.form input { width: 100%; min-width: 0; min-height: 48px; border: 1px solid #c9cbbf; border-radius: 2px; padding: .8rem 1rem; background: white; color: var(--color-text); font-size: 1rem; letter-spacing: .04em; }
+.form input:focus-visible, .primary:focus-visible { outline: 2px solid var(--color-green); outline-offset: 3px; }
+.primary { margin-top: .4rem; min-height: 48px; padding: .85rem 1.4rem; border: 1px solid var(--color-green); border-radius: 2px; background: var(--color-green); color: white; font-size: .95rem; font-weight: 600; cursor: pointer; }
+.primary:hover { background: #0f2a1f; }
+.primary:disabled { opacity: .6; cursor: progress; }
+.error { padding: .8rem 1rem; border-left: 3px solid var(--color-gold); background: #f3ede0; font-size: .9rem; line-height: 1.6; }
+.help { margin-top: 1rem; font-size: .85rem; line-height: 1.7; color: var(--color-muted); }
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; border-top: 1px solid #c9cbbf; padding-block: 1.5rem 2rem; font-size: .8rem; color: var(--color-muted); }

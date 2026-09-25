@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPlainLanguageProductReview } from "@/lib/plain-language-product-review";
+import { requireReviewReportAccess } from "@/lib/review-access";
 import { formatDate, humanize } from "@/lib/studio-review-format";
 import ReviewViewSwitch from "../ReviewViewSwitch";
 import styles from "../report.module.css";
@@ -9,7 +10,9 @@ export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ reference: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const result = await getPlainLanguageProductReview((await params).reference);
+  const { reference } = await params;
+  await requireReviewReportAccess(reference);
+  const result = await getPlainLanguageProductReview(reference);
   if (!result) notFound();
   const title = `${result.review.reference} | Plain-language Review | AiForm Studio`;
   const description = "The issued Product Review explained in everyday language.";
@@ -19,7 +22,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PlainLanguageReviewPage({ params }: Props) {
-  const result = await getPlainLanguageProductReview((await params).reference);
+  const { reference } = await params;
+  await requireReviewReportAccess(reference);
+  const result = await getPlainLanguageProductReview(reference);
   if (!result) notFound();
   const { review, copy } = result;
   return <article className={styles.report} aria-labelledby="report-title"><div className={styles.sheet}>

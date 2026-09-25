@@ -4,6 +4,10 @@ import { notFound } from "next/navigation";
 import { requireStudioPage } from "@/lib/studio-auth";
 import { getStudioReviewDetail } from "@/lib/studio-reviews";
 import { formatCommercialValue, formatDate, formatDateTime, formatMinutes, humanize } from "@/lib/studio-review-format";
+import { getPlainLanguageProductReview } from "@/lib/plain-language-product-review";
+import { getReviewAccessState, isClientAccessEligible } from "@/lib/review-access";
+import { studioAuthConfig } from "@/lib/studio-auth-config";
+import ReviewAccessPanel from "@/components/studio/ReviewAccessPanel";
 import styles from "../../../studio.module.css";
 
 // Recognize only explicit, standalone labels. Unknown/ambiguous formats stay intact.
@@ -45,6 +49,13 @@ export default async function StudioReviewDetailPage({ params }: { params: Promi
   const { id } = await params;
   const review = await getStudioReviewDetail(id);
   if (!review) notFound();
+  const [eligible, plainLanguage, access] = await Promise.all([
+    isClientAccessEligible(review.reference),
+    getPlainLanguageProductReview(review.reference),
+    getReviewAccessState(review.id),
+  ]);
+  const reportBase = `/reviews/${encodeURIComponent(review.reference)}`;
+  const issuedVersion = review.reports.find(report => report.status === "issued")?.version ?? null;
 
   return <section className={`${styles.wide} ${styles.reviewDetail}`} aria-labelledby="review-title">
     <Link href="/studio/reviews" className={styles.backLink}>← Product Reviews</Link>
@@ -70,6 +81,14 @@ export default async function StudioReviewDetailPage({ params }: { params: Promi
       </dl>
       <div className={styles.reviewScope}><h2>Scope</h2><p>{review.scope}</p></div>
     </header>
+
+    <section className={styles.section} aria-labelledby="client-access-title">
+      <h2 id="client-access-title" className={styles.sectionTitle}>Issued report &amp; client access</h2>
+      <ReviewAccessPanel reviewId={review.id} reference={review.reference} eligible={eligible} issuedVersion={issuedVersion}
+        status={access.status} expiresAt={access.expiresAt} lastAccessedAt={access.lastAccessedAt}
+        portalUrl={`${studioAuthConfig().origin}/reviews?reference=${encodeURIComponent(review.reference)}`}
+        plainHref={plainLanguage ? `${reportBase}/plain-language` : null} detailedHref={reportBase} />
+    </section>
 
     {(review.notes || review.limitations) && <section className={styles.section} aria-labelledby="direction-title">
       <h2 id="direction-title" className={styles.sectionTitle}>Review direction &amp; context</h2>

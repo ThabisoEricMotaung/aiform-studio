@@ -2,15 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { requireStudioPage } from "@/lib/studio-auth";
 import { listStudioReviews } from "@/lib/studio-reviews";
+import { listReviewAccessStates, type ReviewAccessStatus } from "@/lib/review-access";
 import { formatDate, humanize } from "@/lib/studio-review-format";
 import styles from "../../studio.module.css";
+
+const accessLabels: Record<ReviewAccessStatus, string | null> = {
+  none: null, active: "Client access active", expired: "Client access expired", revoked: "Client access revoked",
+};
 
 export const metadata: Metadata = { title: { absolute: "Product Reviews | Studio Console" } };
 
 export default async function StudioReviewsPage() {
   // Independent guard: layouts alone do not secure RSC payloads or data reads.
   await requireStudioPage();
-  const reviews = await listStudioReviews();
+  const [reviews, access] = await Promise.all([listStudioReviews(), listReviewAccessStates()]);
 
   return <section className={styles.wide} aria-labelledby="reviews-title">
     <Link href="/studio" className={styles.backLink}>← Studio console</Link>
@@ -24,7 +29,10 @@ export default async function StudioReviewsPage() {
           <Link href={`/studio/reviews/${review.id}`} className={styles.reviewCard}>
             <div className={styles.reviewCardHead}>
               <span className={styles.reviewReference}>{review.reference}</span>
-              <span className={styles.badge}>{humanize(review.status)}</span>
+              <span className={styles.reviewCardBadges}>
+                <span className={styles.badge}>{humanize(review.status)}</span>
+                {accessLabels[access.get(review.id) ?? "none"] && <span className={styles.badge}>{accessLabels[access.get(review.id) ?? "none"]}</span>}
+              </span>
             </div>
             <p className={styles.reviewCardMeta}>{review.clientName} · {review.productName}</p>
             <p className={styles.reviewCardMeta}>{humanize(review.engagementType)} · {review.environment} · {formatDate(review.startDate)}–{formatDate(review.endDate)}</p>

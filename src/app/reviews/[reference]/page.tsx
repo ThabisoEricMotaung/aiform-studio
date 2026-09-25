@@ -5,12 +5,15 @@ import { formatDate, humanize } from "@/lib/studio-review-format";
 import styles from "./report.module.css";
 import ReviewViewSwitch from "./ReviewViewSwitch";
 import { getPlainLanguageProductReview } from "@/lib/plain-language-product-review";
+import { requireReviewReportAccess } from "@/lib/review-access";
 
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ reference: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const review = await getPublicProductReview((await params).reference);
+  const { reference } = await params;
+  await requireReviewReportAccess(reference);
+  const review = await getPublicProductReview(reference);
   if (!review) notFound();
   return {
     title: { absolute: `${review.reference} | Product Review | AiForm Studio` },
@@ -23,7 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductReviewPage({ params }: Props) {
-  const review = await getPublicProductReview((await params).reference);
+  const { reference } = await params;
+  await requireReviewReportAccess(reference);
+  const review = await getPublicProductReview(reference);
   if (!review) notFound();
   const plainLanguage = await getPlainLanguageProductReview(review.reference);
   return <article className={styles.report} aria-labelledby="report-title">

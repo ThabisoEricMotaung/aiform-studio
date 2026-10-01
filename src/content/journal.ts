@@ -369,6 +369,12 @@ export const journalEntries: JournalEntry[] = [
       href: "/work/aiform-procure",
     },
     featured: true,
+    heroImage: {
+      src: "/images/one-search-more-sources-cover.png",
+      alt: "Procurement Notes 05 cover: “One Search. More Sources. Building a multi-source procurement discovery layer.” A warm stone stairway and terraced gardens lead through jacaranda-lined Pretoria towards the Union Buildings at golden hour, marked AiForm Studio × AiForm Procure.",
+      width: 1536,
+      height: 1024,
+    },
     readingTime: "8 min read",
     seoTitle: "One Search. More Sources.",
     seoDescription: "What building a multi-source procurement discovery layer is teaching me about South Africa's tender landscape. Procurement Notes 05, on building AiForm Procure.",

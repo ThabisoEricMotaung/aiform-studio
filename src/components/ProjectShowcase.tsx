@@ -29,6 +29,7 @@ const stageVisuals: Partial<Record<string, StageVisual>> = {
   "aiform-cruise": { kind: "showcase", src: "/images/work/in-development-showcase.png", alt: "AiForm Studio — this project is in development" },
   "aiform-construct": { kind: "showcase", src: "/images/work/in-development-showcase.png", alt: "AiForm Studio — this project is in development" },
   "procurement-knowledge-base": { kind: "publication", src: "/images/work/verified-to-compete.png", alt: "Verified to Compete — the physical Procurement Knowledge Base reference guide" },
+  "guardian-enviroclean": { kind: "showcase", src: "/community-builds/guardian-enviroclean/photos/WhatsApp Image 2026-09-15 at 07.14.55.jpeg", alt: "A rotary cleaning machine scrubbing a large outdoor pool cover for Guardian Enviroclean" },
   "mathabo-crochet": { kind: "identity" },
 };
 
@@ -57,6 +58,7 @@ const projectThemes: Partial<Record<string, ProjectTheme>> = {
   "aiform-cruise": { accent: "#3d6871", wash: quietWash },
   "aiform-engine": { accent: "#4e5861", wash: quietWash },
   "procurement-knowledge-base": { accent: "#4e5861", wash: quietWash },
+  "guardian-enviroclean": { accent: "#2f6c4b", wash: quietWash },
 };
 
 const defaultTheme: ProjectTheme = { accent: "#173b2c", wash: quietWash };

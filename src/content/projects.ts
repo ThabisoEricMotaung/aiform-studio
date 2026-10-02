@@ -1,4 +1,4 @@
-export type ProjectCategory = "Products" | "Client Systems" | "Experiments";
+export type ProjectCategory = "Products" | "Client Systems" | "Community Builds" | "Experiments";
 export type ProjectStatus = "LIVE" | "PILOT" | "PROTOTYPE" | "IN DEVELOPMENT" | "DELIVERED" | "DESIGN COMPLETE" | "R&D" | "ACTIVE" | "WRITING" | "PUBLICATION";
 
 export type Project = {
@@ -6,7 +6,7 @@ export type Project = {
   name: string;
   context: string;
   category: ProjectCategory;
-  type: "Product" | "Client System" | "Experiment";
+  type: "Product" | "Client System" | "Community Build" | "Experiment";
   sector: string;
   status: ProjectStatus;
   summary: string;
@@ -28,7 +28,8 @@ export const projects: Project[] = [
   { id: "mathabo-crochet", name: "Mathabo Crochet", context: "Brand Identity & Digital Presence", category: "Client Systems", type: "Client System", sector: "Creative Commerce", status: "DESIGN COMPLETE", summary: "A visual foundation for a handmade business: identity, palette, typography and social templates.", actionLabel: "Identity case study", featured: true },
   { id: "aiform-construct", name: "AiForm Construct", context: "Construction Operations Platform", category: "Experiments", type: "Experiment", sector: "Construction", status: "R&D", summary: "An investigation into permits, contractor verification and clearer project documentation.", actionLabel: "Read experiment", featured: true },
   { id: "aiform-engine", name: "AiForm Engine", context: "Internal Operating System", category: "Experiments", type: "Experiment", sector: "AI Infrastructure", status: "ACTIVE", summary: "The internal operating system behind AiForm's work.", actionLabel: "Inside the operating system", actionUrl: "/work/aiform-engine", caseStudyUrl: "/work/aiform-engine" },
+  { id: "guardian-enviroclean", name: "Guardian Enviroclean", context: "Digital Foundation for Professional Cleaning", category: "Community Builds", type: "Community Build", sector: "Professional Cleaning", status: "DELIVERED", summary: "A digital foundation for a community-led environmental initiative.", actionLabel: "View Community Build", actionUrl: "/community-builds/guardian-enviroclean", caseStudyUrl: "/community-builds/guardian-enviroclean", featured: true },
   { id: "procurement-knowledge-base", name: "Procurement Knowledge Base", context: "South African Procurement Reference Book", category: "Experiments", type: "Experiment", sector: "Research / Publishing", status: "PUBLICATION", summary: "A South African procurement reference guide on supplier verification.", actionLabel: "Read journal", actionUrl: "/journal" },
 ];
 
-export const projectCategories = ["All Work", "Products", "Client Systems", "Experiments"] as const;
+export const projectCategories = ["All Work", "Products", "Client Systems", "Community Builds", "Experiments"] as const;

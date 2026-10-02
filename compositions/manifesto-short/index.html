@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Storyboard: storyboards/00-manifesto-short.md · Rules: BRAND.md -->
+<style>
+/* Local fonts only (BRAND.md §4). Fraunces file carries the wght + opsz axes. */
+@font-face{font-family:Fraunces;src:url(../../assets/fonts/fraunces-latin-opsz-wght-normal.woff2) format("woff2");font-weight:100 900;font-display:block}
+@font-face{font-family:"Public Sans";src:url(../../assets/fonts/public-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:block}
+/* Document System v1.0 values (BRAND.md §2) */
+:root{--paper:#FBF8F1;--ink:#1C1A16;--muted:#726C5E;--green:#153A2C;--gold:#C1943A}
+html,body{margin:0;width:1080px;height:1920px;background:var(--paper);overflow:hidden}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 108px}
+.el{opacity:0;will-change:opacity,transform}
+h1{font-family:Fraunces,serif;font-weight:400;font-variation-settings:"opsz" 144;font-size:108px;line-height:1.08;letter-spacing:-.015em;color:var(--ink);margin:0}
+/* Beats 1–2: left-aligned on one shared 108px (10%) edge (BRAND.md §4, §7) */
+#s1,#s2{align-items:flex-start;text-align:left}
+/* Sign-off: centred stack (BRAND.md §10) */
+#s3{align-items:center;text-align:center}
+#line{color:var(--gold)} /* the one gold element (BRAND.md §3) */
+/* Native mark, never recoloured; PNG trimmed to its visible edge so 96px = visible height (BRAND.md §5) */
+#mark{display:block;height:96px;width:auto;margin:72px 0 48px} /* ≥48px clear space above and below */
+#url{font-family:"Public Sans",sans-serif;font-weight:400;font-size:34px;line-height:1.2;letter-spacing:.02em;color:var(--ink)}
+</style></head><body>
+<div class="scene" id="s1"><h1 class="el" id="b1">Most businesses<br>don’t need<br>more software.</h1></div>
+<div class="scene" id="s2"><h1 class="el" id="b2">They need what<br>actually fits<br>how they work.</h1></div>
+<div class="scene" id="s3">
+  <h1 class="el" id="line">Noticed,<br>not invented.</h1>
+  <img class="el" id="mark" src="../../assets/mark.png" alt="">
+  <div class="el" id="url">aiformstudio.co.za</div>
+</div>
+<script>
+// BRAND.md §6: entrances power2.out with a 16px rise; exits power2.inOut;
+// staggered crossfades: 0.4s exit, incoming starts 0.28s in (outgoing 82% faded), 0.88s total.
+const RISE=16;
+const out=x=>1-(1-x)**2, inOut=x=>x<.5?2*x*x:1-(-2*x+2)**2/2;
+const clamp=x=>Math.max(0,Math.min(1,x));
+// [id, in start, in length, out start, out length, rise]
+const TIMELINE=[
+  ['b1',  0.0,  0.8, 4.9, 0.4, true ],  // full 0.8–4.9 (4.1s)
+  ['b2',  5.18, 0.6, 9.6, 0.4, true ],  // full 5.78–9.6 (3.82s)
+  ['line',9.88, 0.6, null,0,   true ],  // full from 10.48
+  ['mark',10.68,0.6, null,0,   false],  // fade only (§5); full from 11.28
+  ['url', 11.48,0.6, null,0,   true ],  // full from 12.08 → sign-off holds 2.92s
+];
+window.renderAt=t=>{
+  for(const [id,a,d,o,od,rise] of TIMELINE){
+    const el=document.getElementById(id);
+    const pin=out(clamp((t-a)/d)), pout=o==null?1:1-inOut(clamp((t-o)/od));
+    el.style.opacity=Math.min(pin,pout);
+    el.style.transform=rise?`translateY(${((1-pin)*RISE).toFixed(2)}px)`:'none';
+  }
+};
+renderAt(0);
+</script></body></html>

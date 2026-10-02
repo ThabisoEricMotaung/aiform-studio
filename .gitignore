@@ -45,3 +45,6 @@ next-env.d.ts
 !.env.example
 
 supabase/.temp/
+
+# video renders (BRAND.md §11)
+/renders/

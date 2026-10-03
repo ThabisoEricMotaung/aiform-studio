@@ -76,8 +76,36 @@ const nextConfig: NextConfig = {
         source: "/documents/:path*",
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
       },
+      // Delivered client sites served here temporarily, until their permanent domain is live.
+      // Covers responses served by this app under /sites (e.g. 404s for paths not forwarded).
+      // Responses from the external rewrite keep the upstream's headers instead (verified with
+      // `next dev`), so the client's /sites build must also send X-Robots-Tag itself.
+      {
+        source: "/sites/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      // Guardian's public surface only; its /login (job manager) is deliberately absent.
+      ...clientSiteRewrites("guardian-enviroclean", process.env.GUARDIAN_SITE_ORIGIN,
+        ["", "/request-quote", "/api/quote-requests", "/_next/:path+", "/images/:path+", "/favicon.ico", "/icon.png"]),
     ];
   },
 };
+
+// /sites/<slug>: a delivered client site served from aiformstudio.co.za while its permanent
+// domain is pending (Next.js Multi-Zones). The client app is built with basePath "/sites/<slug>",
+// so paths pass through unchanged. Only the listed public paths are forwarded: anything else
+// (e.g. /login, or a future admin area) 404s here. No origin configured → nothing is served.
+function clientSiteRewrites(slug: string, origin: string | undefined, publicPaths: string[]) {
+  if (!origin) return [];
+  if (!/^https?:\/\/[^/]+$/.test(origin)) throw new Error(`Client site origin for ${slug} must be a bare origin with no path; got "${origin}"`);
+  return publicPaths.map(path => ({
+    source: `/sites/${slug}${path}`,
+    destination: `${origin}/sites/${slug}${path}`,
+  }));
+}
 
 export default nextConfig;

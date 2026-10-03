@@ -97,6 +97,19 @@ function ProjectLink({ project }: { project: Project }) {
   );
 }
 
+function ProjectActions({ project }: { project: Project }) {
+  if (!project.showLiveAction || !project.liveUrl) return <ProjectLink project={project} />;
+
+  return (
+    <div className="showcase-actions">
+      <ProjectLink project={project} />
+      <a className="showcase-action" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+        Visit Live Site<span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  );
+}
+
 function StageArt({ project, immersive = false }: { project: Project; immersive?: boolean }) {
   const visual = visualFor(project);
 
@@ -358,7 +371,7 @@ export default function ProjectShowcase({ immersive = false }: { immersive?: boo
                   <h3>{project.name}</h3>
                   <p className="project-stage-context">{project.context}</p>
                   <p className="project-stage-summary">{project.summary}</p>
-                  <ProjectLink project={project} />
+                  <ProjectActions project={project} />
                 </div>
               ))}
             </div>
@@ -406,7 +419,7 @@ export default function ProjectShowcase({ immersive = false }: { immersive?: boo
                   <h3>{project.name}</h3>
                   <p className="project-stage-context">{project.context}</p>
                   <p className="project-stage-summary">{project.summary}</p>
-                  <ProjectLink project={project} />
+                  <ProjectActions project={project} />
                 </div>
               ))}
             </div>

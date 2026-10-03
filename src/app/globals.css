@@ -2807,6 +2807,7 @@ a.engine-proof-item:hover .engine-proof-figure img { transform: scale(1.03); }
 .showcase-action span { transition: transform 180ms ease; }
 .showcase-action:hover span, .showcase-action:focus-visible span { transform: translateX(3px); }
 .showcase-action-muted { border-bottom-color: var(--color-line); color: var(--color-muted); }
+.showcase-actions { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 1.75rem; }
 @keyframes project-stage-content-enter {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }

@@ -168,6 +168,9 @@
   .cinematic-stage .project-stage-content h3 { grid-row: 3; grid-column: 1; margin: 0 0 1.5rem; padding-inline: 1.25rem; font-size: 2.35rem; }
   .cinematic-stage .project-stage-summary { grid-row: 5; grid-column: 1; padding: 0 1.25rem; margin-top: 1.25rem; }
   .cinematic-stage .showcase-action { grid-row: 6; grid-column: 1; justify-self: start; margin: .75rem 1.25rem 1.5rem; }
+  /* Paired actions: the wrapper takes the action's grid cell; the links sit inside it. */
+  .cinematic-stage .showcase-actions { grid-row: 6; grid-column: 1; justify-self: start; margin: .75rem 1.25rem 1.5rem; column-gap: 1.5rem; }
+  .cinematic-stage .showcase-actions .showcase-action { margin: 0; }
   .cinematic-stage .project-stage-summary:last-child { margin-bottom: 1.5rem; }
   .cinematic-artwork { object-position: center; }
   .cinematic-stage .stage-identity-board { padding: 1.5rem; }

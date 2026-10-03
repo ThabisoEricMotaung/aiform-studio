@@ -38,6 +38,19 @@
 .navLink { color: #684972; font-size: .85rem; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 
 .wide { max-width: 56rem; }
+
+/* Brand assets: the vertical video keeps its 9:16 frame, sized by viewport height on desktop
+   and by available width on mobile, so it is never stretched into a landscape box. */
+.assetLayout { display: grid; gap: 2.25rem; }
+.assetTitle { font-family: var(--font-inter-tight), sans-serif; font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 500; line-height: 1.08; letter-spacing: -.035em; }
+.assetMeta { margin-top: .75rem; color: #6c6270; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.assetVideo { display: block; width: min(100%, calc(min(78svh, 46rem) * 9 / 16)); height: auto; aspect-ratio: 9 / 16; border: 1px solid #e4dde7; border-radius: 4px; background: #fbf8f1; }
+.assetVideo:focus-visible { outline: 2px solid #7a5a83; outline-offset: 4px; }
+/* Wide screens: details beside the video, which is sized to sit fully above the fold. */
+@media (min-width: 56rem) {
+  .assetLayout { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: clamp(2.5rem, 6vw, 5rem); }
+  .assetVideo { width: calc(clamp(24rem, 100svh - 17rem, 46rem) * 9 / 16); }
+}
 .backLink { display: inline-block; margin-bottom: 2rem; color: #684972; font-size: .8rem; text-decoration: underline; text-underline-offset: 4px; }
 
 .reviewList { list-style: none; margin-top: 2.5rem; display: flex; flex-direction: column; gap: .9rem; }

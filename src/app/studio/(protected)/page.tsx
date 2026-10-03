@@ -13,6 +13,7 @@ export default async function StudioPage() {
     <p className={styles.intro}>Internal AiForm Studio workspace.</p>
     <nav className={styles.nav} aria-label="Studio">
       <Link href="/studio/reviews" className={styles.navLink}>Product Reviews</Link>
+      <Link href="/studio/brand/manifesto" className={styles.navLink}>Brand</Link>
     </nav>
     <SignOutButton />
   </section>;

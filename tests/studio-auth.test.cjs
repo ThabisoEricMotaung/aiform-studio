@@ -66,6 +66,7 @@ const verify = require('../src/app/api/studio/auth/verify/route.ts');
 const logout = require('../src/app/api/studio/auth/logout/route.ts');
 const protectedLayout = require('../src/app/studio/(protected)/layout.tsx').default;
 const protectedPage = require('../src/app/studio/(protected)/page.tsx').default;
+const manifestoPage = require('../src/app/studio/(protected)/brand/manifesto/page.tsx').default;
 const neo = require('../src/lib/leora-signing-server.ts');
 const counter = require('../src/lib/studio-countersign-server.ts');
 const access = require('../src/lib/leora-access.ts');
@@ -83,10 +84,11 @@ test.beforeEach(() => {
 test('anonymous layout and page independently redirect before protected content', async () => {
   await assert.rejects(protectedLayout({ children: 'private' }), /REDIRECT:\/studio\/login$/);
   await assert.rejects(protectedPage(), /REDIRECT:\/studio\/login$/);
+  await assert.rejects(manifestoPage(), /REDIRECT:\/studio\/login$/);
 });
 test('verified UUID receives minimal actor; wrong UUID with same email is denied', async () => {
   login(); assert.deepEqual(await guard.requireStudioAdmin(), { id: adminId, name: 'Dr Thabiso Eric Motaung' });
-  assert.equal(await protectedLayout({ children: 'private' }), 'private'); assert.ok(await protectedPage());
+  assert.equal(await protectedLayout({ children: 'private' }), 'private'); assert.ok(await protectedPage()); assert.ok(await manifestoPage());
   login(otherId); sessions.get('valid').email = 'admin@example.test';
   await assert.rejects(guard.requireStudioAdmin(), error => error.status === 403);
   await assert.rejects(protectedPage(), /notice=denied/);
@@ -179,9 +181,24 @@ test('SSR refresh forwards updated request cookies and private response cookies'
 test('writable server adapter clears only Studio cookies', async () => {
   jar.set('other-cookie', 'keep'); jar.set(cookieName, 'remove'); await server.clearStudioCookies(); assert.deepEqual([...jar], [['other-cookie', 'keep']]);
 });
-test('Studio is absent from public navigation and sitemap; client auth modules contain no secrets/storage', () => {
-  for (const filename of ['src/app/sitemap.ts', 'src/components/Header.tsx', 'src/components/Footer.tsx']) assert.doesNotMatch(fs.readFileSync(path.join(root, filename), 'utf8'), /["'`]\/studio(?:[\/"'`])/);
-  assert.match(fs.readFileSync(path.join(root, 'src/components/MarketingChrome.tsx'), 'utf8'), /pathname === "\/studio"/);
+test('Studio is absent from public navigation and sitemap except the footer entry point; client auth modules contain no secrets/storage', () => {
+  const studioRef = /["'`]\/studio(?:[\/"'`])/g;
+  const read = filename => fs.readFileSync(path.join(root, filename), 'utf8');
+  for (const filename of ['src/app/sitemap.ts', 'src/components/Header.tsx']) assert.doesNotMatch(read(filename), studioRef);
+  // The footer's deliberate entry point: exactly one link, to the bare /studio login gate, never a private sub-route.
+  const footer = read('src/components/Footer.tsx');
+  assert.deepEqual(footer.match(studioRef), ['"/studio"']);
+  assert.match(footer, /\["\/studio", "Studio Console →"\]/);
+  // Every other public page and component stays free of Studio routes. MarketingChrome only
+  // matches /studio paths to hide the public chrome there.
+  const allowed = new Set(['src/components/Footer.tsx', 'src/components/MarketingChrome.tsx']);
+  const publicSources = [...fs.readdirSync(path.join(root, 'src/app'), { recursive: true }).map(file => `src/app/${file}`),
+    ...fs.readdirSync(path.join(root, 'src/components'), { recursive: true }).map(file => `src/components/${file}`)]
+    .map(file => file.replace(/\\/g, '/'))
+    .filter(file => /\.tsx?$/.test(file) && !/^src\/(app\/studio|app\/api\/studio|components\/studio)\//.test(file) && !allowed.has(file));
+  assert.ok(publicSources.length > 20);
+  for (const filename of publicSources) assert.doesNotMatch(read(filename), studioRef, `${filename} references a Studio route`);
+  assert.match(read('src/components/MarketingChrome.tsx'), /pathname === "\/studio"/);
   for (const filename of ['StudioLogin.tsx', 'SignOutButton.tsx']) {
     const source = fs.readFileSync(path.join(root, 'src/components/studio', filename), 'utf8');
     assert.doesNotMatch(source, /SUPABASE_|STUDIO_ADMIN_|supabase-admin|localStorage|sessionStorage/);

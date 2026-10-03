@@ -38,21 +38,37 @@ function chromePath() {
       res.writeHead(200, { "Content-Type": TYPES[path.extname(file)] || "application/octet-stream" }).end(data);
     });
   }).listen(0);
-  const browser = await chromium.launch({ executablePath: chromePath() });
-  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
-  const missing = [];
-  page.on("response", (r) => r.status() >= 400 && missing.push(r.url()));
-  await page.goto(`http://localhost:${server.address().port}${PAGE}`, { waitUntil: "networkidle" });
-  await page.evaluate(() => document.fonts.ready);
-  const fonts = await page.evaluate(() => ["400 108px Fraunces", '400 34px "Public Sans"'].map((f) => document.fonts.check(f)));
-  if (missing.length || fonts.includes(false)) throw new Error(`Missing assets: ${missing.join(", ") || "fonts not loaded"}`);
+  // Headless Chromium occasionally dies mid-run on Windows, so a crash relaunches it and
+  // resumes from the frame it was on. Frames are pure functions of t, so this is seamless.
+  let browser, page;
+  async function open() {
+    browser = await chromium.launch({ executablePath: chromePath() });
+    page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
+    const missing = [];
+    page.on("response", (r) => r.status() >= 400 && missing.push(r.url()));
+    await page.goto(`http://localhost:${server.address().port}${PAGE}`, { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts.ready);
+    const fonts = await page.evaluate(() => ["400 108px Fraunces", '400 34px "Public Sans"'].map((f) => document.fonts.check(f)));
+    if (missing.length || fonts.includes(false)) throw new Error(`Missing assets: ${missing.join(", ") || "fonts not loaded"}`);
+  }
+  await open();
 
   const frames = fs.mkdtempSync(path.join(os.tmpdir(), "aiform-frames-"));
   const times = stillsAt || Array.from({ length: FPS * DURATION }, (_, i) => i / FPS);
-  for (const [i, t] of times.entries()) {
-    await page.evaluate((s) => window.renderAt(s), t);
+  let relaunches = 0;
+  for (let i = 0; i < times.length; i++) {
+    const t = times[i];
     const name = stillsAt ? `still-${t.toFixed(2)}s.png` : `f${String(i).padStart(4, "0")}.png`;
-    await page.screenshot({ path: path.join(stillsAt ? path.join(ROOT, "renders") : frames, name) });
+    try {
+      await page.evaluate((s) => window.renderAt(s), t);
+      await page.screenshot({ path: path.join(stillsAt ? path.join(ROOT, "renders") : frames, name) });
+    } catch (err) {
+      if (++relaunches > 5 || !/closed|crash/i.test(err.message)) throw err;
+      console.warn(`Browser closed at frame ${i}; relaunching (${relaunches}/5)`);
+      await browser.close().catch(() => {});
+      await open();
+      i--;
+    }
   }
   await browser.close();
   server.close();

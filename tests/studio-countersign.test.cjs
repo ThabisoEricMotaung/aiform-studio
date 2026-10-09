@@ -179,7 +179,7 @@ test('the fully executed PDF is only available after countersignature evidence e
   assert.equal(clientPdf.status, 200);
   const clientBytes = Buffer.from(await clientPdf.arrayBuffer());
   assert.deepEqual(clientBytes, studioBytes);
-  const original = fs.readFileSync(path.join(root, 'public', LEORA_DOCUMENT.pdfPath));
+  const original = fs.readFileSync(path.join(root, 'private/documents/leora-group/AiForm-Studio-LeOra-Group-Mutual-NDA.pdf'));
   assert.equal(crypto.createHash('sha256').update(original).digest('hex'), LEORA_DOCUMENT.sha256);
   const { PDFDocument } = require('pdf-lib');
   const originalPages = (await PDFDocument.load(original)).getPageCount();

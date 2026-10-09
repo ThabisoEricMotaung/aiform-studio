@@ -35,8 +35,10 @@ Module._load = function (request, parent, isMain) {
 
 const access = require('../src/lib/leora-access.ts');
 const unlockRoute = require('../src/app/api/documents/leora-group/access/route.ts');
+const privatePdfRoute = require('../src/app/documents/leora-group/nda/pdf/route.ts');
 const scopePage = require('../src/app/documents/leora-group/preliminary-scope/page.tsx').default;
 const neo = require('../src/lib/leora-signing-server.ts');
+const { LEORA_DOCUMENT } = require('../src/lib/leora-document.ts');
 
 const code = crypto.randomBytes(32).toString('hex');
 const origin = 'https://studio.test';
@@ -91,6 +93,48 @@ test('a valid LeOra access session renders Preliminary Scope instead of redirect
   jar.set(access.ACCESS_COOKIE, access.createAccessSession().value);
   const element = await scopePage();
   assert.ok(element);
+});
+
+test('NDA PDF route redirects missing, invalid, and expired private-document sessions to access', async () => {
+  const expectedLocation = `/documents/leora-group/access?next=${encodeURIComponent('/documents/leora-group/nda/pdf')}`;
+  const missing = await privatePdfRoute.GET();
+  assert.equal(missing.status, 307);
+  assert.equal(missing.headers.get('location'), expectedLocation);
+
+  const validValue = access.createAccessSession().value;
+  const [validUntil] = validValue.split('.');
+  jar.set(access.ACCESS_COOKIE, `${validUntil}.${'f'.repeat(64)}`);
+  const invalid = await privatePdfRoute.GET();
+  assert.equal(invalid.status, 307);
+  assert.equal(invalid.headers.get('location'), expectedLocation);
+
+  const expiredUntil = String(Date.now() - 1000);
+  const expiredMac = crypto.createHmac('sha256', process.env.LEORA_ACCESS_SESSION_SECRET)
+    .update(`${expiredUntil}.${process.env.LEORA_ACCESS_CODE_SHA256}`).digest('hex');
+  jar.set(access.ACCESS_COOKIE, `${expiredUntil}.${expiredMac}`);
+  const expired = await privatePdfRoute.GET();
+  assert.equal(expired.status, 307);
+  assert.equal(expired.headers.get('location'), expectedLocation);
+  assert.match(expired.headers.get('cache-control'), /no-store/);
+});
+
+test('valid LeOra private-document session receives the hash-verified NDA PDF', async () => {
+  jar.set(access.ACCESS_COOKIE, access.createAccessSession().value);
+  const response = await privatePdfRoute.GET();
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('content-type'), 'application/pdf');
+  assert.match(response.headers.get('content-disposition'), /inline; filename="AiForm-Studio-LeOra-Group-Mutual-NDA\.pdf"/);
+  assert.match(response.headers.get('cache-control'), /private/);
+  assert.match(response.headers.get('cache-control'), /no-store/);
+  assert.match(response.headers.get('x-robots-tag'), /noindex/);
+  assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+  assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+  const bytes = Buffer.from(await response.arrayBuffer());
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), LEORA_DOCUMENT.sha256);
+});
+
+test('the LeOra NDA is no longer present at its former public static path', () => {
+  assert.equal(fs.existsSync(path.join(root, 'public/documents/leora-group/AiForm-Studio-LeOra-Group-Mutual-NDA.pdf')), false);
 });
 
 // 6. expired/tampered session is rejected

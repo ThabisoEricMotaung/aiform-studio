@@ -2,7 +2,6 @@ export const LEORA_DOCUMENT = {
   id: "aiform-leora-mutual-nda",
   version: "2026-09-16.v1",
   reference: "AFS-LEORA-NDA-20260916-v1",
-  pdfPath: "/documents/leora-group/AiForm-Studio-LeOra-Group-Mutual-NDA.pdf",
   sha256: "79269f1c14dd6d3c7d6c456c136d118588c99ed15a6f36ce05f204f8b855bfcd",
 } as const;
 

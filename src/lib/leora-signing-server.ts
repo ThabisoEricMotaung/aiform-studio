@@ -8,6 +8,13 @@ import { getSupabaseAdmin } from "./supabase-admin";
 import { LEORA_DOCUMENT, type ExecutionReceipt } from "./leora-document";
 
 export const SESSION_COOKIE = "leora-signing-session";
+const LEORA_PDF_PATH = path.join(
+  process.cwd(),
+  "private",
+  "documents",
+  "leora-group",
+  "AiForm-Studio-LeOra-Group-Mutual-NDA.pdf",
+);
 export const PRIVATE_HEADERS = {
   "Cache-Control": "private, no-store, max-age=0",
   "X-Robots-Tag": "noindex, nofollow, noarchive",
@@ -37,7 +44,7 @@ export function signingConfig() {
   return { codeHash, secret, expires };
 }
 export async function verifiedPdf() {
-  const bytes = await readFile(path.join(process.cwd(), "public", LEORA_DOCUMENT.pdfPath));
+  const bytes = await readFile(LEORA_PDF_PATH);
   if (createHash("sha256").update(bytes).digest("hex") !== LEORA_DOCUMENT.sha256) {
     throw new SigningError("The issued document could not be verified. Signing is paused; please contact AiForm Studio.", 409);
   }

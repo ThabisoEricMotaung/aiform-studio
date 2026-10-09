@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LEORA_DOCUMENT } from "@/lib/leora-document";
 import DocumentExecutionStatus from "@/components/documents/ExecutionStatus";
 import documentStyles from "@/app/share/share.module.css";
 import styles from "./page.module.css";
 
-const pdfPath = LEORA_DOCUMENT.pdfPath;
+const pdfPath = "/documents/leora-group/nda/pdf";
 const title = "Mutual NDA | AiForm Studio × LeOra Group";
 const description = "This mutual non-disclosure agreement governs confidential discussions between AiForm Studio and LeOra Group concerning the proposed NeoSmart Fuelling platform and related vehicle, energy, logistics and technology systems.";
 

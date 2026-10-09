@@ -1,8 +1,13 @@
 import type { NextConfig } from "next";
 
+const leoraPdf = "./private/documents/leora-group/AiForm-Studio-LeOra-Group-Mutual-NDA.pdf";
+
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
-    "/api/documents/leora-group/nda{,/**}": ["./public/documents/leora-group/AiForm-Studio-LeOra-Group-Mutual-NDA.pdf"],
+    "/api/documents/leora-group/nda{,/**}": [leoraPdf],
+    "/api/documents/leora-group/nda/issued": [leoraPdf],
+    "/api/documents/leora-group/nda/countersign/document": [leoraPdf],
+    "/documents/leora-group/nda/pdf": [leoraPdf],
   },
   async headers() {
     return [

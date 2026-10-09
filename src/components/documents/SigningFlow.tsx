@@ -7,6 +7,7 @@ import SignaturePad from "./SignaturePad";
 import styles from "@/app/documents/leora-group/nda/sign/sign.module.css";
 
 const api = "/api/documents/leora-group/nda";
+const privatePdfUrl = "/documents/leora-group/nda/pdf";
 type Defaults = { name: string; business: string; address: string };
 type Stage = "loading" | "access" | "review" | "details" | "complete";
 
@@ -93,7 +94,7 @@ export default function SigningFlow({ available }: { available: boolean }) {
     <section className={styles.section}>
       <h2>Review the issued agreement</h2>
       <p>Electronic signing is not available yet. You can review or download the agreement while AiForm Studio finishes setting up secure signing.</p>
-      <a href={LEORA_DOCUMENT.pdfPath} target="_blank" rel="noopener noreferrer" className={styles.link}>Open issued NDA (PDF, new tab) ↗</a>
+      <a href={privatePdfUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>Open issued NDA (PDF, new tab) ↗</a>
       <p className={styles.help}>Please contact AiForm Studio to arrange signing. No signature has been submitted.</p>
     </section>
   );
@@ -126,7 +127,7 @@ export default function SigningFlow({ available }: { available: boolean }) {
         {error ? <p role="alert" className={styles.error}>{error}</p> : null}
         <button className={styles.primary} disabled={busy}>{busy ? "Opening…" : "Continue to review"}</button>
       </form>
-      <a href={LEORA_DOCUMENT.pdfPath} target="_blank" rel="noopener noreferrer" className={styles.link}>Open issued NDA (PDF, new tab) ↗</a>
+      <a href={privatePdfUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>Open issued NDA (PDF, new tab) ↗</a>
     </section>
   );
   if (stage === "review") return (

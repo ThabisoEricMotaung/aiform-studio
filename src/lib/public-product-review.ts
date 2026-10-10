@@ -4,7 +4,7 @@ import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 // Publication is deliberate, never inferred from a guessable reference alone.
 // Add future reviewed/approved references and their issued versions here.
-const publications = new Map<string, number>([["PR-2026-001", 1]]);
+const publications = new Map<string, number>([["PR-2026-001", 1], ["PR-2026-002", 1]]);
 
 function clientNotes(notes: string | null) {
   const approved = new Map([

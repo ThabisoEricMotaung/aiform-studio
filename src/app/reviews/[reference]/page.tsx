@@ -6,6 +6,8 @@ import styles from "./report.module.css";
 import ReviewViewSwitch from "./ReviewViewSwitch";
 import { getPlainLanguageProductReview } from "@/lib/plain-language-product-review";
 import { requireReviewReportAccess } from "@/lib/review-access";
+import { getPreMeetingProductReview, requiresPreMeetingReport } from "@/lib/pre-meeting-product-review";
+import PreMeetingReport from "./PreMeetingReport";
 
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ reference: string }> };
@@ -30,6 +32,12 @@ export default async function ProductReviewPage({ params }: Props) {
   await requireReviewReportAccess(reference);
   const review = await getPublicProductReview(reference);
   if (!review) notFound();
+  // Reviewed report copy only; never falls back to the generic rendering.
+  if (requiresPreMeetingReport(review.reference)) {
+    const preMeeting = await getPreMeetingProductReview(review.reference);
+    if (!preMeeting) notFound();
+    return <PreMeetingReport {...preMeeting} />;
+  }
   const plainLanguage = await getPlainLanguageProductReview(review.reference);
   return <article className={styles.report} aria-labelledby="report-title">
     <div className={styles.sheet}>

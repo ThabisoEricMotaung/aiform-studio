@@ -71,7 +71,7 @@ test('public projection excludes private fields, IDs, unapproved notes, draft fi
 
 test('unknown references never query the database', async () => {
   const { get, calls } = load(fixture());
-  assert.equal(await get('PR-2026-002'), null);
+  assert.equal(await get('PR-2099-999'), null);
   assert.equal(await get('toString'), null);
   assert.equal(calls.length, 0);
 });

@@ -89,3 +89,26 @@
   .plainIntro, .plainList { font-size: 10.5pt; line-height: 1.6; }
   .plainList li, .plainPreserve { page-break-inside: avoid; break-inside: avoid-page; }
 }
+
+/* Reviewed report copy (PR-2026-002); existing report rules stay unchanged. */
+.opening h1.reportTitle { max-width: 24ch; font-size: clamp(2.1rem, 5vw, 3.6rem); }
+.printAction { margin-top: 1.5rem; }
+.actionGroups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.actionGroups h3, .subheading { font-size: 1rem; font-weight: 600; color: var(--color-green); margin-bottom: .75rem; }
+.subheading { margin-top: 2.5rem; }
+.assumptions li .stageLabel { font-size: .8rem; font-weight: 600; color: var(--color-green); padding-top: .3rem; }
+.assumptions:has(.stageLabel) li { grid-template-columns: 8rem minmax(0, 1fr); }
+.numberedList { list-style: decimal; padding-left: 1.5rem; max-width: 70ch; font-size: 1rem; line-height: 1.8; }
+.numberedList li + li { margin-top: .85rem; }
+@media (max-width: 600px) {
+  .actionGroups { grid-template-columns: minmax(0, 1fr); }
+  .assumptions:has(.stageLabel) li { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
+}
+@media print {
+  .printAction { display: none; }
+  .opening h1.reportTitle { font-size: 26pt; }
+  .actionGroups { display: block; }
+  .actionGroups > section { margin-bottom: 1rem; break-inside: avoid; }
+  .numberedList { font-size: 10.5pt; line-height: 1.6; }
+  .numberedList li { break-inside: avoid; }
+}

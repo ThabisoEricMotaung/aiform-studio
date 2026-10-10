@@ -66,6 +66,8 @@ function projection(reference) {
 const publicReview = { getPublicProductReview: async reference => eligible.has(reference) ? projection(reference) : null };
 const plainReview = { getPlainLanguageProductReview: async reference => reference === 'PR-2026-001' ? { review: projection(reference),
   copy: { takeaway: 'T', working: [], preserve: 'P', scope: 'S', coverage: [], findings: [], assumptions: [], limitations: [] } } : null };
+const preMeetingReview = { requiresPreMeetingReport: reference => reference === 'PR-2026-002',
+  getPreMeetingProductReview: async reference => reference === 'PR-2026-002' && eligible.has(reference) ? { review: projection(reference), copy: {} } : null };
 
 const originalLoad = Module._load;
 Module._load = function (request, parent, isMain) {
@@ -91,6 +93,7 @@ Module._load = function (request, parent, isMain) {
   if (request === '@/lib/supabase/server') return { createStudioClient: async () => ({}) };
   if (request === './public-product-review' || request === '@/lib/public-product-review') return publicReview;
   if (request === './plain-language-product-review' || request === '@/lib/plain-language-product-review') return plainReview;
+  if (request === '@/lib/pre-meeting-product-review') return preMeetingReview;
   if (request.startsWith('@/')) request = path.join(root, 'src', request.slice(2));
   return originalLoad.call(this, request, parent, isMain);
 };

@@ -101,3 +101,10 @@ test('copy excludes private operational fields', async () => {
   const { copy } = await load(canonical, true).getPreMeetingProductReview('PR-2026-002');
   assert(!/commercial_value|commercial_notes|engagement_type|time_spent|\/studio\/|[0-9a-f]{8}-[0-9a-f]{4}-/.test(JSON.stringify(copy)));
 });
+
+test('production fingerprint is pinned, not the unreviewed placeholder', () => {
+  const source = fs.readFileSync(path.join(__dirname, '../src/lib/pre-meeting-product-review.ts'), 'utf8');
+  const [, hash] = source.match(/sourceHash: "([a-f0-9]{64})"/) ?? [];
+  assert.ok(hash);
+  assert.notEqual(hash, '0'.repeat(64));
+});

@@ -400,7 +400,7 @@ test('report routes are guarded before any lookup and remain dynamic and noindex
     const source = fs.readFileSync(path.join(root, file), 'utf8');
     assert.match(source, /export const dynamic = "force-dynamic"/);
     assert.match(source, /index: false, follow: false/);
-    assert.equal(source.match(/await requireReviewReportAccess\(reference\);\n\s+const (review|result) = await get/g)?.length, 2);
+    assert.equal(source.match(/await requireReviewReportAccess\(reference\);\r?\n\s+const (review|result) = await get/g)?.length, 2);
   }
   const config = fs.readFileSync(path.join(root, 'next.config.ts'), 'utf8');
   assert.match(config, /"\/reviews\/:path\*", "\/api\/reviews\/:path\*"[\s\S]{0,200}noindex, nofollow[\s\S]{0,200}no-store/);

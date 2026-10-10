@@ -11,7 +11,7 @@ import { getPublicProductReview } from "@/lib/public-product-review";
 const REFERENCE = "PR-2026-002";
 
 const report = {
-  sourceHash: "0000000000000000000000000000000000000000000000000000000000000000",
+  sourceHash: "0afdc6e5a23353e5bb03e206a9cd26c067003ac0eff47b3f89cc4341694caf3c",
   title: "Credit Builder Flow — Pre-Meeting Website Review",
   preparedBy: "AiForm Studio",
   preparedFor: "Kea / Volve Media",
